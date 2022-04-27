@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="561c0ba9-5a02-48b2-b775-ba2dd574ea78" name="Changes" comment="first commit">
-      <change afterPath="$PROJECT_DIR$/.idea/test/ControllerTest/defaultTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/test/ModelTest/defaultTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/test/ViewTest/defaultTest.java" afterDir="false" />
-    </list>
+    <list default="true" id="561c0ba9-5a02-48b2-b775-ba2dd574ea78" name="Changes" comment="Added default test classes and junit" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -49,7 +48,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1651091837929</updated>
-      <workItem from="1651091839524" duration="1027000" />
+      <workItem from="1651091839524" duration="1653000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1651091947316</created>
@@ -79,7 +78,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651092733707</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Added default test classes and junit">
+      <created>1651092897199</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1651092897199</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -100,6 +106,7 @@
     <MESSAGE value="First commit" />
     <MESSAGE value="remove gitignore" />
     <MESSAGE value="first commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="first commit" />
+    <MESSAGE value="Added default test classes and junit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added default test classes and junit" />
   </component>
 </project>
