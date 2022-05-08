@@ -1,13 +1,17 @@
-package ControllerTest;
+package ViewTest;
+
 import Model.Hero;
+import View.DriverView;
 import org.junit.jupiter.api.Test;
-import Controller.Driver;
+
 import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
-public class ControlTest {
+
+class DriverViewTest {
+
     @Test
-    void heroToScreenTest() throws SQLException {
+    void getHero() throws SQLException {
         Hero myHero = new Hero("Warrior");
         StringBuilder stats = new StringBuilder();
         stats.append("hit points: ").append(myHero.getHIT_POINTS()).append("\n");
@@ -16,8 +20,6 @@ public class ControlTest {
         stats.append("minimum damage: ").append(myHero.getMINIMUM_DAMAGE()).append("\n");
         stats.append("maximum damage: ").append(myHero.getMAXIMUM_DAMAGE()).append("\n");
         stats.append("chance to block: ").append(myHero.getCHANCE_TO_BLOCK_OR_HEAL()).append("\n");
-        Driver.heroToScreen("Warrior");
-        assertEquals(stats.toString(), Driver.heroToScreen("Warrior").toString());
-
+        assertEquals(stats.toString(), DriverView.getHero("Warrior"));
     }
 }
