@@ -9,6 +9,8 @@ public abstract class DungeonCharacter {
     private final int MINIMUM_DAMAGE;
     private final int MAXIMUM_DAMAGE;
     private final double CHANCE_TO_BLOCK_OR_HEAL;
+    private final int MINIMUM_HEAL_POINTS;
+    private final int MAXIMUM_HEAL_POINTS;
     public DungeonCharacter(String theName) throws SQLException {
         Database DB = new Database();
         String[] theStats = DB.getStats(theName).toString().split(" ");
@@ -18,6 +20,14 @@ public abstract class DungeonCharacter {
         MINIMUM_DAMAGE = Integer.parseInt(theStats[3]);
         MAXIMUM_DAMAGE = Integer.parseInt(theStats[4]);
         CHANCE_TO_BLOCK_OR_HEAL = Double.parseDouble(theStats[5]);
+        if(theStats.length != 6){
+            MINIMUM_HEAL_POINTS = Integer.parseInt(theStats[6]);
+            MAXIMUM_HEAL_POINTS = Integer.parseInt(theStats[7]);
+        }
+        else {
+            MINIMUM_HEAL_POINTS = 0;
+            MAXIMUM_HEAL_POINTS = 0;
+        }
     }
     public int getHIT_POINTS() {
         return HIT_POINTS;
@@ -41,5 +51,13 @@ public abstract class DungeonCharacter {
 
     public double getCHANCE_TO_BLOCK_OR_HEAL() {
         return CHANCE_TO_BLOCK_OR_HEAL;
+    }
+
+    public int getMINIMUM_HEAL_POINTS() {
+        return MINIMUM_HEAL_POINTS;
+    }
+
+    public int getMAXIMUM_HEAL_POINTS() {
+        return MAXIMUM_HEAL_POINTS;
     }
 }

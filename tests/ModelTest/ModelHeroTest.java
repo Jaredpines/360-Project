@@ -1,4 +1,5 @@
 package ModelTest;
+import Model.DungeonCharacter;
 import Model.Hero;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +13,7 @@ public class ModelHeroTest {
 
         Hero myHero = new Hero("Warrior");
         boolean isItAHero = false;
-        isItAHero = myHero instanceof Hero;
+        isItAHero = myHero instanceof DungeonCharacter;
         assertTrue(isItAHero);
     }
     @Test
