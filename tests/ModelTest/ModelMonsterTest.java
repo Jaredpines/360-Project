@@ -1,7 +1,4 @@
 package ModelTest;
-
-import Model.DungeonCharacter;
-import Model.Hero;
 import Model.Monster;
 import org.junit.jupiter.api.Test;
 
@@ -10,14 +7,6 @@ import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ModelMonsterTest {
-    @Test
-    void canCreateMonsterTest() throws SQLException {
-
-        Monster myMonster = new Monster("Ogre");
-        boolean isItAMonster = false;
-        isItAMonster = myMonster instanceof DungeonCharacter;
-        assertTrue(isItAMonster);
-    }
     @Test
     void canGatherStatsOgre() throws SQLException {
         Monster myMonster = new Monster("Ogre");

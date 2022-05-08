@@ -36,7 +36,7 @@ public class Database {
                 "GREMLIN,"+
                 "SKELETON )";
         try {
-            int myRv = myStmt.executeUpdate(query);
+            myStmt.executeUpdate(query);
         } catch (SQLException e){
             e.printStackTrace();
             System.exit(0);
