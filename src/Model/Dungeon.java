@@ -45,7 +45,7 @@ public class Dungeon {
     }
 }
 
-    /** STILL DECIDIN IF WE NEED IT
+    /* STILL DECIDING IF WE NEED IT
     //creates walls bases on their Rows
     private String lineMaker(final int theRow) {
         StringBuilder sb = new StringBuilder();

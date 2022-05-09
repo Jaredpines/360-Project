@@ -4,25 +4,19 @@ import java.util.LinkedList;
 
 public class Room {
     private LinkedList<Character> myItems;
-    private int myRoomX;
-    private int myRoomY;
+    private final int ROOM_X;
+    private final int ROOM_Y;
     public Room (int x, int y, final String theItems){
         if (theItems == null || theItems.length()==0){
             throw new IllegalArgumentException("Item passed to room was 0 or null");
         }
         //myItems = setItems();
-        myRoomX = x;
-        myRoomY = y;
-        switch (theItems){
-            case "entrance":
-                myItems.add('I');
-                break;
-            case "exit":
-                myItems.add('O');
-                break;
-            case "pit":
-                myItems.add('X');
-                break;
+        ROOM_X = x;
+        ROOM_Y = y;
+        switch (theItems) {
+            case "entrance" -> myItems.add('I');
+            case "exit" -> myItems.add('O');
+            case "pit" -> myItems.add('X');
         }
      //   public int getRoomX(){
       //      return myRoomX;

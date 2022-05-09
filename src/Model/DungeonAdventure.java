@@ -41,7 +41,6 @@ public class DungeonAdventure {
                                 break;
                         case 3:
                                 System.out.println("It was nice having you here!");
-                                return;
                 }
         }
 
@@ -54,4 +53,4 @@ public class DungeonAdventure {
 
 
         }
-}
+
