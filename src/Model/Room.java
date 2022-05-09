@@ -1,8 +1,9 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
-public class Room {
+public class Room implements Serializable {
     private LinkedList<Character> myItems;
     private final int ROOM_X;
     private final int ROOM_Y;

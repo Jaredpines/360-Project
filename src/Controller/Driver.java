@@ -2,9 +2,15 @@ package Controller;
 
 import Model.Hero;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 
-public class Driver {
+import static View.DriverView.chooseHero;
+
+public class Driver implements Serializable {
+    public static void main(String[] args) throws SQLException {
+        System.out.println(chooseHero());
+    }
     public static StringBuilder heroToScreen(String theName) throws SQLException {
         Hero myHero = new Hero(theName);
         StringBuilder stats = new StringBuilder();

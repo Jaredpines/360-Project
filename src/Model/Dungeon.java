@@ -1,6 +1,8 @@
 package Model;
 
-public class Dungeon {
+import java.io.Serializable;
+
+public class Dungeon implements Serializable {
     public static void main(String[] args) {
         Dungeon test = new Dungeon();
         System.out.println(test);

@@ -1,8 +1,9 @@
 package Model;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 
-public abstract class DungeonCharacter {
+public abstract class DungeonCharacter implements Serializable {
     private final int HIT_POINTS;
     private final int ATTACK_SPEED;
     private final double CHANCE_TO_HIT;

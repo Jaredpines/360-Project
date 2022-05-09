@@ -1,8 +1,9 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.Scanner;
 
-public class DungeonAdventure {
+public class DungeonAdventure implements Serializable {
         static Dungeon myDungeon;
         static Hero myHero;
 

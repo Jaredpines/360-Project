@@ -1,15 +1,14 @@
 package View;
 import Controller.Driver;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class DriverView {
+public class DriverView implements Serializable {
 
-    public static void main(String[] args) throws SQLException {
-        System.out.println(chooseHero());
-    }
+
     public static String chooseHero() throws SQLException {
         Scanner myScanner = new Scanner(System.in);
         String myInput = "";
