@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:sqlite:C:\Users\pines\Desktop\360Project\DungeonCharacter.db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="DungeonCharacter [2]" uuid="c02202b0-9a7a-4d5f-a25a-0e7e2042383a">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/DungeonCharacter.db</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
