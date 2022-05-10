@@ -1,6 +1,8 @@
 package Model;
 
-public class Dungeon {
+import java.io.Serializable;
+
+public class Dungeon implements Serializable {
     public static void main(String[] args) {
         Dungeon test = new Dungeon();
         System.out.println(test);
@@ -45,7 +47,7 @@ public class Dungeon {
     }
 }
 
-    /** STILL DECIDIN IF WE NEED IT
+    /* STILL DECIDING IF WE NEED IT
     //creates walls bases on their Rows
     private String lineMaker(final int theRow) {
         StringBuilder sb = new StringBuilder();

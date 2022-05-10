@@ -1,8 +1,9 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.Scanner;
 
-public class DungeonAdventure {
+public class DungeonAdventure implements Serializable {
         static Dungeon myDungeon;
         static Hero myHero;
 
@@ -41,7 +42,6 @@ public class DungeonAdventure {
                                 break;
                         case 3:
                                 System.out.println("It was nice having you here!");
-                                return;
                 }
         }
 
@@ -54,4 +54,4 @@ public class DungeonAdventure {
 
 
         }
-}
+
