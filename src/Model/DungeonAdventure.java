@@ -1,15 +1,13 @@
 package Model;
 
 import java.io.Serializable;
-import java.util.Scanner;
 
 public class DungeonAdventure implements Serializable {
-        static Dungeon myDungeon;
-        static Hero myHero;
+        //final static Dungeon DUNGEON = new Dungeon();
 
-        public static Dungeon getDungeon(){
-                return myDungeon;
-        }
+        /*public static Dungeon getDungeon(){
+                return DUNGEON;
+        }*/
 
         public static void main(String[] args) {
 

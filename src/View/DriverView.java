@@ -27,6 +27,33 @@ public class DriverView implements Serializable {
 
         return Driver.heroToScreen(theName).toString();
     }
+    public static String mapMaker(final int theX, final int theY) {
+        StringBuilder mySB = new StringBuilder();
+        String[] mySplit = Driver.dungeonToScreen(theX,theY).toString().split("");
+        int myCounter = 0;
+        for (int i = 0; i < theY+2; i++) {
+            mySB.append("*");
+        }
+        mySB.append("\n");
+        for (int i = 0; i < theX; i++) {
+            mySB.append("*");
+            for (int j = 0; j < theX+2; j++) {
+                if(!(myCounter >= mySplit.length) && j > 1) {
+                    mySB.append(mySplit[myCounter]);
+                    myCounter++;
+                }
+
+            }
+            mySB.append("*");
+            mySB.append("\n");
+        }
+        for (int i = 0; i < theY+2; i++) {
+            mySB.append("*");
+        }
+        mySB.append("\n");
+        mySB.append("\n");
+        return mySB.toString();
+    }
     public static ArrayList<String> currentlyAvailableHeroes(){
         ArrayList<String> names = new ArrayList<>();
         names.add("WARRIOR");

@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class DriverViewTest {
 
     @Test
-    void getHero() throws SQLException {
+    public void getHero() throws SQLException {
         Hero myHero = new Hero("Warrior");
         StringBuilder stats = new StringBuilder();
         stats.append("hit points: ").append(myHero.getHIT_POINTS()).append("\n");
@@ -21,5 +21,9 @@ class DriverViewTest {
         stats.append("maximum damage: ").append(myHero.getMAXIMUM_DAMAGE()).append("\n");
         stats.append("chance to block: ").append(myHero.getCHANCE_TO_BLOCK_OR_HEAL()).append("\n");
         assertEquals(stats.toString(), DriverView.getHero("Warrior"));
+    }
+    @Test
+    public void mapMakerTest(){
+        System.out.println(DriverView.mapMaker(5,5));
     }
 }
