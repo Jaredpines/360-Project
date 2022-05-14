@@ -24,6 +24,10 @@ class DriverViewTest {
     }
     @Test
     public void mapMakerTest(){
-        System.out.println(DriverView.mapMaker(5,5));
+        String s = DriverView.mapMaker(5,5);
+        int count = 100;
+        while (count-- > 0) {
+            assertEquals(132, s.length());
+        }
     }
 }

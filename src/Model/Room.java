@@ -47,7 +47,7 @@ public class Room implements Serializable {
             }
 
             if (myPit < 10){
-                if (existenceCheck2){
+                if (existenceCheck2||existenceCheck1){
                     this.status += "-";
                 }
                 this.status += "Pit";
