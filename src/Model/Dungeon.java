@@ -1,11 +1,17 @@
 package Model;
 
-public class Dungeon {
-    public static void main(String[] args) {
-        Dungeon test = new Dungeon();
-        System.out.println(test);
-    }
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Random;
 
+public class Dungeon implements Serializable {
+    final private int X;
+    final private int Y;
+    private int entExi;
+    private int myRanNumEntranceX;
+    private int myRanNumEntranceY;
+    private int myRanNumExitX;
+    private int myRanNumExitY;
     /**
      * 2D room inside of this class
      */
@@ -15,8 +21,77 @@ public class Dungeon {
      */
     private int[][] myCoordinates;
 
-    public Dungeon() {
+    public Dungeon(final int X, final int Y) {
+        this.entExi = 0;
+        this.X = X;
+        this.Y = Y;
+        myMaze = new Room[X][Y];
+        createEntranceExit();
+        creatPillars();
+        creatItemRooms();
+    }
+    public void createEntranceExit(){
+        Random myRand = new Random();
+        myRanNumEntranceX = myRand.nextInt(getX());
+        myRanNumEntranceY = myRand.nextInt(getY());
+        do{
+            myRanNumExitX = myRand.nextInt(getX());
+            myRanNumExitY = myRand.nextInt(getY());
+        }while (myRanNumEntranceX == myRanNumExitX || myRanNumEntranceY == myRanNumExitY);
+        myMaze[myRanNumEntranceX][myRanNumEntranceY] = new Room(entExi);
+        entExi++;
+        myMaze[myRanNumExitX][myRanNumExitY] = new Room(entExi);
+    }
+    public void creatPillars(){
+        Random myRand = new Random();
+        int myX;
+        int myY;
+        boolean existenceCheck1 = false;
+        boolean existenceCheck2 = false;
+        boolean existenceCheck3 = false;
+        boolean existenceCheck4 = false;
+        while (!existenceCheck1||!existenceCheck2||!existenceCheck3||!existenceCheck4) {
+            if (myMaze[myX = myRand.nextInt(getX())][myY = myRand.nextInt(getY())] == null && !existenceCheck1) {
+                myMaze[myX][myY] = new Room("pillarA");
+                existenceCheck1 = true;
+            }
+            if (myMaze[myX = myRand.nextInt(getX())][myY = myRand.nextInt(getY())] == null && !existenceCheck2) {
+                myMaze[myX][myY] = new Room("pillarE");
+                existenceCheck2 = true;
+            }
+            if (myMaze[myX = myRand.nextInt(getX())][myY = myRand.nextInt(getY())] == null && !existenceCheck3) {
+                myMaze[myX][myY] = new Room("pillarI");
+                existenceCheck3 = true;
+            }
+            if (myMaze[myX = myRand.nextInt(getX())][myY = myRand.nextInt(getY())] == null && !existenceCheck4) {
+                myMaze[myX][myY] = new Room("pillarP");
+                existenceCheck4 = true;
+            }
+        }
+    }
+    public void creatItemRooms(){
+        for (int i = 0; i < myMaze.length; i++){
+            for (int j = 0; j < myMaze[i].length; j++) {
+                if(myMaze[i][j] == null){
+                    myMaze[i][j] = new Room("items");
+                }
+            }
+        }
+    }
+    public int getX() {
+        return X;
+    }
 
+    public int getY() {
+        return Y;
+    }
+
+    public Room[][] getMyMaze() {
+        return myMaze;
+    }
+
+    public void setMyMaze(Room[][] myMaze) {
+        this.myMaze = myMaze;
     }
 
     @Override
@@ -25,24 +100,19 @@ public class Dungeon {
    TODO STILL NEED TO BE FINISHED
      */
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        return "String";
+        StringBuilder mySB = new StringBuilder();
+        for (int i = 0; i < myMaze.length; i++){
+            for (int j = 0; j < myMaze[i].length; j++) {
+                mySB.append(myMaze[i][j].getStatus());
+                mySB.append(" ");
+            }
+        }
+        return mySB.toString();
     }
 
 
     //creates walls
-    private String lineMaker(final String theSegment, final int theLength) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("    *");
-        for (int i = 0; i < theLength; i++) {
-            sb.append(" ");
-            sb.append(theSegment);
-            sb.append(" ");
-            sb.append("*");
-        }
-        sb.append("\n");
-        return sb.toString();
-    }
+
 }
 
     /* STILL DECIDING IF WE NEED IT

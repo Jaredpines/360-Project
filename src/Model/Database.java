@@ -2,13 +2,14 @@ package Model;
 
 import org.sqlite.SQLiteDataSource;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Locale;
 
-public class Database {
+public class Database implements Serializable {
     Database() throws SQLException {
         createConnection();
         createTable();
