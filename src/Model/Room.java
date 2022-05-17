@@ -56,10 +56,11 @@ public class Room implements Serializable {
                 this.status = "empty";
             }
         }
+        if(theItems.equals("player")){
+            this.status = "player";
+        }
 
     }
-
-
     public String getStatus() {
         return status;
     }

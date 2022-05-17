@@ -11,28 +11,29 @@ public class Dungeon implements Serializable {
     private int myRanNumEntranceY;
     private int myRanNumExitX;
     private int myRanNumExitY;
+    private int playerX;
+    private int playerY;
     /**
      * 2D room inside of this class
      */
-    private Room[][] myMaze;
+    private Room[][][] myMaze;
     /**
      * 2D array that holds coordinates
      */
-    private int myCoordinates;
 
-    public Dungeon(final int X, final int Y, int myCoordinate) {
+    public Dungeon(final int X, final int Y) {
         this.entExi = 0;
         this.X = X;
         this.Y = Y;
-        this.myCoordinates = myCoordinate;
 
-        myMaze = new Room[X][Y];
+
+        myMaze = new Room[X][Y][2];
         createEntranceExit();
         creatPillars();
         creatItemRooms();
 
         //TODO Wrong too
-        System.out.println("corX " + myRanNumEntranceX + "_ corY " + myRanNumEntranceY);
+
 
 
     }
@@ -40,18 +41,19 @@ public class Dungeon implements Serializable {
         Random myRand = new Random();
         myRanNumEntranceX = myRand.nextInt(getX());
         myRanNumEntranceY = myRand.nextInt(getY());
-
+        myMaze[myRanNumEntranceX][myRanNumEntranceY][1] = new Room("player");
         //TODO SHOWS weird coordinates
-
+        playerX = (myRanNumEntranceX);
+        playerY = (myRanNumEntranceY);
         do{
             myRanNumExitX = myRand.nextInt(getX());
             myRanNumExitY = myRand.nextInt(getY());
             //it works here
             //System.out.println("ExitCorX " + myRanNumExitX + "ExitCorY " + myRanNumExitY);
         }while (myRanNumEntranceX == myRanNumExitX || myRanNumEntranceY == myRanNumExitY);
-        myMaze[myRanNumEntranceX][myRanNumEntranceY] = new Room(entExi);
+        myMaze[myRanNumEntranceX][myRanNumEntranceY][0] = new Room(entExi);
         entExi++;
-        myMaze[myRanNumExitX][myRanNumExitY]= new Room(entExi);
+        myMaze[myRanNumExitX][myRanNumExitY][0]= new Room(entExi);
        // System.out.println("ExitCorX " + myRanNumExitX + "ExitCorY " + myRanNumExitY);
         //System.out.println("corX " + myRanNumEntranceX + "corY " + myRanNumEntranceY);
     }
@@ -64,29 +66,29 @@ public class Dungeon implements Serializable {
         boolean existenceCheck3 = false;
         boolean existenceCheck4 = false;
         while (!existenceCheck1||!existenceCheck2||!existenceCheck3||!existenceCheck4) {
-            if (myMaze[myX = myRand.nextInt(getX())][myY = myRand.nextInt(getY())] == null && !existenceCheck1) {
-                myMaze[myX][myY] = new Room("pillarA");
+            if (myMaze[myX = myRand.nextInt(getX())][myY = myRand.nextInt(getY())][0] == null && !existenceCheck1) {
+                myMaze[myX][myY][0] = new Room("pillarA");
                 existenceCheck1 = true;
             }
-            if (myMaze[myX = myRand.nextInt(getX())][myY = myRand.nextInt(getY())] == null && !existenceCheck2) {
-                myMaze[myX][myY] = new Room("pillarE");
+            if (myMaze[myX = myRand.nextInt(getX())][myY = myRand.nextInt(getY())][0] == null && !existenceCheck2) {
+                myMaze[myX][myY][0] = new Room("pillarE");
                 existenceCheck2 = true;
             }
-            if (myMaze[myX = myRand.nextInt(getX())][myY = myRand.nextInt(getY())] == null && !existenceCheck3) {
-                myMaze[myX][myY]= new Room("pillarI");
+            if (myMaze[myX = myRand.nextInt(getX())][myY = myRand.nextInt(getY())][0] == null && !existenceCheck3) {
+                myMaze[myX][myY][0] = new Room("pillarI");
                 existenceCheck3 = true;
             }
-            if (myMaze[myX = myRand.nextInt(getX())][myY = myRand.nextInt(getY())] == null && !existenceCheck4) {
-                myMaze[myX][myY] = new Room("pillarP");
+            if (myMaze[myX = myRand.nextInt(getX())][myY = myRand.nextInt(getY())][0] == null && !existenceCheck4) {
+                myMaze[myX][myY][0] = new Room("pillarP");
                 existenceCheck4 = true;
             }
         }
     }
     public void creatItemRooms(){
         for (int i = 0; i < myMaze.length; i++){
-            for (int j = 0; j < myMaze[i].length; j++) {
-                if(myMaze[i][j] == null){
-                    myMaze[i][j] = new Room("items");
+            for (int j = 0; j < myMaze[0].length; j++) {
+                if(myMaze[i][j][0] == null){
+                    myMaze[i][j][0] = new Room("items");
                 }
             }
         }
@@ -99,12 +101,17 @@ public class Dungeon implements Serializable {
         return Y;
     }
 
-    public Room[][] getMyMaze() {
-        return myMaze;
+    public int getPlayerX() {
+        return playerX;
     }
 
-    public void setMyMaze(Room[][] myMaze) {
-        this.myMaze = myMaze;
+    public int getPlayerY() {
+        return playerY;
+    }
+
+
+    public Room[][][] getMyMaze() {
+        return myMaze;
     }
 
     @Override
@@ -116,7 +123,7 @@ public class Dungeon implements Serializable {
         StringBuilder mySB = new StringBuilder();
         for (int i = 0; i < myMaze.length; i++){
             for (int j = 0; j < myMaze[i].length; j++) {
-                mySB.append(myMaze[i][j].getStatus());
+                mySB.append(myMaze[i][j][0].getStatus());
                 mySB.append(" ");
             }
         }
@@ -124,35 +131,9 @@ public class Dungeon implements Serializable {
     }
 
 
-    //creates walls
 
 }
 
-    /* STILL DECIDING IF WE NEED IT
-    //creates walls bases on their Rows
-    private String lineMaker(final int theRow) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("    *");
-        for (int col = 0; col < myMaze[theRow].length; col++) {
-            sb.append(" ");
-            if (theRow == myCoordinates[4][0] && col == myCoordinates[4][1])
-                sb.append("@");	// @ for Hero's location
-            else
-                sb.append(myMaze[theRow][col]);
-            sb.append(" ");
-            if (col == myMaze[theRow].length - 1)
-                sb.append("*");
-            else
-                sb.append("|");
-        }
-        sb.append("\n");
-        return sb.toString();
-    }
-
-
-}
-
-     */
 
 
 

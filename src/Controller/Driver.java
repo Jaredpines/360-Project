@@ -39,7 +39,7 @@ public class Driver implements Serializable {
         StringBuilder mySB = new StringBuilder();
         //make Dungeon 3D array
         int myCoordinates = 0;
-        Dungeon myDungeon = new Dungeon(theX,theY, myCoordinates);
+        Dungeon myDungeon = new Dungeon(theX,theY);
         String[] mySplit = myDungeon.toString().split(" ");
         for (int i = 0; i < mySplit.length; i++) {
             switch (mySplit[i]) {
