@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+    /*
 class DriverViewTest {
 
     @Test
@@ -22,6 +22,7 @@ class DriverViewTest {
         stats.append("chance to block: ").append(myHero.getCHANCE_TO_BLOCK_OR_HEAL()).append("\n");
         assertEquals(stats.toString(), DriverView.getHero("Warrior"));
     }
+    /*
     @Test
     public void mapMakerTest(){
         String s = DriverView.mapMaker(5,5);
@@ -31,3 +32,5 @@ class DriverViewTest {
         }
     }
 }
+
+     */

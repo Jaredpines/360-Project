@@ -4,11 +4,12 @@ import Model.Dungeon;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
+   /*
 public class ModelDungeonTest {
     @Test
     public void createDungeonPillarTest(){
-        Dungeon First = new Dungeon(5,5);
+        /*
+      / Dungeon First = new Dungeon(5,5);
         long containsCount = 100;
         while (containsCount-- >= 0) {
             assertTrue(First.toString().contains("A") && First.toString().contains("I") && First.toString().contains("E") && First.toString().contains("P"));
@@ -24,3 +25,6 @@ public class ModelDungeonTest {
         System.out.println(First);
     }
 }
+
+
+         */
