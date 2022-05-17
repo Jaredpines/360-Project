@@ -1,7 +1,6 @@
 package Model;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.Random;
 
 public class Dungeon implements Serializable {
@@ -19,28 +18,42 @@ public class Dungeon implements Serializable {
     /**
      * 2D array that holds coordinates
      */
-    private int[][] myCoordinates;
+    private int myCoordinates;
 
-    public Dungeon(final int X, final int Y) {
+    public Dungeon(final int X, final int Y, int myCoordinate) {
         this.entExi = 0;
         this.X = X;
         this.Y = Y;
+        this.myCoordinates = myCoordinate;
+
         myMaze = new Room[X][Y];
         createEntranceExit();
         creatPillars();
         creatItemRooms();
+
+        //TODO Wrong too
+        System.out.println("corX " + myRanNumEntranceX + "_ corY " + myRanNumEntranceY);
+
+
     }
     public void createEntranceExit(){
         Random myRand = new Random();
         myRanNumEntranceX = myRand.nextInt(getX());
         myRanNumEntranceY = myRand.nextInt(getY());
+
+        //TODO SHOWS weird coordinates
+
         do{
             myRanNumExitX = myRand.nextInt(getX());
             myRanNumExitY = myRand.nextInt(getY());
+            //it works here
+            //System.out.println("ExitCorX " + myRanNumExitX + "ExitCorY " + myRanNumExitY);
         }while (myRanNumEntranceX == myRanNumExitX || myRanNumEntranceY == myRanNumExitY);
         myMaze[myRanNumEntranceX][myRanNumEntranceY] = new Room(entExi);
         entExi++;
-        myMaze[myRanNumExitX][myRanNumExitY] = new Room(entExi);
+        myMaze[myRanNumExitX][myRanNumExitY]= new Room(entExi);
+       // System.out.println("ExitCorX " + myRanNumExitX + "ExitCorY " + myRanNumExitY);
+        //System.out.println("corX " + myRanNumEntranceX + "corY " + myRanNumEntranceY);
     }
     public void creatPillars(){
         Random myRand = new Random();
@@ -60,7 +73,7 @@ public class Dungeon implements Serializable {
                 existenceCheck2 = true;
             }
             if (myMaze[myX = myRand.nextInt(getX())][myY = myRand.nextInt(getY())] == null && !existenceCheck3) {
-                myMaze[myX][myY] = new Room("pillarI");
+                myMaze[myX][myY]= new Room("pillarI");
                 existenceCheck3 = true;
             }
             if (myMaze[myX = myRand.nextInt(getX())][myY = myRand.nextInt(getY())] == null && !existenceCheck4) {

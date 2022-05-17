@@ -12,6 +12,8 @@ import static View.DriverView.chooseHero;
 import static View.DriverView.mapMaker;
 
 public class Driver implements Serializable {
+
+
     public static void main(String[] args) throws SQLException {
         System.out.println("Working");
         try {
@@ -35,7 +37,9 @@ public class Driver implements Serializable {
     }
     public static StringBuilder dungeonToScreen(final int theX, final int theY){
         StringBuilder mySB = new StringBuilder();
-        Dungeon myDungeon = new Dungeon(theX,theY);
+        //make Dungeon 3D array
+        int myCoordinates = 0;
+        Dungeon myDungeon = new Dungeon(theX,theY, myCoordinates);
         String[] mySplit = myDungeon.toString().split(" ");
         for (int i = 0; i < mySplit.length; i++) {
             switch (mySplit[i]) {
