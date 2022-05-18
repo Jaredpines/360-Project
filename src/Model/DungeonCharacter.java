@@ -61,4 +61,5 @@ public abstract class DungeonCharacter implements Serializable {
     public int getMAXIMUM_HEAL_POINTS() {
         return MAXIMUM_HEAL_POINTS;
     }
+    abstract public int attack(int theMin, int theMax);
 }

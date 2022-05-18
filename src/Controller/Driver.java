@@ -2,6 +2,7 @@ package Controller;
 
 import Model.Dungeon;
 import Model.Hero;
+import Model.Warrior;
 
 import java.io.*;
 import java.sql.SQLException;
@@ -25,14 +26,15 @@ public class Driver implements Serializable {
 
     }
     public static StringBuilder heroToScreen(String theName) throws SQLException {
-        Hero myHero = new Hero(theName);
+        //change later
+        Warrior myWarrior= new Warrior(theName);
         StringBuilder stats = new StringBuilder();
-        stats.append("hit points: ").append(myHero.getHIT_POINTS()).append("\n");
-        stats.append("attack speed: ").append(myHero.getATTACK_SPEED()).append("\n");
-        stats.append("chance to hit: ").append(myHero.getCHANCE_TO_HIT()).append("\n");
-        stats.append("minimum damage: ").append(myHero.getMINIMUM_DAMAGE()).append("\n");
-        stats.append("maximum damage: ").append(myHero.getMAXIMUM_DAMAGE()).append("\n");
-        stats.append("chance to block: ").append(myHero.getCHANCE_TO_BLOCK_OR_HEAL()).append("\n");
+        stats.append("hit points: ").append(myWarrior.getHIT_POINTS()).append("\n");
+        stats.append("attack speed: ").append(myWarrior.getATTACK_SPEED()).append("\n");
+        stats.append("chance to hit: ").append(myWarrior.getCHANCE_TO_HIT()).append("\n");
+        stats.append("minimum damage: ").append(myWarrior.getMINIMUM_DAMAGE()).append("\n");
+        stats.append("maximum damage: ").append(myWarrior.getMAXIMUM_DAMAGE()).append("\n");
+        stats.append("chance to block: ").append(myWarrior.getCHANCE_TO_BLOCK_OR_HEAL()).append("\n");
         return stats;
     }
     public static StringBuilder dungeonToScreen(final int theX, final int theY){

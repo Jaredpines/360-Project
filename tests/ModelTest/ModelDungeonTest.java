@@ -32,9 +32,9 @@ public class ModelDungeonTest {
         System.out.println(First.toString().indexOf("entrance"));
         long containsCount = 100;
         while (containsCount-- >= 0) {
-            assertEquals("player", First.getMyMaze()[First.getPlayerX()][First.getPlayerY()][1].getStatus());
+            assertEquals("player", First.getMyMaze()[First.getMyPlayerX()][First.getMyPlayerY()][1].getStatus());
         }
-        System.out.println(First.getMyMaze()[First.getPlayerX()][First.getPlayerY()][1].getStatus());
+        System.out.println(First.getMyMaze()[First.getMyPlayerX()][First.getMyPlayerY()][1].getStatus());
     }
 }
 
