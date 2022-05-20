@@ -1,5 +1,7 @@
 package ModelTest;
 import Model.Hero;
+import Model.Priestess;
+import Model.Thief;
 import Model.Warrior;
 import org.junit.jupiter.api.Test;
 
@@ -20,26 +22,22 @@ public class ModelHeroTest {
     }
     @Test
     void canGatherStatsPriestess() throws SQLException {
-        //Fix with new class
-        /*Hero myHero = new Hero("Priestess");
-        assertEquals(75, myHero.getHIT_POINTS());
-        assertEquals(5, myHero.getATTACK_SPEED());
-        assertEquals(0.7, myHero.getCHANCE_TO_HIT());
-        assertEquals(25, myHero.getMINIMUM_DAMAGE());
-        assertEquals(45, myHero.getMAXIMUM_DAMAGE());
-        assertEquals(0.3, myHero.getCHANCE_TO_BLOCK_OR_HEAL());
-         */
+        Priestess myPriestess = new Priestess("Priestess");
+        assertEquals(75, myPriestess.getHIT_POINTS());
+        assertEquals(5, myPriestess.getATTACK_SPEED());
+        assertEquals(0.7, myPriestess.getCHANCE_TO_HIT());
+        assertEquals(25, myPriestess.getMINIMUM_DAMAGE());
+        assertEquals(45, myPriestess.getMAXIMUM_DAMAGE());
+        assertEquals(0.3, myPriestess.getCHANCE_TO_BLOCK_OR_HEAL());
     }
     @Test
     void canGatherStatsThief() throws SQLException {
-        //Fix with new class
-        /*Hero myHero = new Hero("Thief");
-        assertEquals(75, myHero.getHIT_POINTS());
-        assertEquals(6, myHero.getATTACK_SPEED());
-        assertEquals(0.8, myHero.getCHANCE_TO_HIT());
-        assertEquals(20, myHero.getMINIMUM_DAMAGE());
-        assertEquals(40, myHero.getMAXIMUM_DAMAGE());
-        assertEquals(0.4, myHero.getCHANCE_TO_BLOCK_OR_HEAL());
-         */
+        Thief myThief = new Thief("Thief");
+        assertEquals(75, myThief.getHIT_POINTS());
+        assertEquals(6, myThief.getATTACK_SPEED());
+        assertEquals(0.8, myThief.getCHANCE_TO_HIT());
+        assertEquals(20, myThief.getMINIMUM_DAMAGE());
+        assertEquals(40, myThief.getMAXIMUM_DAMAGE());
+        assertEquals(0.4, myThief.getCHANCE_TO_BLOCK_OR_HEAL());
     }
 }

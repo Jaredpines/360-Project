@@ -4,15 +4,15 @@ import java.io.Serializable;
 import java.util.Random;
 
 public class Dungeon implements Serializable {
+    private static int myPlayerX;
+    private static int myPlayerY;
     final private int Dungeon_X;
     final private int Dungeon_Y;
     private int myEntExi;
-    private int myPlayerX;
-    private int myPlayerY;
     /**
      * 2D room inside of this class
      */
-    private final Room[][][] myMaze;
+    private static Room[][][] myMaze;
     /**
      * 2D array that holds coordinates
      */
@@ -39,8 +39,8 @@ public class Dungeon implements Serializable {
         int myRanNumEntranceY = myRand.nextInt(getDungeon_Y());
         myMaze[myRanNumEntranceX][myRanNumEntranceY][1] = new Room("player");
         //TODO SHOWS weird coordinates
-        myPlayerX = (myRanNumEntranceX);
-        myPlayerY = (myRanNumEntranceY);
+        myPlayerX = myRanNumEntranceX;
+        myPlayerY = myRanNumEntranceY;
         int myRanNumExitX;
         int myRanNumExitY;
         do{
@@ -99,17 +99,27 @@ public class Dungeon implements Serializable {
         return Dungeon_Y;
     }
 
-    public int getMyPlayerX() {
+    public static int getMyPlayerX() {
         return myPlayerX;
     }
 
-    public int getMyPlayerY() {
+    public static int getMyPlayerY() {
         return myPlayerY;
     }
 
+    public static void setMyPlayerX(int thePlayerX) {
+        myPlayerX = thePlayerX;
+    }
 
-    public Room[][][] getMyMaze() {
+    public static void setMyPlayerY(int thePlayerY) {
+        myPlayerY = thePlayerY;
+    }
+
+    public static Room[][][] getMyMaze() {
         return myMaze;
+    }
+    public static void setMyMaze(Room[][][] theMaze) {
+        myMaze = theMaze;
     }
 
     @Override

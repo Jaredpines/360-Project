@@ -1,20 +1,18 @@
 package Controller;
 
-import Model.Dungeon;
-import Model.Hero;
-import Model.Warrior;
+import Model.*;
 
 import java.io.*;
 import java.sql.SQLException;
 import java.util.Scanner;
 
 import static Model.DungeonAdventure.Play;
-import static View.DriverView.chooseHero;
-import static View.DriverView.mapMaker;
+import static Model.MovePlayer.move;
+import static View.DriverView.*;
 
 public class Driver implements Serializable {
 
-
+    private static Dungeon myMainDungeon;
     public static void main(String[] args) throws SQLException {
         System.out.println("Working");
         try {
@@ -26,23 +24,41 @@ public class Driver implements Serializable {
 
     }
     public static StringBuilder heroToScreen(String theName) throws SQLException {
-        //change later
-        Warrior myWarrior= new Warrior(theName);
+        StringBuilder myStats = new StringBuilder();
+        if(theName.equalsIgnoreCase("Warrior")) {
+            Warrior myWarrior = new Warrior(theName);
+            myStats = Stats(myWarrior.getHIT_POINTS(), myWarrior.getATTACK_SPEED(), myWarrior.getCHANCE_TO_HIT(), myWarrior.getMINIMUM_DAMAGE(), myWarrior.getMAXIMUM_DAMAGE(), myWarrior.getCHANCE_TO_BLOCK_OR_HEAL(), myWarrior);
+        }else if(theName.equalsIgnoreCase("Priestess")){
+            Priestess myPriestess = new Priestess(theName);
+            myStats = Stats(myPriestess.getHIT_POINTS(), myPriestess.getATTACK_SPEED(), myPriestess.getCHANCE_TO_HIT(), myPriestess.getMINIMUM_DAMAGE(), myPriestess.getMAXIMUM_DAMAGE(), myPriestess.getCHANCE_TO_BLOCK_OR_HEAL(), myPriestess);
+        }else if(theName.equalsIgnoreCase("Thief")){
+            Thief myThief = new Thief(theName);
+            myStats = Stats(myThief.getHIT_POINTS(), myThief.getATTACK_SPEED(), myThief.getCHANCE_TO_HIT(), myThief.getMINIMUM_DAMAGE(), myThief.getMAXIMUM_DAMAGE(), myThief.getCHANCE_TO_BLOCK_OR_HEAL(), myThief);
+        }
+
+        return myStats;
+    }
+
+    private static StringBuilder Stats(int hit_points, int attack_speed, double chance_to_hit, int minimum_damage, int maximum_damage, double chance_to_block_or_heal, Hero myHero) {
         StringBuilder stats = new StringBuilder();
-        stats.append("hit points: ").append(myWarrior.getHIT_POINTS()).append("\n");
-        stats.append("attack speed: ").append(myWarrior.getATTACK_SPEED()).append("\n");
-        stats.append("chance to hit: ").append(myWarrior.getCHANCE_TO_HIT()).append("\n");
-        stats.append("minimum damage: ").append(myWarrior.getMINIMUM_DAMAGE()).append("\n");
-        stats.append("maximum damage: ").append(myWarrior.getMAXIMUM_DAMAGE()).append("\n");
-        stats.append("chance to block: ").append(myWarrior.getCHANCE_TO_BLOCK_OR_HEAL()).append("\n");
+        stats.append("hit points: ").append(hit_points).append("\n");
+        stats.append("attack speed: ").append(attack_speed).append("\n");
+        stats.append("chance to hit: ").append(chance_to_hit).append("\n");
+        stats.append("minimum damage: ").append(minimum_damage).append("\n");
+        stats.append("maximum damage: ").append(maximum_damage).append("\n");
+        stats.append("chance to block: ").append(chance_to_block_or_heal).append("\n");
         return stats;
     }
+
     public static StringBuilder dungeonToScreen(final int theX, final int theY){
         StringBuilder mySB = new StringBuilder();
         //make Dungeon 3D array
         int myCoordinates = 0;
-        Dungeon myDungeon = new Dungeon(theX,theY);
-        String[] mySplit = myDungeon.toString().split(" ");
+
+        if(myMainDungeon == null){
+            myMainDungeon = new Dungeon(theX,theY);
+        }
+        String[] mySplit = myMainDungeon.toString().split(" ");
         for (int i = 0; i < mySplit.length; i++) {
             switch (mySplit[i]) {
                 case "entrance" -> mySB.append("i");
@@ -115,12 +131,13 @@ public class Driver implements Serializable {
                 System.out.println("Please enter the size of your dungeon in X Y format.");
                 int myX = sc.nextInt();
                 int myY = sc.nextInt();
-                System.out.println("Type M to see the map");
-                myChoice = sc.next();
-                if(myChoice.equalsIgnoreCase("M")){
-                    System.out.println(mapMaker(myX,myY));
+                System.out.println(roomMap(myX,myY));
+                while (!myChoice.equalsIgnoreCase("Stop")) {
+                    System.out.println("Type Left, Right, Up, or Down to move.");
+                    myChoice = sc.next();
+                    move(myChoice);
+                    System.out.println(roomMap(myX,myY));
                 }
-
                 //HOPEFULLY WHAT WE NEED TO MAKE SERIALIZATION WORK
                 FileOutputStream myFileOut = new FileOutputStream("UserInfo.ser");
                 ObjectOutputStream myOut = new ObjectOutputStream(myFileOut);
