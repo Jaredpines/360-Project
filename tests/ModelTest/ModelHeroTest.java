@@ -1,5 +1,7 @@
 package ModelTest;
-import Model.Hero;
+import Model.Priestess;
+import Model.Thief;
+import Model.Warrior;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
@@ -9,32 +11,32 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ModelHeroTest {
     @Test
     void canGatherStatsWarrior() throws SQLException {
-        Hero myHero = new Hero("Warrior");
-        assertEquals(125, myHero.getHIT_POINTS());
-        assertEquals(4, myHero.getATTACK_SPEED());
-        assertEquals(0.8, myHero.getCHANCE_TO_HIT());
-        assertEquals(35, myHero.getMINIMUM_DAMAGE());
-        assertEquals(60, myHero.getMAXIMUM_DAMAGE());
-        assertEquals(0.2, myHero.getCHANCE_TO_BLOCK_OR_HEAL());
+        Warrior myWarrior = new Warrior("Warrior");
+        assertEquals(125, myWarrior.getMyHitPoint());
+        assertEquals(4, myWarrior.getMyAttackSpeed());
+        assertEquals(0.8, myWarrior.getMyChanceToHit());
+        assertEquals(35, myWarrior.getMINIMUM_DAMAGE());
+        assertEquals(60, myWarrior.getMyMaximumDamage());
+        assertEquals(0.2, myWarrior.getMyChangesToBlockOrHeal());
     }
     @Test
     void canGatherStatsPriestess() throws SQLException {
-        Hero myHero = new Hero("Priestess");
-        assertEquals(75, myHero.getHIT_POINTS());
-        assertEquals(5, myHero.getATTACK_SPEED());
-        assertEquals(0.7, myHero.getCHANCE_TO_HIT());
-        assertEquals(25, myHero.getMINIMUM_DAMAGE());
-        assertEquals(45, myHero.getMAXIMUM_DAMAGE());
-        assertEquals(0.3, myHero.getCHANCE_TO_BLOCK_OR_HEAL());
+        Priestess myPriestess = new Priestess("Priestess");
+        assertEquals(75, myPriestess.getMyHitPoint());
+        assertEquals(5, myPriestess.getMyAttackSpeed());
+        assertEquals(0.7, myPriestess.getMyChanceToHit());
+        assertEquals(25, myPriestess.getMINIMUM_DAMAGE());
+        assertEquals(45, myPriestess.getMyMaximumDamage());
+        assertEquals(0.3, myPriestess.getMyChangesToBlockOrHeal());
     }
     @Test
     void canGatherStatsThief() throws SQLException {
-        Hero myHero = new Hero("Thief");
-        assertEquals(75, myHero.getHIT_POINTS());
-        assertEquals(6, myHero.getATTACK_SPEED());
-        assertEquals(0.8, myHero.getCHANCE_TO_HIT());
-        assertEquals(20, myHero.getMINIMUM_DAMAGE());
-        assertEquals(40, myHero.getMAXIMUM_DAMAGE());
-        assertEquals(0.4, myHero.getCHANCE_TO_BLOCK_OR_HEAL());
+        Thief myThief = new Thief("Thief");
+        assertEquals(75, myThief.getMyHitPoint());
+        assertEquals(6, myThief.getMyAttackSpeed());
+        assertEquals(0.8, myThief.getMyChanceToHit());
+        assertEquals(20, myThief.getMINIMUM_DAMAGE());
+        assertEquals(40, myThief.getMyMaximumDamage());
+        assertEquals(0.4, myThief.getMyChangesToBlockOrHeal());
     }
 }
