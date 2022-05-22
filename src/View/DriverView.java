@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 
+import static Controller.Driver.getMyVPUsed;
+import static Controller.Driver.setMyVPUsed;
 import static Model.Dungeon.*;
 
 public class DriverView implements Serializable {
@@ -75,15 +77,73 @@ public class DriverView implements Serializable {
         return mySB.toString();
     }
     public static String roomMap(int theX, int theY){
-        int mySpacer = 2;
+        int mySideRoomsLeft = 0;
+        int mySideRoomsRight = 0;
         StringBuilder myRoom = new StringBuilder();
         String[] theSplit = mapMaker(theX , theY).split("\n");
-        myRoom.append(theSplit[getMyPlayerX()*2], getMyPlayerY()*2, (getMyPlayerY()*2)+3);
+        if(getMyVPUsed()){
+            mySideRoomsLeft = 2;
+            mySideRoomsRight = 2;
+            if(0 <= getMyPlayerX()*2 - 2) {
+                if(getMyPlayerY() * 2 - mySideRoomsLeft < 0){
+                    mySideRoomsLeft = 0;
+                }
+                if((getMyPlayerY() * 2) + 3 + mySideRoomsLeft >= theSplit[getMyPlayerX() * 2 - 2].length()){
+                    mySideRoomsRight = 0;
+                }
+                myRoom.append(theSplit[getMyPlayerX() * 2 - 2], getMyPlayerY() * 2 - mySideRoomsLeft, (getMyPlayerY() * 2) + 3 + mySideRoomsRight);
+                myRoom.append("\n");
+            }
+            if(0 <= getMyPlayerX()*2 - 1) {
+                myRoom.append(theSplit[getMyPlayerX() * 2 - 1], getMyPlayerY() * 2 - mySideRoomsLeft, (getMyPlayerY() * 2) + 3 + mySideRoomsRight);
+                mySideRoomsLeft = 2;
+                mySideRoomsRight = 2;
+                myRoom.append("\n");
+            }
+        }
+
+
+        if(getMyPlayerY() * 2 - mySideRoomsLeft < 0){
+            mySideRoomsLeft = 0;
+        }
+        if((getMyPlayerY() * 2) + 3 + mySideRoomsLeft >= theSplit[getMyPlayerX() * 2].length()){
+            mySideRoomsRight = 0;
+        }
+        myRoom.append(theSplit[getMyPlayerX() * 2], getMyPlayerY() * 2 - mySideRoomsLeft, (getMyPlayerY() * 2) + 3 + mySideRoomsRight);
         myRoom.append("\n");
-        myRoom.append(theSplit[(getMyPlayerX()*2)+1], getMyPlayerY()*2, (getMyPlayerY()*2)+3);
+        myRoom.append(theSplit[getMyPlayerX() * 2 + 1], getMyPlayerY() * 2 - mySideRoomsLeft, (getMyPlayerY() * 2) + 3 + mySideRoomsRight);
         myRoom.append("\n");
-        myRoom.append(theSplit[(getMyPlayerX()*2)+2], getMyPlayerY()*2, (getMyPlayerY()*2)+3);
+        myRoom.append(theSplit[getMyPlayerX() * 2 + 2], getMyPlayerY() * 2 - mySideRoomsLeft, (getMyPlayerY() * 2) + 3 + mySideRoomsRight);
+        mySideRoomsLeft = 2;
+        mySideRoomsRight = 2;
+
+
+        if(getMyVPUsed()){
+            if(theSplit.length > getMyPlayerX()*2+3) {
+                myRoom.append("\n");
+                if(getMyPlayerY() * 2 - mySideRoomsLeft < 0){
+                    mySideRoomsLeft = 0;
+                }
+                if((getMyPlayerY() * 2) + 3 + mySideRoomsLeft >= theSplit[getMyPlayerX() * 2 + 3].length()){
+                    mySideRoomsRight = 0;
+                }
+                myRoom.append(theSplit[getMyPlayerX() * 2 + 3], getMyPlayerY() * 2 - mySideRoomsLeft, (getMyPlayerY() * 2) + 3 + mySideRoomsRight);
+                myRoom.append("\n");
+            }
+            if(theSplit.length > getMyPlayerX()*2+4) {
+                myRoom.append(theSplit[getMyPlayerX() * 2 + 4], getMyPlayerY() * 2 - mySideRoomsLeft, (getMyPlayerY() * 2) + 3 + mySideRoomsRight);
+                myRoom.append("\n");
+            }
+            setMyVPUsed();
+        }
         return myRoom.toString();
+    }
+    public static String potionsToScreen(int theHP, int theVP){
+        StringBuilder mySB = new StringBuilder();
+        mySB.append("Number of Health Potions: ").append(theHP);
+        mySB.append("   ");
+        mySB.append("Number of Vision Potions: ").append(theVP);
+        return mySB.toString();
     }
     public static ArrayList<String> currentlyAvailableHeroes(){
         ArrayList<String> names = new ArrayList<>();

@@ -1,6 +1,7 @@
 package Model;
 
 import static Model.Dungeon.*;
+import static Model.Room.statusEffect;
 
 public class MovePlayer {
     public static String move(final String theDirection){
@@ -19,6 +20,7 @@ public class MovePlayer {
         Room temp = myMaze[myPreviousLocationX][myPreviousLocationY][1];
         myMaze[myPreviousLocationX][myPreviousLocationY][1] = myMaze[getMyPlayerX()][getMyPlayerY()][1];
         myMaze[getMyPlayerX()][getMyPlayerY()][1] = temp;
+        statusEffect(myMaze[getMyPlayerX()][getMyPlayerY()][0].getStatus());
         return myMaze[getMyPlayerX()][getMyPlayerY()][0].getStatus();
     }
 }

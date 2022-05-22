@@ -4,23 +4,23 @@ import java.io.Serializable;
 import java.sql.SQLException;
 
 public abstract class DungeonCharacter implements Serializable {
-    private final int HIT_POINTS;
-    private final int ATTACK_SPEED;
-    private final double CHANCE_TO_HIT;
+    private static int myHitPoint;
+    private static int myAttackSpeed;
+    private static double myChanceToHit;
     private final int MINIMUM_DAMAGE;
-    private final int MAXIMUM_DAMAGE;
-    private final double CHANCE_TO_BLOCK_OR_HEAL;
+    private static int myMaximumDamage;
+    private static double myChangesToBlockOrHeal;
     private final int MINIMUM_HEAL_POINTS;
     private final int MAXIMUM_HEAL_POINTS;
     public DungeonCharacter(String theName) throws SQLException {
         Database DB = new Database();
         String[] theStats = DB.getStats(theName).toString().split(" ");
-        HIT_POINTS = Integer.parseInt(theStats[0]);
-        ATTACK_SPEED = Integer.parseInt(theStats[1]);
-        CHANCE_TO_HIT = Double.parseDouble(theStats[2]);
+        myHitPoint = Integer.parseInt(theStats[0]);
+        myAttackSpeed = Integer.parseInt(theStats[1]);
+        myChanceToHit = Double.parseDouble(theStats[2]);
         MINIMUM_DAMAGE = Integer.parseInt(theStats[3]);
-        MAXIMUM_DAMAGE = Integer.parseInt(theStats[4]);
-        CHANCE_TO_BLOCK_OR_HEAL = Double.parseDouble(theStats[5]);
+        myMaximumDamage = Integer.parseInt(theStats[4]);
+        myChangesToBlockOrHeal = Double.parseDouble(theStats[5]);
         if(theStats.length != 6){
             MINIMUM_HEAL_POINTS = Integer.parseInt(theStats[6]);
             MAXIMUM_HEAL_POINTS = Integer.parseInt(theStats[7]);
@@ -30,28 +30,28 @@ public abstract class DungeonCharacter implements Serializable {
             MAXIMUM_HEAL_POINTS = 0;
         }
     }
-    public int getHIT_POINTS() {
-        return HIT_POINTS;
+    public static int getMyHitPoint() {
+        return myHitPoint;
     }
 
-    public int getATTACK_SPEED() {
-        return ATTACK_SPEED;
+    public static int getMyAttackSpeed() {
+        return myAttackSpeed;
     }
 
-    public double getCHANCE_TO_HIT() {
-        return CHANCE_TO_HIT;
+    public static double getMyChanceToHit() {
+        return myChanceToHit;
     }
 
     public int getMINIMUM_DAMAGE() {
         return MINIMUM_DAMAGE;
     }
 
-    public int getMAXIMUM_DAMAGE() {
-        return MAXIMUM_DAMAGE;
+    public static int getMyMaximumDamage() {
+        return myMaximumDamage;
     }
 
-    public double getCHANCE_TO_BLOCK_OR_HEAL() {
-        return CHANCE_TO_BLOCK_OR_HEAL;
+    public static double getMyChangesToBlockOrHeal() {
+        return myChangesToBlockOrHeal;
     }
 
     public int getMINIMUM_HEAL_POINTS() {
@@ -60,6 +60,22 @@ public abstract class DungeonCharacter implements Serializable {
 
     public int getMAXIMUM_HEAL_POINTS() {
         return MAXIMUM_HEAL_POINTS;
+    }
+
+    public static void setMyHitPoint(int theHealth){
+        myHitPoint = theHealth;
+    }
+    public static void setMyAttackSpeed(int theSpeed){
+        myAttackSpeed = theSpeed;
+    }
+    public static void setMyChangesToBlockOrHeal(double theChance){
+        myChangesToBlockOrHeal = theChance;
+    }
+    public static void setMyMaximumDamage(int theDamage){
+        myMaximumDamage = theDamage;
+    }
+    public static void setMyChanceToHit(double theChance){
+        myChanceToHit = theChance;
     }
     abstract public int attack(int theMin, int theMax);
 }
