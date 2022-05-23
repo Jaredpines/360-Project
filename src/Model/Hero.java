@@ -2,24 +2,19 @@ package Model;
 
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.Random;
 
-abstract public class Hero extends DungeonCharacter implements Serializable {
-    public static int myHPTotal = 0;
-    public static int myVPTotal = 0;
+public class Hero extends DungeonCharacter implements Serializable {
     public Hero(String theName) throws SQLException {
         super(theName);
     }
-    public static int getMyHPTotal(){
-        return myHPTotal;
+
+    @Override
+    public int attack(int theMin, int theMax) {
+       return 0;
     }
-    public static int getMyVPTotal(){
-        return myVPTotal;
+
+    public double blockAttack() {
+        return 0.0;
     }
-    public static void setMyHPTotal(int theTotal){
-        myHPTotal = theTotal;
-    }
-    public static void setMyVPTotal(int theTotal){
-        myVPTotal = theTotal;
-    }
-    abstract String specialAttack();
 }
