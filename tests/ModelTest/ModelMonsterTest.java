@@ -13,7 +13,7 @@ public class ModelMonsterTest {
         assertEquals(200, myMonster.getMyHitPoint());
         assertEquals(2, myMonster.getMyAttackSpeed());
         assertEquals(0.6, myMonster.getMyChanceToHit());
-        assertEquals(30, myMonster.getMINIMUM_DAMAGE());
+        assertEquals(30, myMonster.getMyMinimumDamage());
         assertEquals(60, myMonster.getMyMaximumDamage());
         assertEquals(0.1, myMonster.getMyChangesToBlockOrHeal());
         assertEquals(30, myMonster.getMINIMUM_HEAL_POINTS());
@@ -25,7 +25,7 @@ public class ModelMonsterTest {
         assertEquals(70, myMonster.getMyHitPoint());
         assertEquals(5, myMonster.getMyAttackSpeed());
         assertEquals(0.8, myMonster.getMyChanceToHit());
-        assertEquals(15, myMonster.getMINIMUM_DAMAGE());
+        assertEquals(15, myMonster.getMyMinimumDamage());
         assertEquals(30, myMonster.getMyMaximumDamage());
         assertEquals(0.4, myMonster.getMyChangesToBlockOrHeal());
         assertEquals(20, myMonster.getMINIMUM_HEAL_POINTS());
@@ -37,7 +37,7 @@ public class ModelMonsterTest {
         assertEquals(100, myMonster.getMyHitPoint());
         assertEquals(3, myMonster.getMyAttackSpeed());
         assertEquals(0.8, myMonster.getMyChanceToHit());
-        assertEquals(30, myMonster.getMINIMUM_DAMAGE());
+        assertEquals(30, myMonster.getMyMinimumDamage());
         assertEquals(50, myMonster.getMyMaximumDamage());
         assertEquals(0.3, myMonster.getMyChangesToBlockOrHeal());
         assertEquals(30, myMonster.getMINIMUM_HEAL_POINTS());

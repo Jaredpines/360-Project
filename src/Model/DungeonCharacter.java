@@ -7,9 +7,8 @@ public abstract class DungeonCharacter implements Serializable {
     private static int myHitPoint;
     private static int myAttackSpeed;
     private static double myChanceToHit;
-//    private final int MINIMUM_DAMAGE;
+    private final int MINIMUM_DAMAGE;
     private static int myMaximumDamage;
-    private static int myMinimumDamage;
     private static double myChangesToBlockOrHeal;
     private final int MINIMUM_HEAL_POINTS;
     private final int MAXIMUM_HEAL_POINTS;
@@ -19,7 +18,7 @@ public abstract class DungeonCharacter implements Serializable {
         myHitPoint = Integer.parseInt(theStats[0]);
         myAttackSpeed = Integer.parseInt(theStats[1]);
         myChanceToHit = Double.parseDouble(theStats[2]);
-        myMinimumDamage = Integer.parseInt(theStats[3]);
+        MINIMUM_DAMAGE = Integer.parseInt(theStats[3]);
         myMaximumDamage = Integer.parseInt(theStats[4]);
         myChangesToBlockOrHeal = Double.parseDouble(theStats[5]);
         if(theStats.length != 6){
@@ -43,8 +42,8 @@ public abstract class DungeonCharacter implements Serializable {
         return myChanceToHit;
     }
 
-    public int getMyMinimumDamage() {
-        return myMinimumDamage;
+    public int getMINIMUM_DAMAGE() {
+        return MINIMUM_DAMAGE;
     }
 
     public static int getMyMaximumDamage() {
@@ -75,10 +74,6 @@ public abstract class DungeonCharacter implements Serializable {
     public static void setMyMaximumDamage(int theDamage){
         myMaximumDamage = theDamage;
     }
-    public static void setMyMinimumDamage(int theDamage){
-        myMinimumDamage = theDamage;
-    }
-
     public static void setMyChanceToHit(double theChance){
         myChanceToHit = theChance;
     }
