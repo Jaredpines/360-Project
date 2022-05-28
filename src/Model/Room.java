@@ -1,16 +1,15 @@
 package Model;
 
+import Controller.ToScreen;
+
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.Random;
 
-import static Model.DungeonCharacter.*;
-import static Model.Hero.*;
-
 public class Room implements Serializable {
     private LinkedList<Character> items;
-
     private String status = "";
+    private ToScreen myToScreen = new ToScreen();
     public Room (int entExi){
         if(entExi == 0){
             this.status = "entrance";
@@ -64,27 +63,27 @@ public class Room implements Serializable {
         }
 
     }
-    public static void statusEffect(String theStatus){
+    public void statusEffect(String theStatus){
         String[] mySplit = theStatus.split("-");
         Random myRand = new Random();
         for (int i = 0; i < mySplit.length; i++) {
             if(mySplit[i].equalsIgnoreCase("HP")){
-                setMyHPTotal(getMyHPTotal() + 1);
+                myToScreen.getMyHero().setMyHPTotal(myToScreen.getMyHero().getMyHPTotal() + 1);
             }else if(mySplit[i].equalsIgnoreCase("Pit")){
                 int myRandDamage = myRand.nextInt(20) + 1;
-                System.out.println(getMyHitPoint());
-                setMyHitPoint(getMyHitPoint() - myRandDamage);
-                System.out.println(getMyHitPoint());
+                System.out.println(myToScreen.getMyHero().getMyHitPoints());
+                myToScreen.getMyHero().setMyHitPoint(myToScreen.getMyHero().getMyHitPoints() - myRandDamage);
+                System.out.println(myToScreen.getMyHero().getMyHitPoints());
             }else if(mySplit[i].equalsIgnoreCase("VP")){
-                setMyVPTotal(getMyVPTotal() + 1);
+                myToScreen.getMyHero().setMyVPTotal(myToScreen.getMyHero().getMyVPTotal() + 1);
             }else if(mySplit[i].equalsIgnoreCase("A")){
-                setMyAttackSpeed(getMyAttackSpeed() + 2);
+                myToScreen.getMyHero().setMyAttackSpeed(myToScreen.getMyHero().getMyAttackSpeed() + 2);
             }else if(mySplit[i].equalsIgnoreCase("E")){
-                setMyChangesToBlockOrHeal(getMyChangesToBlockOrHeal() + 0.2);
+                myToScreen.getMyHero().setMyChangesToBlockOrHeal(myToScreen.getMyHero().getMyChangesToBlockOrHeal() + 0.2);
             }else if(mySplit[i].equalsIgnoreCase("I")){
-                setMyMaximumDamage(getMyMaximumDamage() + 20);
+                myToScreen.getMyHero().setMyMaximumDamage(myToScreen.getMyHero().getMyMaximumDamage() + 20);
             }else if(mySplit[i].equalsIgnoreCase("P")){
-                setMyChanceToHit(getMyChanceToHit() + 0.2);
+                myToScreen.getMyHero().setMyChanceToHit(myToScreen.getMyHero().getMyChanceToHit() + 0.2);
             }
 
         }

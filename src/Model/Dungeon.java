@@ -4,15 +4,15 @@ import java.io.Serializable;
 import java.util.Random;
 
 public class Dungeon implements Serializable {
-    private static int myPlayerX;
-    private static int myPlayerY;
+    private int myPlayerX;
+    private int myPlayerY;
     final private int Dungeon_X;
     final private int Dungeon_Y;
     private int myEntExi;
     /**
      * 2D room inside of this class
      */
-    private static Room[][][] myMaze;
+    private Room[][][] myMaze;
     /**
      * 2D array that holds coordinates
      */
@@ -99,26 +99,26 @@ public class Dungeon implements Serializable {
         return Dungeon_Y;
     }
 
-    public static int getMyPlayerX() {
+    public int getMyPlayerX() {
         return myPlayerX;
     }
 
-    public static int getMyPlayerY() {
+    public int getMyPlayerY() {
         return myPlayerY;
     }
 
-    public static void setMyPlayerX(int thePlayerX) {
+    public void setMyPlayerX(int thePlayerX) {
         myPlayerX = thePlayerX;
     }
 
-    public static void setMyPlayerY(int thePlayerY) {
+    public void setMyPlayerY(int thePlayerY) {
         myPlayerY = thePlayerY;
     }
 
-    public static Room[][][] getMyMaze() {
+    public Room[][][] getMyMaze() {
         return myMaze;
     }
-    public static void setMyMaze(Room[][][] theMaze) {
+    public void setMyMaze(Room[][][] theMaze) {
         myMaze = theMaze;
     }
 

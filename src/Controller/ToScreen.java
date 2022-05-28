@@ -1,48 +1,41 @@
 package Controller;
 
 import Model.*;
+import View.View;
 
 import java.io.*;
 import java.sql.SQLException;
 import java.util.Random;
 import java.util.Scanner;
 
-import static Model.Dungeon.*;
-import static Controller.DungeonAdventure.Play;
-import static Model.Hero.*;
-import static Model.MovePlayer.move;
-import static View.DriverView.*;
 
-public class Driver implements Serializable {
+public class ToScreen implements Serializable {
 
     private static Dungeon myMainDungeon;
     private static boolean myVPUsed;
+    private static Hero myHero;
+    private static View myView;
+    private MovePlayer myMovePlayer = new MovePlayer();
     public static StringBuilder heroToScreen(String theName) throws SQLException {
         StringBuilder myStats = new StringBuilder();
+        myView = new View();
         if(theName.equalsIgnoreCase("Warrior")) {
             Warrior myWarrior = new Warrior(theName);
-            myStats = Stats(myWarrior.getMyHitPoint(), myWarrior.getMyAttackSpeed(), myWarrior.getMyChanceToHit(), myWarrior.getMINIMUM_DAMAGE(), myWarrior.getMyMaximumDamage(), myWarrior.getMyChangesToBlockOrHeal(), myWarrior);
+            setMyHero(myWarrior);
+            myStats = myView.Stats(myWarrior.getMyHitPoints(), myWarrior.getMyAttackSpeed(), myWarrior.getMyChanceToHit(), myWarrior.getMINIMUM_DAMAGE(), myWarrior.getMyMaximumDamage(), myWarrior.getMyChangesToBlockOrHeal());
         }else if(theName.equalsIgnoreCase("Priestess")){
             Priestess myPriestess = new Priestess(theName);
-            myStats = Stats(myPriestess.getMyHitPoint(), myPriestess.getMyAttackSpeed(), myPriestess.getMyChanceToHit(), myPriestess.getMINIMUM_DAMAGE(), myPriestess.getMyMaximumDamage(), myPriestess.getMyChangesToBlockOrHeal(), myPriestess);
+            setMyHero(myPriestess);
+            myStats = myView.Stats(myPriestess.getMyHitPoints(), myPriestess.getMyAttackSpeed(), myPriestess.getMyChanceToHit(), myPriestess.getMINIMUM_DAMAGE(), myPriestess.getMyMaximumDamage(), myPriestess.getMyChangesToBlockOrHeal());
         }else if(theName.equalsIgnoreCase("Thief")){
             Thief myThief = new Thief(theName);
-            myStats = Stats(myThief.getMyHitPoint(), myThief.getMyAttackSpeed(), myThief.getMyChanceToHit(), myThief.getMINIMUM_DAMAGE(), myThief.getMyMaximumDamage(), myThief.getMyChangesToBlockOrHeal(), myThief);
+            setMyHero(myThief);
+            myStats = myView.Stats(myThief.getMyHitPoints(), myThief.getMyAttackSpeed(), myThief.getMyChanceToHit(), myThief.getMINIMUM_DAMAGE(), myThief.getMyMaximumDamage(), myThief.getMyChangesToBlockOrHeal());
         }
 
         return myStats;
     }
 
-    private static StringBuilder Stats(int hit_points, int attack_speed, double chance_to_hit, int minimum_damage, int maximum_damage, double chance_to_block_or_heal, Hero myHero) {
-        StringBuilder stats = new StringBuilder();
-        stats.append("hit points: ").append(hit_points).append("\n");
-        stats.append("attack speed: ").append(attack_speed).append("\n");
-        stats.append("chance to hit: ").append(chance_to_hit).append("\n");
-        stats.append("minimum damage: ").append(minimum_damage).append("\n");
-        stats.append("maximum damage: ").append(maximum_damage).append("\n");
-        stats.append("chance to block: ").append(chance_to_block_or_heal).append("\n");
-        return stats;
-    }
 
     public static StringBuilder dungeonToScreen(final int theX, final int theY){
         StringBuilder mySB = new StringBuilder();
@@ -73,7 +66,7 @@ public class Driver implements Serializable {
         }
         return mySB;
     }
-    public static void Intro () throws Exception {
+    public void Intro () throws Exception {
         System.out.println("Welcome to the game!");
         System.out.println("This is dungeon adventure game!");
         System.out.println("Press 1) Start the game");
@@ -122,37 +115,38 @@ public class Driver implements Serializable {
                 System.out.println("Thanks for choosing to play our game");
                 System.out.println("You can always save the game if you need to run and do some errands");
 
-
-                System.out.println(chooseHero());
-                Play();
+                myView = new View();
+                System.out.println(myView.chooseHero());
+                Monster myMonster = new Monster("Ogre");
+                battleToScreen(myMonster, myHero);
                 System.out.println("Please enter the size of your dungeon in X Y format.");
                 int myX = sc.nextInt();
                 int myY = sc.nextInt();
-                System.out.println(potionsToScreen(getMyHPTotal(), getMyVPTotal()));
-                System.out.println(roomMap(myX,myY));
+                System.out.println(myView.potionsToScreen(getMyHero().getMyHPTotal(), getMyHero().getMyVPTotal()));
+                System.out.println(myView.roomMap(myX,myY));
                 while (!myChoice.equalsIgnoreCase("Stop")) {
                     System.out.println("Type Left, Right, Up, or Down to move.");
-                    if(getMyHPTotal()>0 || getMyVPTotal()>0){
+                    if(getMyHero().getMyHPTotal()>0 || getMyHero().getMyVPTotal()>0){
                         System.out.println("Type HP or VP to use potions");
                     }
                     myChoice = sc.next();
                     if(myChoice.equalsIgnoreCase("m")){
-                        System.out.println(mapMaker(myX,myY));
-                    }else if(myChoice.equalsIgnoreCase("HP") && getMyHPTotal()>0) {
-                        setMyHPTotal(getMyHPTotal()-1);
+                        System.out.println(myView.mapMaker(myX,myY));
+                    }else if(myChoice.equalsIgnoreCase("HP") && getMyHero().getMyHPTotal()>0) {
+                        getMyHero().setMyHPTotal(getMyHero().getMyHPTotal()-1);
                         Random myRand = new Random();
                         int myRandHP = myRand.nextInt(11) + 5;
-                        setMyHitPoint(getMyHitPoint() + myRandHP);
-                    }else if(myChoice.equalsIgnoreCase("VP") && getMyVPTotal()>0){
-                        setMyVPTotal(getMyVPTotal()-1);
+                        getMyHero().setMyHitPoint(getMyHero().getMyHitPoints() + myRandHP);
+                    }else if(myChoice.equalsIgnoreCase("VP") && getMyHero().getMyVPTotal()>0){
+                        getMyHero().setMyVPTotal(getMyHero().getMyVPTotal()-1);
                         myVPUsed = true;
                     }
-                    move(myChoice);
-                    System.out.println(roomMap(myX,myY));
-                    if(!getMyMaze()[getMyPlayerX()][getMyPlayerY()][0].getStatus().equalsIgnoreCase("entrance") && !getMyMaze()[getMyPlayerX()][getMyPlayerY()][0].getStatus().equalsIgnoreCase("exit")) {
-                        getMyMaze()[getMyPlayerX()][getMyPlayerY()][0].setStatus("empty");
+                    myMovePlayer.move(myChoice);
+                    System.out.println(myView.roomMap(myX,myY));
+                    if(!myMainDungeon.getMyMaze()[myMainDungeon.getMyPlayerX()][myMainDungeon.getMyPlayerY()][0].getStatus().equalsIgnoreCase("entrance") && !myMainDungeon.getMyMaze()[myMainDungeon.getMyPlayerX()][myMainDungeon.getMyPlayerY()][0].getStatus().equalsIgnoreCase("exit")) {
+                        myMainDungeon.getMyMaze()[myMainDungeon.getMyPlayerX()][myMainDungeon.getMyPlayerY()][0].setStatus("empty");
                     }
-                    System.out.println(potionsToScreen(getMyHPTotal(), getMyVPTotal()));
+                    System.out.println(myView.potionsToScreen(getMyHero().getMyHPTotal(), getMyHero().getMyVPTotal()));
                 }
                 //HOPEFULLY WHAT WE NEED TO MAKE SERIALIZATION WORK
                 FileOutputStream myFileOut = new FileOutputStream("UserInfo.ser");
@@ -199,13 +193,32 @@ public class Driver implements Serializable {
                 System.out.println("It was nice having you here!");
         }
     }
-    public static void battleToScreen(Monster theMonster, Hero theHero){
-
+    public void battleToScreen(Monster theMonster, Hero theHero){
+        int[] myStats = new int[6];
+        myStats[0] = theMonster.getMINIMUM_DAMAGE();
+        myStats[1] = theMonster.getMyMaximumDamage();
+        myStats[2] = theMonster.getMyHitPoints();
+        myStats[3] = theHero.getMINIMUM_DAMAGE();
+        myStats[4] = theHero.getMyMaximumDamage();
+        myStats[5] = theHero.getMyHitPoints();
+        System.out.println(myView.battle(myStats, theMonster.getMyName()));
     }
     public static boolean getMyVPUsed(){
         return myVPUsed;
     }
     public static void setMyVPUsed(){
         myVPUsed = false;
+    }
+    public static Hero getMyHero(){
+        return myHero;
+    }
+    public static void setMyHero(Hero theHero){
+        myHero = theHero;
+    }
+    public static Dungeon getMyMainDungeon(){
+        return myMainDungeon;
+    }
+    public Room getRoom(){
+        return myMainDungeon.getMyMaze()[getMyMainDungeon().getMyPlayerX()][getMyMainDungeon().getMyPlayerY()][0];
     }
 }

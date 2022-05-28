@@ -1,13 +1,6 @@
 package ViewTest;
 
-import Model.Hero;
-import View.DriverView;
-import org.junit.jupiter.api.Test;
-
-import java.sql.SQLException;
-
-import static org.junit.jupiter.api.Assertions.*;
-    /*
+/*
 class DriverViewTest {
 
     @Test

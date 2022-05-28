@@ -12,7 +12,7 @@ public class ModelHeroTest {
     @Test
     void canGatherStatsWarrior() throws SQLException {
         Warrior myWarrior = new Warrior("Warrior");
-        assertEquals(125, myWarrior.getMyHitPoint());
+        assertEquals(125, myWarrior.getMyHitPoints());
         assertEquals(4, myWarrior.getMyAttackSpeed());
         assertEquals(0.8, myWarrior.getMyChanceToHit());
         assertEquals(35, myWarrior.getMINIMUM_DAMAGE());
@@ -22,7 +22,7 @@ public class ModelHeroTest {
     @Test
     void canGatherStatsPriestess() throws SQLException {
         Priestess myPriestess = new Priestess("Priestess");
-        assertEquals(75, myPriestess.getMyHitPoint());
+        assertEquals(75, myPriestess.getMyHitPoints());
         assertEquals(5, myPriestess.getMyAttackSpeed());
         assertEquals(0.7, myPriestess.getMyChanceToHit());
         assertEquals(25, myPriestess.getMINIMUM_DAMAGE());
@@ -32,7 +32,7 @@ public class ModelHeroTest {
     @Test
     void canGatherStatsThief() throws SQLException {
         Thief myThief = new Thief("Thief");
-        assertEquals(75, myThief.getMyHitPoint());
+        assertEquals(75, myThief.getMyHitPoints());
         assertEquals(6, myThief.getMyAttackSpeed());
         assertEquals(0.8, myThief.getMyChanceToHit());
         assertEquals(20, myThief.getMINIMUM_DAMAGE());

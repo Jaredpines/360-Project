@@ -1,21 +1,19 @@
 package ModelTest;
 import Model.Dungeon;
-import Model.Room;
+import Model.MovePlayer;
 import org.junit.jupiter.api.Test;
-import static Model.Dungeon.*;
-import static Model.MovePlayer.move;
-import static View.DriverView.mapMaker;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ModelMovePlayerTest {
-
+    private MovePlayer myMovePlayer = new MovePlayer();
     @Test
     public void moveTestLeft(){
         Dungeon myDungeon = new Dungeon(5,5);
         int count = 100;
         while (count-- > 0) {
             assertDoesNotThrow(() -> {
-                move("Left");
+                myMovePlayer.move("Left");
             }, "Out of Bounds");
         }
     }
@@ -25,7 +23,7 @@ public class ModelMovePlayerTest {
         int count = 100;
         while (count-- > 0) {
             assertDoesNotThrow(() -> {
-                move("Right");
+                myMovePlayer.move("Right");
             }, "Out of Bounds");
         }
     }
@@ -35,7 +33,7 @@ public class ModelMovePlayerTest {
         int count = 100;
         while (count-- > 0) {
             assertDoesNotThrow(() -> {
-                move("Up");
+                myMovePlayer.move("Up");
             }, "Out of Bounds");
         }
     }
@@ -45,7 +43,7 @@ public class ModelMovePlayerTest {
         int count = 100;
         while (count-- > 0) {
             assertDoesNotThrow(() -> {
-                move("Down");
+                myMovePlayer.move("Down");
             }, "Out of Bounds");
         }
     }

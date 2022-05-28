@@ -10,7 +10,7 @@ public class ModelMonsterTest {
     @Test
     void canGatherStatsOgre() throws SQLException {
         Monster myMonster = new Monster("Ogre");
-        assertEquals(200, myMonster.getMyHitPoint());
+        assertEquals(200, myMonster.getMyHitPoints());
         assertEquals(2, myMonster.getMyAttackSpeed());
         assertEquals(0.6, myMonster.getMyChanceToHit());
         assertEquals(30, myMonster.getMINIMUM_DAMAGE());
@@ -22,7 +22,7 @@ public class ModelMonsterTest {
     @Test
     void canGatherStatsGremlin() throws SQLException {
         Monster myMonster = new Monster("Gremlin");
-        assertEquals(70, myMonster.getMyHitPoint());
+        assertEquals(70, myMonster.getMyHitPoints());
         assertEquals(5, myMonster.getMyAttackSpeed());
         assertEquals(0.8, myMonster.getMyChanceToHit());
         assertEquals(15, myMonster.getMINIMUM_DAMAGE());
@@ -34,7 +34,7 @@ public class ModelMonsterTest {
     @Test
     void canGatherStatsSkeleton() throws SQLException {
         Monster myMonster = new Monster("Skeleton");
-        assertEquals(100, myMonster.getMyHitPoint());
+        assertEquals(100, myMonster.getMyHitPoints());
         assertEquals(3, myMonster.getMyAttackSpeed());
         assertEquals(0.8, myMonster.getMyChanceToHit());
         assertEquals(30, myMonster.getMINIMUM_DAMAGE());

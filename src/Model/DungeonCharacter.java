@@ -2,14 +2,16 @@ package Model;
 
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.Locale;
 
 public abstract class DungeonCharacter implements Serializable {
-    private static int myHitPoint;
-    private static int myAttackSpeed;
-    private static double myChanceToHit;
+    private String myName;
+    private int myHitPoint;
+    private int myAttackSpeed;
+    private double myChanceToHit;
     private final int MINIMUM_DAMAGE;
-    private static int myMaximumDamage;
-    private static double myChangesToBlockOrHeal;
+    private int myMaximumDamage;
+    private double myChangesToBlockOrHeal;
     private final int MINIMUM_HEAL_POINTS;
     private final int MAXIMUM_HEAL_POINTS;
     public DungeonCharacter(String theName) throws SQLException {
@@ -29,16 +31,17 @@ public abstract class DungeonCharacter implements Serializable {
             MINIMUM_HEAL_POINTS = 0;
             MAXIMUM_HEAL_POINTS = 0;
         }
+        myName = theName.substring(0,1).toUpperCase(Locale.ROOT) + theName.substring(1).toLowerCase(Locale.ROOT);
     }
-    public static int getMyHitPoint() {
+    public int getMyHitPoints() {
         return myHitPoint;
     }
 
-    public static int getMyAttackSpeed() {
+    public int getMyAttackSpeed() {
         return myAttackSpeed;
     }
 
-    public static double getMyChanceToHit() {
+    public double getMyChanceToHit() {
         return myChanceToHit;
     }
 
@@ -46,11 +49,11 @@ public abstract class DungeonCharacter implements Serializable {
         return MINIMUM_DAMAGE;
     }
 
-    public static int getMyMaximumDamage() {
+    public int getMyMaximumDamage() {
         return myMaximumDamage;
     }
 
-    public static double getMyChangesToBlockOrHeal() {
+    public double getMyChangesToBlockOrHeal() {
         return myChangesToBlockOrHeal;
     }
 
@@ -61,21 +64,26 @@ public abstract class DungeonCharacter implements Serializable {
     public int getMAXIMUM_HEAL_POINTS() {
         return MAXIMUM_HEAL_POINTS;
     }
-
-    public static void setMyHitPoint(int theHealth){
+    public String getMyName(){
+        return myName;
+    }
+    public void setMyHitPoint(int theHealth){
         myHitPoint = theHealth;
     }
-    public static void setMyAttackSpeed(int theSpeed){
+    public void setMyAttackSpeed(int theSpeed){
         myAttackSpeed = theSpeed;
     }
-    public static void setMyChangesToBlockOrHeal(double theChance){
+    public void setMyChangesToBlockOrHeal(double theChance){
         myChangesToBlockOrHeal = theChance;
     }
-    public static void setMyMaximumDamage(int theDamage){
+    public void setMyMaximumDamage(int theDamage){
         myMaximumDamage = theDamage;
     }
-    public static void setMyChanceToHit(double theChance){
+    public void setMyChanceToHit(double theChance){
         myChanceToHit = theChance;
+    }
+    public void setMyName(String theName){
+        myName = theName;
     }
     abstract public int attack(int theMin, int theMax);
 }
