@@ -14,6 +14,7 @@ public class ToScreen implements Serializable {
     private static Dungeon myMainDungeon;
     private static boolean myVPUsed;
     private static Hero myHero;
+    private static Monster myMonster;
     private static View myView;
     private MovePlayer myMovePlayer = new MovePlayer();
     public static StringBuilder heroToScreen(String theName) throws SQLException {
@@ -117,7 +118,7 @@ public class ToScreen implements Serializable {
 
                 myView = new View();
                 System.out.println(myView.chooseHero());
-                Monster myMonster = new Monster("Ogre");
+                myMonster = new Monster("Ogre");
                 battleToScreen(myMonster, myHero);
                 System.out.println("Please enter the size of your dungeon in X Y format.");
                 int myX = sc.nextInt();
@@ -194,14 +195,16 @@ public class ToScreen implements Serializable {
         }
     }
     public void battleToScreen(Monster theMonster, Hero theHero){
-        int[] myStats = new int[6];
+        int[] myStats = new int[8];
         myStats[0] = theMonster.getMINIMUM_DAMAGE();
         myStats[1] = theMonster.getMyMaximumDamage();
         myStats[2] = theMonster.getMyHitPoints();
         myStats[3] = theHero.getMINIMUM_DAMAGE();
         myStats[4] = theHero.getMyMaximumDamage();
         myStats[5] = theHero.getMyHitPoints();
-        System.out.println(myView.battle(myStats, theMonster.getMyName()));
+        myStats[6] = theMonster.getMyAttackSpeed();
+        myStats[7] = theHero.getMyAttackSpeed();
+        myView.battleAttacks(myStats, theMonster.getMyName());
     }
     public static boolean getMyVPUsed(){
         return myVPUsed;
@@ -211,6 +214,9 @@ public class ToScreen implements Serializable {
     }
     public static Hero getMyHero(){
         return myHero;
+    }
+    public static Monster getMyMonster(){
+        return myMonster;
     }
     public static void setMyHero(Hero theHero){
         myHero = theHero;

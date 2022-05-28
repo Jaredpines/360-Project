@@ -21,6 +21,5 @@ abstract public class Hero extends DungeonCharacter implements Serializable {
     public void setMyVPTotal(int theTotal){
         myVPTotal = theTotal;
     }
-    abstract int specialAttack();
-    abstract int specialAttack(int theMin, int theMax);
+    public abstract int specialAttack();
 }

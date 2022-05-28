@@ -9,7 +9,7 @@ public class Warrior extends Hero{
     }
     // TODO: Make attack
     @Override
-    int specialAttack() {
+    public int specialAttack() {
         Random myRand = new Random();
         boolean mySpecialAttack = myRand.nextInt(101) < 40;
         if (mySpecialAttack) {
@@ -18,20 +18,15 @@ public class Warrior extends Hero{
         return 0;
     }
 
-    @Override
-    int specialAttack(int theMin, int theMax) {
-        return 0;
-    }
-
     // TODO: Make attack
     @Override
-    public int attack(int theMin, int theMax) {
+    public int attack() {
         Random myRand = new Random();
         boolean myMissHit = myRand.nextInt(101) > getMyChanceToHit()*100;
         if (myMissHit) {
             return 0;
         } else {
-            return myRand.nextInt(theMin, theMax+1);
+            return myRand.nextInt(getMINIMUM_DAMAGE(), getMyMaximumDamage()+1);
         }
     }
 }

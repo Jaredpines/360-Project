@@ -85,5 +85,5 @@ public abstract class DungeonCharacter implements Serializable {
     public void setMyName(String theName){
         myName = theName;
     }
-    abstract public int attack(int theMin, int theMax);
+    abstract public int attack();
 }

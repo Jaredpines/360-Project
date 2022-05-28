@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Random;
 import java.util.Scanner;
 
 import static Controller.ToScreen.*;
@@ -149,13 +150,60 @@ public class View implements Serializable {
         mySB.append("Number of Vision Potions: ").append(theVP);
         return mySB.toString();
     }
-    public String battle(int[] theStats, String monsterName){
-        return monsterName + "           " + getMyHero().getMyName() +
+    public String battleText(int[] theStats, String theMonsterName){
+        return theMonsterName + "               " + getMyHero().getMyName() +
                 "\n" +
-                "HP " + theStats[2] + "         " + "HP " + theStats[5] +
+                "HP: " + theStats[2] + "            " + "HP: " + theStats[5] +
                 "\n" +
-                "Damage " + theStats[0] + "-" + theStats[1] + "   " + "Damage " + theStats[3] + "-" + theStats[4] +
-                "\n";
+                "Damage: " + theStats[0] + "-" + theStats[1] + "      " + "Damage: " + theStats[3] + "-" + theStats[4] +
+                "\n" +
+                "Attack Speed: " + theStats[6] +"    " +"Attack Speed: " + theStats[7] +
+                "\n" +
+                "Health Potions: " + getMyHero().getMyHPTotal();
+    }
+    public void battleAttacks(int[] theStats, String theMonsterName){
+        int myMonsterSpeed = theStats[6];
+        int myHeroSpeed = theStats[7];
+        Scanner myScanner = new Scanner(System.in);
+        String myInput;
+        System.out.println(battleText(theStats, theMonsterName));
+        while (theStats[5] > 0 && theStats[2] > 0){
+            while (myHeroSpeed > 0 && theStats[5] > 0 && theStats[2] > 0){
+                myHeroSpeed -= myMonsterSpeed;
+                System.out.println("Do you want to (A)ttack, use (S)pecial attack or (H)eal?");
+                myInput = myScanner.next();
+                if(myInput.equalsIgnoreCase("A")){
+                    theStats[2]= theStats[2]-getMyHero().attack();
+                }else if(myInput.equalsIgnoreCase("H") && getMyHero().getMyHPTotal()>0){
+                    getMyHero().setMyHPTotal(getMyHero().getMyHPTotal()-1);
+                    Random myRand = new Random();
+                    int myRandHP = myRand.nextInt(11) + 5;
+                    getMyHero().setMyHitPoint(getMyHero().getMyHitPoints() + myRandHP);
+                    theStats[5] = theStats[5] + myRandHP;
+                }else if(myInput.equalsIgnoreCase("S")){
+                    if(getMyHero().getMyName().equalsIgnoreCase("Priestess")){
+                        theStats[5] = theStats[5] + getMyHero().specialAttack();
+                    }else {
+                        theStats[2]= theStats[2] - getMyHero().specialAttack();
+                    }
+                }
+                if(theStats[2] < 0){
+                    theStats[2] = 0;
+                    System.out.println(battleText(theStats, theMonsterName));
+                    System.out.println("The monster is dead!");
+                }else{
+                    System.out.println(battleText(theStats, theMonsterName));
+                }
+            }
+            myMonsterSpeed = theStats[6];
+            myHeroSpeed = theStats[7];
+            while (myMonsterSpeed > 0 && theStats[5] > 0 && theStats[2] > 0){
+                myMonsterSpeed -= myHeroSpeed;
+                theStats[5] = theStats[5] - getMyMonster().attack();
+                System.out.println(battleText(theStats, theMonsterName));
+            }
+            myMonsterSpeed = theStats[6];
+        }
     }
     public ArrayList<String> currentlyAvailableHeroes(){
         ArrayList<String> names = new ArrayList<>();
