@@ -8,7 +8,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 import static Model.Dungeon.*;
-import static Model.DungeonAdventure.Play;
+import static Controller.DungeonAdventure.Play;
 import static Model.Hero.*;
 import static Model.MovePlayer.move;
 import static View.DriverView.*;
@@ -17,16 +17,6 @@ public class Driver implements Serializable {
 
     private static Dungeon myMainDungeon;
     private static boolean myVPUsed;
-    public static void main(String[] args) throws SQLException {
-        System.out.println("Working");
-        try {
-            Intro();
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Ooops, game has an issue in main: " + e.getMessage());
-        }
-
-    }
     public static StringBuilder heroToScreen(String theName) throws SQLException {
         StringBuilder myStats = new StringBuilder();
         if(theName.equalsIgnoreCase("Warrior")) {
@@ -208,6 +198,9 @@ public class Driver implements Serializable {
             case "3":
                 System.out.println("It was nice having you here!");
         }
+    }
+    public static void battleToScreen(Monster theMonster, Hero theHero){
+
     }
     public static boolean getMyVPUsed(){
         return myVPUsed;

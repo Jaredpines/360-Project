@@ -13,7 +13,7 @@ public class ControlTest {
         stats.append("hit points: ").append(myWarrior.getMyHitPoint()).append("\n");
         stats.append("attack speed: ").append(myWarrior.getMyAttackSpeed()).append("\n");
         stats.append("chance to hit: ").append(myWarrior.getMyChanceToHit()).append("\n");
-        stats.append("minimum damage: ").append(myWarrior.getMyMinimumDamage()).append("\n");
+        stats.append("minimum damage: ").append(myWarrior.getMINIMUM_DAMAGE()).append("\n");
         stats.append("maximum damage: ").append(myWarrior.getMyMaximumDamage()).append("\n");
         stats.append("chance to block: ").append(myWarrior.getMyChangesToBlockOrHeal()).append("\n");
         Driver.heroToScreen("Warrior");

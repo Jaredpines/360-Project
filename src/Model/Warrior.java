@@ -1,19 +1,37 @@
 package Model;
 
 import java.sql.SQLException;
+import java.util.Random;
 
 public class Warrior extends Hero{
     public Warrior(String theName) throws SQLException {
         super(theName);
     }
-    // TODO: Make special attack
+    // TODO: Make attack
     @Override
-    String specialAttack() {
-        return null;
+    int specialAttack() {
+        Random myRand = new Random();
+        boolean mySpecialAttack = myRand.nextInt(101) < 40;
+        if (mySpecialAttack) {
+            return myRand.nextInt(75, 175 + 1);
+        }
+        return 0;
     }
+
+    @Override
+    int specialAttack(int theMin, int theMax) {
+        return 0;
+    }
+
     // TODO: Make attack
     @Override
     public int attack(int theMin, int theMax) {
-        return 0;
+        Random myRand = new Random();
+        boolean myMissHit = myRand.nextInt(101) > getMyChanceToHit()*100;
+        if (myMissHit) {
+            return 0;
+        } else {
+            return myRand.nextInt(theMin, theMax+1);
+        }
     }
 }
