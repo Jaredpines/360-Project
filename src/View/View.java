@@ -10,6 +10,7 @@ import java.util.Scanner;
 import static Controller.ToScreen.*;
 
 public class View implements Serializable {
+    private Art myArt = new Art();
     public String chooseHero() throws SQLException {
         Scanner myScanner = new Scanner(System.in);
         String myInput = "";
@@ -200,10 +201,19 @@ public class View implements Serializable {
             while (myMonsterSpeed > 0 && theStats[5] > 0 && theStats[2] > 0){
                 myMonsterSpeed -= myHeroSpeed;
                 theStats[5] = theStats[5] - getMyMonster().attack();
+                if(theStats[5]< 0){
+                    theStats[5] = 0;
+                    System.out.println(battleText(theStats, theMonsterName));
+                    System.out.println("You have died! ;_;");
+                    System.out.println(myArt.GameOverArt());
+                    System.exit(0);
+                }
                 System.out.println(battleText(theStats, theMonsterName));
             }
             myMonsterSpeed = theStats[6];
+
         }
+        getMyHero().setMyHitPoint(theStats[5]);
     }
     public ArrayList<String> currentlyAvailableHeroes(){
         ArrayList<String> names = new ArrayList<>();

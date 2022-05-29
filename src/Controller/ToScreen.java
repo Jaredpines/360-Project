@@ -1,7 +1,7 @@
 package Controller;
 
 import Model.*;
-import View.View;
+import View.*;
 
 import java.io.*;
 import java.sql.SQLException;
@@ -17,6 +17,7 @@ public class ToScreen implements Serializable {
     private static Monster myMonster;
     private static View myView;
     private MovePlayer myMovePlayer = new MovePlayer();
+    private Art myArt = new Art();
     public static StringBuilder heroToScreen(String theName) throws SQLException {
         StringBuilder myStats = new StringBuilder();
         myView = new View();
@@ -81,48 +82,33 @@ public class ToScreen implements Serializable {
 
             case "1":
 
-                String art = """ 
-          d8888b. db    db d8b   db  d888b  d88888b  .d88b.  d8b   db
-          88  `8D 88    88 888o  88 88' Y8b 88'     .8P  Y8. 888o  88
-          88   88 88    88 88V8o 88 88      88ooooo 88    88 88V8o 88
-          88   88 88    88 88 V8o88 88  ooo 88~~~~~ 88    88 88 V8o88
-          88  .8D 88b  d88 88  V888 88. ~8~ 88.     `8b  d8' 88  V888
-          Y8888D' ~Y8888P' VP   V8P  Y888P  Y88888P  `Y88P'  VP   V8P
-                                                                      
-                                                                      
-   .d8b.  d8888b. db    db d88888b d8b   db d888888b db    db d8888b. d88888b
-  d8' `8b 88  `8D 88    88 88'     888o  88 `~~88~~' 88    88 88  `8D 88'
-  88ooo88 88   88 Y8    8P 88ooooo 88V8o 88    88    88    88 88oobY' 88ooooo
-  88~~~88 88   88 `8b  d8' 88~~~~~ 88 V8o88    88    88    88 88`8b   88~~~~~
-  88   88 88  .8D  `8bd8'  88.     88  V888    88    88b  d88 88 `88. 88.
-  YP   YP Y8888D'    YP    Y88888P VP   V8P    YP    ~Y8888P' 88   YD Y88888P
-                                                                              
-                                                                              
-                       .d888b.  .d88b.  .d888b. .d888b.
-                       VP  `8D .8P  88. VP  `8D VP  `8D
-                          odD' 88  d'88    odD'    odD'
-                        .88'   88 d' 88  .88'    .88'
-                       j88.    `88  d8' j88.    j88.
-                       888888D  `Y88P'  888888D 888888D
-                                                        
-                        """;
+                String myStart = myArt.StartScreenArt();
 
-                for (int i = 0; i < art.length(); i++){
-                    System.out.print(art.charAt(i));
+                for (int i = 0; i < myStart.length(); i++){
+                    System.out.print(myStart.charAt(i));
                     Thread.sleep(1);
                 }
 
+                Thread.sleep(1000);
+                try {
+                    Runtime.getRuntime().exec("cls");
+                }catch (IOException ignored){
 
+                }
+                try {
+                    Runtime.getRuntime().exec("clear");
+                }catch (IOException ignored){
+
+                }
                 System.out.println("Thanks for choosing to play our game");
                 System.out.println("You can always save the game if you need to run and do some errands");
 
                 myView = new View();
                 System.out.println(myView.chooseHero());
-                myMonster = new Monster("Ogre");
-                battleToScreen(myMonster, myHero);
                 System.out.println("Please enter the size of your dungeon in X Y format.");
                 int myX = sc.nextInt();
                 int myY = sc.nextInt();
+                Random myRand = new Random();
                 System.out.println(myView.potionsToScreen(getMyHero().getMyHPTotal(), getMyHero().getMyVPTotal()));
                 System.out.println(myView.roomMap(myX,myY));
                 while (!myChoice.equalsIgnoreCase("Stop")) {
@@ -135,7 +121,6 @@ public class ToScreen implements Serializable {
                         System.out.println(myView.mapMaker(myX,myY));
                     }else if(myChoice.equalsIgnoreCase("HP") && getMyHero().getMyHPTotal()>0) {
                         getMyHero().setMyHPTotal(getMyHero().getMyHPTotal()-1);
-                        Random myRand = new Random();
                         int myRandHP = myRand.nextInt(11) + 5;
                         getMyHero().setMyHitPoint(getMyHero().getMyHitPoints() + myRandHP);
                     }else if(myChoice.equalsIgnoreCase("VP") && getMyHero().getMyVPTotal()>0){
@@ -144,7 +129,18 @@ public class ToScreen implements Serializable {
                     }
                     myMovePlayer.move(myChoice);
                     System.out.println(myView.roomMap(myX,myY));
-                    if(!myMainDungeon.getMyMaze()[myMainDungeon.getMyPlayerX()][myMainDungeon.getMyPlayerY()][0].getStatus().equalsIgnoreCase("entrance") && !myMainDungeon.getMyMaze()[myMainDungeon.getMyPlayerX()][myMainDungeon.getMyPlayerY()][0].getStatus().equalsIgnoreCase("exit")) {
+                    if(myRand.nextInt(101) >75 && !getMyMainDungeon().getMyMaze()[getMyMainDungeon().getMyPlayerX()][getMyMainDungeon().getMyPlayerY()][0].getStatus().equalsIgnoreCase("entrance")
+                            && !getMyMainDungeon().getMyMaze()[getMyMainDungeon().getMyPlayerX()][getMyMainDungeon().getMyPlayerY()][0].getStatus().equalsIgnoreCase("exit")){
+                        int myWhichMonster = myRand.nextInt(3);
+                        switch (myWhichMonster) {
+                            case 0 -> myMonster = new Monster("Ogre");
+                            case 1 -> myMonster = new Monster("Skeleton");
+                            case 2 -> myMonster = new Monster("Gremlin");
+                        }
+                        battleToScreen(myMonster, myHero);
+                    }
+                    if(!myMainDungeon.getMyMaze()[myMainDungeon.getMyPlayerX()][myMainDungeon.getMyPlayerY()][0].getStatus().equalsIgnoreCase("entrance")
+                            && !myMainDungeon.getMyMaze()[myMainDungeon.getMyPlayerX()][myMainDungeon.getMyPlayerY()][0].getStatus().equalsIgnoreCase("exit")) {
                         myMainDungeon.getMyMaze()[myMainDungeon.getMyPlayerX()][myMainDungeon.getMyPlayerY()][0].setStatus("empty");
                     }
                     System.out.println(myView.potionsToScreen(getMyHero().getMyHPTotal(), getMyHero().getMyVPTotal()));
