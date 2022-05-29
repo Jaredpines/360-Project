@@ -50,16 +50,16 @@ public class ToScreen implements Serializable {
         String[] mySplit = myMainDungeon.toString().split(" ");
         for (int i = 0; i < mySplit.length; i++) {
             switch (mySplit[i]) {
-                case "entrance" -> mySB.append("i");
-                case "exit" -> mySB.append("O");
-                case "A" -> mySB.append("A");
-                case "E" -> mySB.append("E");
-                case "I" -> mySB.append("I");
-                case "P" -> mySB.append("P");
-                case "Pit" -> mySB.append("X");
-                case "HP" -> mySB.append("H");
-                case "VP" -> mySB.append("V");
-                case "empty" -> mySB.append(" ");
+                case "entrance": mySB.append("i");
+                case "exit": mySB.append("O");
+                case "A": mySB.append("A");
+                case "E": mySB.append("E");
+                case "I": mySB.append("I");
+                case "P": mySB.append("P");
+                case "Pit": mySB.append("X");
+                case "HP": mySB.append("H");
+                case "VP": mySB.append("V");
+                case "empty": mySB.append(" ");
             }
             String[] mySplitLoop = mySplit[i].split("-");
             if(mySplitLoop.length > 1){
@@ -133,9 +133,9 @@ public class ToScreen implements Serializable {
                             && !getMyMainDungeon().getMyMaze()[getMyMainDungeon().getMyPlayerX()][getMyMainDungeon().getMyPlayerY()][0].getStatus().equalsIgnoreCase("exit")){
                         int myWhichMonster = myRand.nextInt(3);
                         switch (myWhichMonster) {
-                            case 0 -> myMonster = new Monster("Ogre");
-                            case 1 -> myMonster = new Monster("Skeleton");
-                            case 2 -> myMonster = new Monster("Gremlin");
+                            case 0: myMonster = new Monster("Ogre");
+                            case 1: myMonster = new Monster("Skeleton");
+                            case 2: myMonster = new Monster("Gremlin");
                         }
                         battleToScreen(myMonster, myHero);
                     }

@@ -1,2 +1,0 @@
-int myRandHP = myRand.nextInt(11) + 5;
-setMyHitPoint(getMyHitPoint() + myRandHP);
