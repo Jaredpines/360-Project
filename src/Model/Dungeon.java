@@ -28,7 +28,6 @@ public class Dungeon implements Serializable {
         creatPillars();
         creatItemRooms();
 
-        //TODO Wrong too
 
 
 
@@ -38,7 +37,7 @@ public class Dungeon implements Serializable {
         int myRanNumEntranceX = myRand.nextInt(getDungeon_X());
         int myRanNumEntranceY = myRand.nextInt(getDungeon_Y());
         myMaze[myRanNumEntranceX][myRanNumEntranceY][1] = new Room("player");
-        //TODO SHOWS weird coordinates
+
         myPlayerX = myRanNumEntranceX;
         myPlayerY = myRanNumEntranceY;
         int myRanNumExitX;

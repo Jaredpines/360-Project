@@ -68,7 +68,7 @@ public class ToScreen implements Serializable {
         }
         return mySB;
     }
-    public void Intro () throws Exception {
+    public String Intro () throws Exception {
         System.out.println("Welcome to the game!");
         System.out.println("This is dungeon adventure game!");
         System.out.println("Press 1) Start the game");
@@ -183,12 +183,22 @@ public class ToScreen implements Serializable {
 
 
             case "2":
-                System.out.println("Game is under construction \n" +
-                        "Instructions will be added soon!");
+
+                System.out.println("This game is pretty simple but in case you have quetions here are the instructions");
+                System.out.println("1) Pick what hero you want to pick. You can see specifications of each hero before picking it");
+                System.out.println("2) Pick what size of the dungeon you want to have");
+                System.out.println("3) Once you enter size of the dungeon you will see the entrance room and number of health " +
+                        "potions and vision postions you have");
+                System.out.println("4) Pick where do you want to go (Left, Right, Up, Down) ");
+                System.out.println("5) Once you pick where to go you will be moved to that room");
+                System.out.println("6) There is a possibility you will find a monster there. If you do be brave and fight!");
+                System.out.println("You also have possibility to use special attack and heal (if you have heal points)");
+                System.out.println("Repeat and have fun!");
                 break;
             case "3":
                 System.out.println("It was nice having you here!");
         }
+        return myChoice;
     }
     public void battleToScreen(Monster theMonster, Hero theHero){
         int[] myStats = new int[8];

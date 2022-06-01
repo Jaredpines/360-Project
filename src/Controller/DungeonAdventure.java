@@ -8,11 +8,10 @@ import java.io.Serializable;
 public class DungeonAdventure implements Serializable {
         public static void main(String[] args) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
 
-                Music myMusic = new Music();
-                myMusic.playMusic();
+                //      Music myMusic = new Music();
+                //myMusic.playMusic();
 
                 ToScreen myToScreen = new ToScreen();
-
 
 
                 System.out.println("Working");
