@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Music {
     public void playMusic() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         Scanner myScanner = new Scanner(System.in);
-        File myFile = new File("Vandals.wav");
+        File myFile = new File("Dungeon music.wav");
         AudioInputStream myAudioStream = AudioSystem.getAudioInputStream(myFile);
         Clip myClip = AudioSystem.getClip();
         myClip.open(myAudioStream);
