@@ -14,7 +14,6 @@ public class DungeonAdventure implements Serializable {
                 ToScreen myToScreen = new ToScreen();
 
 
-                System.out.println("Working");
                 try {
                         myToScreen.Intro();
                 } catch (Exception e) {

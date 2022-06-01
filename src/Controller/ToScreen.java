@@ -16,9 +16,10 @@ public class ToScreen implements Serializable {
     private static Hero myHero;
     private static Monster myMonster;
     private static View myView;
+    private Music myMusic = new Music();
     private MovePlayer myMovePlayer = new MovePlayer();
     private Art myArt = new Art();
-    public static StringBuilder heroToScreen(String theName) throws SQLException {
+    public StringBuilder heroToScreen(String theName) throws SQLException {
         StringBuilder myStats = new StringBuilder();
         myView = new View();
         if(theName.equalsIgnoreCase("Warrior")) {
@@ -39,27 +40,27 @@ public class ToScreen implements Serializable {
     }
 
 
-    public static StringBuilder dungeonToScreen(final int theX, final int theY){
+    public StringBuilder dungeonToScreen(final int theX, final int theY){
         StringBuilder mySB = new StringBuilder();
         //make Dungeon 3D array
         int myCoordinates = 0;
 
         if(myMainDungeon == null){
-            myMainDungeon = new Dungeon(theX,theY);
+            this.myMainDungeon = new Dungeon(theX,theY);
         }
         String[] mySplit = myMainDungeon.toString().split(" ");
         for (int i = 0; i < mySplit.length; i++) {
             switch (mySplit[i]) {
-                case "entrance": mySB.append("i");
-                case "exit": mySB.append("O");
-                case "A": mySB.append("A");
-                case "E": mySB.append("E");
-                case "I": mySB.append("I");
-                case "P": mySB.append("P");
-                case "Pit": mySB.append("X");
-                case "HP": mySB.append("H");
-                case "VP": mySB.append("V");
-                case "empty": mySB.append(" ");
+                case "entrance" -> mySB.append("i");
+                case "exit" -> mySB.append("O");
+                case "A" -> mySB.append("A");
+                case "E" -> mySB.append("E");
+                case "I" -> mySB.append("I");
+                case "P" -> mySB.append("P");
+                case "Pit" -> mySB.append("X");
+                case "HP" -> mySB.append("H");
+                case "VP" -> mySB.append("V");
+                case "empty" -> mySB.append(" ");
             }
             String[] mySplitLoop = mySplit[i].split("-");
             if(mySplitLoop.length > 1){
@@ -69,6 +70,7 @@ public class ToScreen implements Serializable {
         return mySB;
     }
     public String Intro () throws Exception {
+        myMusic.playMusic();
         System.out.println("Welcome to the game!");
         System.out.println("This is dungeon adventure game!");
         System.out.println("Press 1) Start the game");
@@ -123,19 +125,23 @@ public class ToScreen implements Serializable {
                         getMyHero().setMyHPTotal(getMyHero().getMyHPTotal()-1);
                         int myRandHP = myRand.nextInt(11) + 5;
                         getMyHero().setMyHitPoint(getMyHero().getMyHitPoints() + myRandHP);
+                        System.out.println(myView.roomMap(myX,myY));
                     }else if(myChoice.equalsIgnoreCase("VP") && getMyHero().getMyVPTotal()>0){
                         getMyHero().setMyVPTotal(getMyHero().getMyVPTotal()-1);
                         myVPUsed = true;
+                        System.out.println(myView.roomMap(myX,myY));
+                    }else {
+                        myMovePlayer.move(myChoice);
+                        System.out.println(myView.roomMap(myX,myY));
                     }
-                    myMovePlayer.move(myChoice);
-                    System.out.println(myView.roomMap(myX,myY));
+
                     if(myRand.nextInt(101) >75 && !getMyMainDungeon().getMyMaze()[getMyMainDungeon().getMyPlayerX()][getMyMainDungeon().getMyPlayerY()][0].getStatus().equalsIgnoreCase("entrance")
                             && !getMyMainDungeon().getMyMaze()[getMyMainDungeon().getMyPlayerX()][getMyMainDungeon().getMyPlayerY()][0].getStatus().equalsIgnoreCase("exit")){
                         int myWhichMonster = myRand.nextInt(3);
                         switch (myWhichMonster) {
-                            case 0: myMonster = new Monster("Ogre");
-                            case 1: myMonster = new Monster("Skeleton");
-                            case 2: myMonster = new Monster("Gremlin");
+                            case 0 -> myMonster = new Monster("Ogre");
+                            case 1 -> myMonster = new Monster("Skeleton");
+                            case 2 -> myMonster = new Monster("Gremlin");
                         }
                         battleToScreen(myMonster, myHero);
                     }
@@ -212,22 +218,22 @@ public class ToScreen implements Serializable {
         myStats[7] = theHero.getMyAttackSpeed();
         myView.battleAttacks(myStats, theMonster.getMyName());
     }
-    public static boolean getMyVPUsed(){
+    public boolean getMyVPUsed(){
         return myVPUsed;
     }
-    public static void setMyVPUsed(){
+    public void setMyVPUsed(){
         myVPUsed = false;
     }
-    public static Hero getMyHero(){
+    public Hero getMyHero(){
         return myHero;
     }
-    public static Monster getMyMonster(){
+    public Monster getMyMonster(){
         return myMonster;
     }
-    public static void setMyHero(Hero theHero){
+    public void setMyHero(Hero theHero){
         myHero = theHero;
     }
-    public static Dungeon getMyMainDungeon(){
+    public Dungeon getMyMainDungeon(){
         return myMainDungeon;
     }
     public Room getRoom(){

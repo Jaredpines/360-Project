@@ -1,5 +1,7 @@
 package View;
 
+import Controller.ToScreen;
+
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,6 +13,7 @@ import static Controller.ToScreen.*;
 
 public class View implements Serializable {
     private Art myArt = new Art();
+    private ToScreen myToScreen = new ToScreen();
     public String chooseHero() throws SQLException {
         Scanner myScanner = new Scanner(System.in);
         String myInput = "";
@@ -30,8 +33,8 @@ public class View implements Serializable {
                 System.out.println(myInput + " is not a valid hero.");
             }
         }
-        getMyHero().setMyName(myInput.substring(0,1).toUpperCase(Locale.ROOT) + myInput.substring(1).toLowerCase(Locale.ROOT));
-        return "You chose a "+ getMyHero().getMyName() + ": \n" + getHeroString(myInput);
+        myToScreen.getMyHero().setMyName(myInput.substring(0,1).toUpperCase(Locale.ROOT) + myInput.substring(1).toLowerCase(Locale.ROOT));
+        return "You chose a "+ myToScreen.getMyHero().getMyName() + ": \n" + getHeroString(myInput);
     }
     public StringBuilder Stats(int hit_points, int attack_speed, double chance_to_hit, int minimum_damage, int maximum_damage, double chance_to_block_or_heal) {
         StringBuilder stats = new StringBuilder();
@@ -45,11 +48,11 @@ public class View implements Serializable {
     }
     public String getHeroString(String theName) throws SQLException {
 
-        return heroToScreen(theName).toString();
+        return myToScreen.heroToScreen(theName).toString();
     }
     public String mapMaker(final int theX, final int theY) {
         StringBuilder mySB = new StringBuilder();
-        String[] mySplit = dungeonToScreen(theX,theY).toString().split("");
+        String[] mySplit = myToScreen.dungeonToScreen(theX,theY).toString().split("");
         int myCounter = 0;
         for (int i = 0; i < theY*2+1; i++) {
             mySB.append("*");
@@ -87,21 +90,21 @@ public class View implements Serializable {
         int mySideRoomsRight = 0;
         StringBuilder myRoom = new StringBuilder();
         String[] theSplit = mapMaker(theX , theY).split("\n");
-        if(getMyVPUsed()){
+        if(myToScreen.getMyVPUsed()){
             mySideRoomsLeft = 2;
             mySideRoomsRight = 2;
-            if(0 <= getMyMainDungeon().getMyPlayerX()*2 - 2) {
-                if(getMyMainDungeon().getMyPlayerY() * 2 - mySideRoomsLeft < 0){
+            if(0 <= myToScreen.getMyMainDungeon().getMyPlayerX()*2 - 2) {
+                if(myToScreen.getMyMainDungeon().getMyPlayerY() * 2 - mySideRoomsLeft < 0){
                     mySideRoomsLeft = 0;
                 }
-                if((getMyMainDungeon().getMyPlayerY() * 2) + 3 + mySideRoomsLeft >= theSplit[getMyMainDungeon().getMyPlayerX() * 2 - 2].length()){
+                if((myToScreen.getMyMainDungeon().getMyPlayerY() * 2) + 3 + mySideRoomsLeft >= theSplit[myToScreen.getMyMainDungeon().getMyPlayerX() * 2 - 2].length()){
                     mySideRoomsRight = 0;
                 }
-                myRoom.append(theSplit[getMyMainDungeon().getMyPlayerX() * 2 - 2], getMyMainDungeon().getMyPlayerY() * 2 - mySideRoomsLeft, (getMyMainDungeon().getMyPlayerY() * 2) + 3 + mySideRoomsRight);
+                myRoom.append(theSplit[myToScreen.getMyMainDungeon().getMyPlayerX() * 2 - 2], myToScreen.getMyMainDungeon().getMyPlayerY() * 2 - mySideRoomsLeft, (myToScreen.getMyMainDungeon().getMyPlayerY() * 2) + 3 + mySideRoomsRight);
                 myRoom.append("\n");
             }
-            if(0 <= getMyMainDungeon().getMyPlayerX()*2 - 1) {
-                myRoom.append(theSplit[getMyMainDungeon().getMyPlayerX() * 2 - 1], getMyMainDungeon().getMyPlayerY() * 2 - mySideRoomsLeft, (getMyMainDungeon().getMyPlayerY() * 2) + 3 + mySideRoomsRight);
+            if(0 <= myToScreen.getMyMainDungeon().getMyPlayerX()*2 - 1) {
+                myRoom.append(theSplit[myToScreen.getMyMainDungeon().getMyPlayerX() * 2 - 1], myToScreen.getMyMainDungeon().getMyPlayerY() * 2 - mySideRoomsLeft, (myToScreen.getMyMainDungeon().getMyPlayerY() * 2) + 3 + mySideRoomsRight);
                 mySideRoomsLeft = 2;
                 mySideRoomsRight = 2;
                 myRoom.append("\n");
@@ -109,38 +112,38 @@ public class View implements Serializable {
         }
 
 
-        if(getMyMainDungeon().getMyPlayerY() * 2 - mySideRoomsLeft < 0){
+        if(myToScreen.getMyMainDungeon().getMyPlayerY() * 2 - mySideRoomsLeft < 0){
             mySideRoomsLeft = 0;
         }
-        if((getMyMainDungeon().getMyPlayerY() * 2) + 3 + mySideRoomsLeft >= theSplit[getMyMainDungeon().getMyPlayerX() * 2].length()){
+        if((myToScreen.getMyMainDungeon().getMyPlayerY() * 2) + 3 + mySideRoomsLeft >= theSplit[myToScreen.getMyMainDungeon().getMyPlayerX() * 2].length()){
             mySideRoomsRight = 0;
         }
-        myRoom.append(theSplit[getMyMainDungeon().getMyPlayerX() * 2], getMyMainDungeon().getMyPlayerY() * 2 - mySideRoomsLeft, (getMyMainDungeon().getMyPlayerY() * 2) + 3 + mySideRoomsRight);
+        myRoom.append(theSplit[myToScreen.getMyMainDungeon().getMyPlayerX() * 2], myToScreen.getMyMainDungeon().getMyPlayerY() * 2 - mySideRoomsLeft, (myToScreen.getMyMainDungeon().getMyPlayerY() * 2) + 3 + mySideRoomsRight);
         myRoom.append("\n");
-        myRoom.append(theSplit[getMyMainDungeon().getMyPlayerX() * 2 + 1], getMyMainDungeon().getMyPlayerY() * 2 - mySideRoomsLeft, (getMyMainDungeon().getMyPlayerY() * 2) + 3 + mySideRoomsRight);
+        myRoom.append(theSplit[myToScreen.getMyMainDungeon().getMyPlayerX() * 2 + 1], myToScreen.getMyMainDungeon().getMyPlayerY() * 2 - mySideRoomsLeft, (myToScreen.getMyMainDungeon().getMyPlayerY() * 2) + 3 + mySideRoomsRight);
         myRoom.append("\n");
-        myRoom.append(theSplit[getMyMainDungeon().getMyPlayerX() * 2 + 2], getMyMainDungeon().getMyPlayerY() * 2 - mySideRoomsLeft, (getMyMainDungeon().getMyPlayerY() * 2) + 3 + mySideRoomsRight);
+        myRoom.append(theSplit[myToScreen.getMyMainDungeon().getMyPlayerX() * 2 + 2], myToScreen.getMyMainDungeon().getMyPlayerY() * 2 - mySideRoomsLeft, (myToScreen.getMyMainDungeon().getMyPlayerY() * 2) + 3 + mySideRoomsRight);
         mySideRoomsLeft = 2;
         mySideRoomsRight = 2;
 
 
-        if(getMyVPUsed()){
-            if(theSplit.length > getMyMainDungeon().getMyPlayerX()*2+3) {
+        if(myToScreen.getMyVPUsed()){
+            if(theSplit.length > myToScreen.getMyMainDungeon().getMyPlayerX()*2+3) {
                 myRoom.append("\n");
-                if(getMyMainDungeon().getMyPlayerY() * 2 - mySideRoomsLeft < 0){
+                if(myToScreen.getMyMainDungeon().getMyPlayerY() * 2 - mySideRoomsLeft < 0){
                     mySideRoomsLeft = 0;
                 }
-                if((getMyMainDungeon().getMyPlayerY() * 2) + 3 + mySideRoomsLeft >= theSplit[getMyMainDungeon().getMyPlayerX() * 2 + 3].length()){
+                if((myToScreen.getMyMainDungeon().getMyPlayerY() * 2) + 3 + mySideRoomsLeft >= theSplit[myToScreen.getMyMainDungeon().getMyPlayerX() * 2 + 3].length()){
                     mySideRoomsRight = 0;
                 }
-                myRoom.append(theSplit[getMyMainDungeon().getMyPlayerX() * 2 + 3], getMyMainDungeon().getMyPlayerY() * 2 - mySideRoomsLeft, (getMyMainDungeon().getMyPlayerY() * 2) + 3 + mySideRoomsRight);
+                myRoom.append(theSplit[myToScreen.getMyMainDungeon().getMyPlayerX() * 2 + 3], myToScreen.getMyMainDungeon().getMyPlayerY() * 2 - mySideRoomsLeft, (myToScreen.getMyMainDungeon().getMyPlayerY() * 2) + 3 + mySideRoomsRight);
                 myRoom.append("\n");
             }
-            if(theSplit.length > getMyMainDungeon().getMyPlayerX()*2+4) {
-                myRoom.append(theSplit[getMyMainDungeon().getMyPlayerX() * 2 + 4], getMyMainDungeon().getMyPlayerY() * 2 - mySideRoomsLeft, (getMyMainDungeon().getMyPlayerY() * 2) + 3 + mySideRoomsRight);
+            if(theSplit.length > myToScreen.getMyMainDungeon().getMyPlayerX()*2+4) {
+                myRoom.append(theSplit[myToScreen.getMyMainDungeon().getMyPlayerX() * 2 + 4], myToScreen.getMyMainDungeon().getMyPlayerY() * 2 - mySideRoomsLeft, (myToScreen.getMyMainDungeon().getMyPlayerY() * 2) + 3 + mySideRoomsRight);
                 myRoom.append("\n");
             }
-            setMyVPUsed();
+            myToScreen.setMyVPUsed();
         }
         return myRoom.toString();
     }
@@ -152,7 +155,7 @@ public class View implements Serializable {
         return mySB.toString();
     }
     public String battleText(int[] theStats, String theMonsterName){
-        return theMonsterName + "               " + getMyHero().getMyName() +
+        return theMonsterName + "               " + myToScreen.getMyHero().getMyName() +
                 "\n" +
                 "HP: " + theStats[2] + "            " + "HP: " + theStats[5] +
                 "\n" +
@@ -160,7 +163,7 @@ public class View implements Serializable {
                 "\n" +
                 "Attack Speed: " + theStats[6] +"    " +"Attack Speed: " + theStats[7] +
                 "\n" +
-                "Health Potions: " + getMyHero().getMyHPTotal();
+                "Health Potions: " + myToScreen.getMyHero().getMyHPTotal();
     }
     public void battleAttacks(int[] theStats, String theMonsterName){
         int myMonsterSpeed = theStats[6];
@@ -174,18 +177,18 @@ public class View implements Serializable {
                 System.out.println("Do you want to (A)ttack, use (S)pecial attack or (H)eal?");
                 myInput = myScanner.next();
                 if(myInput.equalsIgnoreCase("A")){
-                    theStats[2]= theStats[2]-getMyHero().attack();
-                }else if(myInput.equalsIgnoreCase("H") && getMyHero().getMyHPTotal()>0){
-                    getMyHero().setMyHPTotal(getMyHero().getMyHPTotal()-1);
+                    theStats[2]= theStats[2]-myToScreen.getMyHero().attack();
+                }else if(myInput.equalsIgnoreCase("H") && myToScreen.getMyHero().getMyHPTotal()>0){
+                    myToScreen.getMyHero().setMyHPTotal(myToScreen.getMyHero().getMyHPTotal()-1);
                     Random myRand = new Random();
                     int myRandHP = myRand.nextInt(11) + 5;
-                    getMyHero().setMyHitPoint(getMyHero().getMyHitPoints() + myRandHP);
+                    myToScreen.getMyHero().setMyHitPoint(myToScreen.getMyHero().getMyHitPoints() + myRandHP);
                     theStats[5] = theStats[5] + myRandHP;
                 }else if(myInput.equalsIgnoreCase("S")){
-                    if(getMyHero().getMyName().equalsIgnoreCase("Priestess")){
-                        theStats[5] = theStats[5] + getMyHero().specialAttack();
+                    if(myToScreen.getMyHero().getMyName().equalsIgnoreCase("Priestess")){
+                        theStats[5] = theStats[5] + myToScreen.getMyHero().specialAttack();
                     }else {
-                        theStats[2]= theStats[2] - getMyHero().specialAttack();
+                        theStats[2]= theStats[2] - myToScreen.getMyHero().specialAttack();
                     }
                 }
                 if(theStats[2] < 0){
@@ -200,7 +203,7 @@ public class View implements Serializable {
             myHeroSpeed = theStats[7];
             while (myMonsterSpeed > 0 && theStats[5] > 0 && theStats[2] > 0){
                 myMonsterSpeed -= myHeroSpeed;
-                theStats[5] = theStats[5] - getMyMonster().attack();
+                theStats[5] = theStats[5] - myToScreen.getMyMonster().attack();
                 if(theStats[5]< 0){
                     theStats[5] = 0;
                     System.out.println(battleText(theStats, theMonsterName));
@@ -213,7 +216,7 @@ public class View implements Serializable {
             myMonsterSpeed = theStats[6];
 
         }
-        getMyHero().setMyHitPoint(theStats[5]);
+        myToScreen.getMyHero().setMyHitPoint(theStats[5]);
     }
     public ArrayList<String> currentlyAvailableHeroes(){
         ArrayList<String> names = new ArrayList<>();

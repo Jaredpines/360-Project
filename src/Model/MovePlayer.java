@@ -2,7 +2,6 @@ package Model;
 
 
 import Controller.ToScreen;
-
 public class MovePlayer {
     public String move(final String theDirection){
         ToScreen myToScreen = new ToScreen();
