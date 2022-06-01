@@ -1,11 +1,20 @@
 package Controller;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.IOException;
 import java.io.Serializable;
 
-
 public class DungeonAdventure implements Serializable {
-        public static void main(String[] args) {
+        public static void main(String[] args) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+
+                Music myMusic = new Music();
+                myMusic.playMusic();
+
                 ToScreen myToScreen = new ToScreen();
+
+
+
                 System.out.println("Working");
                 try {
                         myToScreen.Intro();
