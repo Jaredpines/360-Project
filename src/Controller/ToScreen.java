@@ -3,6 +3,8 @@ package Controller;
 import Model.*;
 import View.*;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.*;
 import java.sql.SQLException;
 import java.util.Random;
@@ -16,14 +18,7 @@ public class ToScreen implements Serializable {
     private static Hero myHero;
     private static Monster myMonster;
     private static View myView;
-    private boolean myPillar1 = false;
-    private boolean myPillar2 = false;
-    private boolean myPillar3 = false;
-    private boolean myPillar4 = false;
-    private int myPillarCount;
-    private final Music MUSIC = new Music();
-    private final MovePlayer MOVE_PLAYER = new MovePlayer();
-    private final Art ART = new Art();
+    private final Options OPTIONS = new Options();
     public StringBuilder heroToScreen(String theName) throws SQLException {
         StringBuilder myStats = new StringBuilder();
         myView = new View();
@@ -73,115 +68,8 @@ public class ToScreen implements Serializable {
         }
         return mySB;
     }
-    public String Intro () throws Exception {
-        MUSIC.playMusic();
-        System.out.println("Welcome to the game!");
-        System.out.println("This is dungeon adventure game!");
-        System.out.println("Press 1) Start the game");
-        System.out.println("Press 2) Read the instruction of the game");
-        System.out.println("Press 3) To exit the game");
-
-        Scanner sc = new Scanner(System.in);
-        String myChoice = sc.next();
-
-        switch (myChoice) {
-
-            case "1":
-
-                String myStart = ART.StartScreenArt();
-
-                for (int i = 0; i < myStart.length(); i++){
-                    System.out.print(myStart.charAt(i));
-                    Thread.sleep(1);
-                }
-
-                Thread.sleep(1000);
-                try {
-                    Runtime.getRuntime().exec("cls");
-                }catch (IOException ignored){
-
-                }
-                try {
-                    Runtime.getRuntime().exec("clear");
-                }catch (IOException ignored){
-
-                }
-                System.out.println("Thanks for choosing to play our game");
-                System.out.println("You can always save the game if you need to run and do some errands");
-
-                myView = new View();
-                System.out.println(myView.chooseHero());
-                System.out.println("Please enter the size of your dungeon in X Y format.");
-                int myX = sc.nextInt();
-                int myY = sc.nextInt();
-                Random myRand = new Random();
-                System.out.println(myView.potionsToScreen(getMyHero().getMyHPTotal(), getMyHero().getMyVPTotal()));
-                System.out.println(myView.roomMap(myX,myY));
-                while (!myChoice.equalsIgnoreCase("Stop")) {
-                    System.out.println("Type Left, Right, Up, or Down to move.");
-                    if(getMyHero().getMyHPTotal()>0 || getMyHero().getMyVPTotal()>0){
-                        System.out.println("Type HP or VP to use potions");
-                    }
-                    myChoice = sc.next();
-                    if(myChoice.equalsIgnoreCase("m")){
-                        System.out.println(myView.mapMaker(myX,myY));
-                    }else if(myChoice.equalsIgnoreCase("HP") && getMyHero().getMyHPTotal()>0) {
-                        getMyHero().setMyHPTotal(getMyHero().getMyHPTotal()-1);
-                        int myRandHP = myRand.nextInt(11) + 5;
-                        getMyHero().setMyHitPoint(getMyHero().getMyHitPoints() + myRandHP);
-                        System.out.println(myView.roomMap(myX,myY));
-                    }else if(myChoice.equalsIgnoreCase("VP") && getMyHero().getMyVPTotal()>0){
-                        getMyHero().setMyVPTotal(getMyHero().getMyVPTotal()-1);
-                        myVPUsed = true;
-                        System.out.println(myView.roomMap(myX,myY));
-                    }else if(myChoice.equalsIgnoreCase("left")||myChoice.equalsIgnoreCase("right")||myChoice.equalsIgnoreCase("up")||myChoice.equalsIgnoreCase("down")) {
-                        MOVE_PLAYER.move(myChoice);
-                        System.out.println(myView.roomMap(myX,myY));
-                        if(myMainDungeon.getMyMaze()[myMainDungeon.getMyPlayerX()][myMainDungeon.getMyPlayerY()][0].getStatus().equalsIgnoreCase("A")){
-                            SpecialBattle();
-                            myPillar1 = true;
-                            myPillarCount++;
-                        }else if(myMainDungeon.getMyMaze()[myMainDungeon.getMyPlayerX()][myMainDungeon.getMyPlayerY()][0].getStatus().equalsIgnoreCase("E")){
-                            SpecialBattle();
-                            myPillar2 = true;
-                            myPillarCount++;
-                        }else if(myMainDungeon.getMyMaze()[myMainDungeon.getMyPlayerX()][myMainDungeon.getMyPlayerY()][0].getStatus().equalsIgnoreCase("I")){
-                            SpecialBattle();
-                            myPillar3 = true;
-                            myPillarCount++;
-                        }else if(myMainDungeon.getMyMaze()[myMainDungeon.getMyPlayerX()][myMainDungeon.getMyPlayerY()][0].getStatus().equalsIgnoreCase("P")){
-                            SpecialBattle();
-                            myPillar4 = true;
-                            myPillarCount++;
-                        }else if(myRand.nextInt(101) >75 && !getMyMainDungeon().getMyMaze()[getMyMainDungeon().getMyPlayerX()][getMyMainDungeon().getMyPlayerY()][0].getStatus().equalsIgnoreCase("entrance")
-                                && !getMyMainDungeon().getMyMaze()[getMyMainDungeon().getMyPlayerX()][getMyMainDungeon().getMyPlayerY()][0].getStatus().equalsIgnoreCase("exit")){
-                            int myWhichMonster = myRand.nextInt(3);
-                            switch (myWhichMonster) {
-                                case 0 -> myMonster = new Monster("Ogre");
-                                case 1 -> myMonster = new Monster("Skeleton");
-                                case 2 -> myMonster = new Monster("Gremlin");
-                            }
-                            battleToScreen(myMonster, myHero);
-                        }
-                    }
-
-                    if(myMainDungeon.getMyMaze()[myMainDungeon.getMyPlayerX()][myMainDungeon.getMyPlayerY()][0].getStatus().equalsIgnoreCase("Pit")){
-                        System.out.println("You feel in a pit and took damage!");
-                        System.out.println("HP: "+getMyHero().getMyHitPoints());
-                    }
-                    if(!myMainDungeon.getMyMaze()[myMainDungeon.getMyPlayerX()][myMainDungeon.getMyPlayerY()][0].getStatus().equalsIgnoreCase("entrance")
-                            && !myMainDungeon.getMyMaze()[myMainDungeon.getMyPlayerX()][myMainDungeon.getMyPlayerY()][0].getStatus().equalsIgnoreCase("exit")) {
-                        myMainDungeon.getMyMaze()[myMainDungeon.getMyPlayerX()][myMainDungeon.getMyPlayerY()][0].setStatus("empty");
-                    }else if(myMainDungeon.getMyMaze()[myMainDungeon.getMyPlayerX()][myMainDungeon.getMyPlayerY()][0].getStatus().equalsIgnoreCase("exit")
-                            && myPillar1 && myPillar2 && myPillar3 && myPillar4){
-                        System.out.println(ART.YouWinArt());;
-                        System.exit(0);
-                    }else if(myMainDungeon.getMyMaze()[myMainDungeon.getMyPlayerX()][myMainDungeon.getMyPlayerY()][0].getStatus().equalsIgnoreCase("exit")){
-                        System.out.println("You need to collect all the pillars of OO to exit you only have " + myPillarCount + " pillars.");
-                    }
-
-                    System.out.println(myView.potionsToScreen(getMyHero().getMyHPTotal(), getMyHero().getMyVPTotal()));
-                }
+    public void Intro () throws Exception {
+        OPTIONS.DifferentOptions();
                 //HOPEFULLY WHAT WE NEED TO MAKE SERIALIZATION WORK
                 FileOutputStream myFileOut = new FileOutputStream("UserInfo.ser");
                 ObjectOutputStream myOut = new ObjectOutputStream(myFileOut);
@@ -217,28 +105,8 @@ public class ToScreen implements Serializable {
 
 
                  */
-
-
-            case "2":
-
-                System.out.println("This game is pretty simple but in case you have quetions here are the instructions");
-                System.out.println("1) Pick what hero you want to pick. You can see specifications of each hero before picking it");
-                System.out.println("2) Pick what size of the dungeon you want to have");
-                System.out.println("3) Once you enter size of the dungeon you will see the entrance room and number of health " +
-                        "potions and vision postions you have");
-                System.out.println("4) Pick where do you want to go (Left, Right, Up, Down) ");
-                System.out.println("5) Once you pick where to go you will be moved to that room");
-                System.out.println("6) There is a possibility you will find a monster there. If you do be brave and fight!");
-                System.out.println("You also have possibility to use special attack and heal (if you have heal points)");
-                System.out.println("Repeat and have fun!");
-                break;
-            case "3":
-                System.out.println(ART.ExitGameArt());
-                System.out.println("It was nice having you here!");
-        }
-        return myChoice;
     }
-    public void battleToScreen(Monster theMonster, Hero theHero){
+    public void battleToScreen(Monster theMonster, Hero theHero) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         int[] myStats = new int[8];
         myStats[0] = theMonster.getMINIMUM_DAMAGE();
         myStats[1] = theMonster.getMyMaximumDamage();
@@ -253,14 +121,17 @@ public class ToScreen implements Serializable {
     public boolean getMyVPUsed(){
         return myVPUsed;
     }
-    public void setMyVPUsed(){
-        myVPUsed = false;
+    public void setMyVPUsed(boolean theTF){
+        myVPUsed = theTF;
     }
     public Hero getMyHero(){
         return myHero;
     }
     public Monster getMyMonster(){
         return myMonster;
+    }
+    public void setMyMonster(Monster theMonster){
+        myMonster = theMonster;
     }
     public void setMyHero(Hero theHero){
         myHero = theHero;
@@ -271,29 +142,5 @@ public class ToScreen implements Serializable {
     public Room getRoom(){
         return myMainDungeon.getMyMaze()[getMyMainDungeon().getMyPlayerX()][getMyMainDungeon().getMyPlayerY()][0];
     }
-    public void SpecialBattle() throws SQLException {
-        Random myRand = new Random();
-        int myWhichMonster = myRand.nextInt(3);
-        switch (myWhichMonster) {
-            case 0 -> myMonster = new Monster("Ogre");
-            case 1 -> myMonster = new Monster("Skeleton");
-            case 2 -> myMonster = new Monster("Gremlin");
-        }
-        myMonster.setMyHitPoint(myMonster.getMyHitPoints() + (myMonster.getMyHitPoints()/2));
-        myWhichMonster = myRand.nextInt(11);
-        switch (myWhichMonster) {
-            case 0 -> myMonster.setMyName("Blue "+ myMonster.getMyName());
-            case 1 -> myMonster.setMyName("Green "+ myMonster.getMyName());
-            case 2 -> myMonster.setMyName("Red "+ myMonster.getMyName());
-            case 3 -> myMonster.setMyName("Yellow "+ myMonster.getMyName());
-            case 4 -> myMonster.setMyName("White "+ myMonster.getMyName());
-            case 5 -> myMonster.setMyName("Purple "+ myMonster.getMyName());
-            case 6 -> myMonster.setMyName("Violet "+ myMonster.getMyName());
-            case 7 -> myMonster.setMyName("Orange "+ myMonster.getMyName());
-            case 8 -> myMonster.setMyName("Black "+ myMonster.getMyName());
-            case 9 -> myMonster.setMyName("Magenta "+ myMonster.getMyName());
-            case 10 -> myMonster.setMyName("Crimson "+ myMonster.getMyName());
-        }
-        battleToScreen(myMonster, myHero);
-    }
+
 }

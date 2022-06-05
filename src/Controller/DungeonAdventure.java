@@ -6,11 +6,7 @@ import java.io.IOException;
 import java.io.Serializable;
 
 public class DungeonAdventure implements Serializable {
-        public static void main(String[] args) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-
-                //      Music myMusic = new Music();
-                //myMusic.playMusic();
-
+        public static void main(String[] args) {
                 ToScreen myToScreen = new ToScreen();
 
 
@@ -23,7 +19,7 @@ public class DungeonAdventure implements Serializable {
         }
 
 
-        public void Play() throws Exception {
+        public void Play() {
                        //STILL NEED TO DO getCurrentRoom method
                        // Room current = myDungeon.getCurrentRoom();
         }

@@ -2,6 +2,9 @@ package View;
 
 import Controller.ToScreen;
 
+import javax.sound.sampled.*;
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -143,7 +146,7 @@ public class View implements Serializable {
                 myRoom.append(theSplit[myToScreen.getMyMainDungeon().getMyPlayerX() * 2 + 4], myToScreen.getMyMainDungeon().getMyPlayerY() * 2 - mySideRoomsLeft, (myToScreen.getMyMainDungeon().getMyPlayerY() * 2) + 3 + mySideRoomsRight);
                 myRoom.append("\n");
             }
-            myToScreen.setMyVPUsed();
+            myToScreen.setMyVPUsed(false);
         }
         return myRoom.toString();
     }
@@ -155,17 +158,21 @@ public class View implements Serializable {
         return mySB.toString();
     }
     public String battleText(int[] theStats, String theMonsterName){
-        return theMonsterName + "               " + myToScreen.getMyHero().getMyName() +
-                "\n" +
-                "HP: " + theStats[2] + "            " + "HP: " + theStats[5] +
-                "\n" +
-                "Damage: " + theStats[0] + "-" + theStats[1] + "      " + "Damage: " + theStats[3] + "-" + theStats[4] +
-                "\n" +
-                "Attack Speed: " + theStats[6] +"    " +"Attack Speed: " + theStats[7] +
-                "\n" +
-                "Health Potions: " + myToScreen.getMyHero().getMyHPTotal();
+        final String ANSI_RESET = "\u001B[0m";
+        final String ANSI_RED = "\u001B[31m";
+        final String ANSI_CYAN = "\u001B[36m";
+        final String UNDERLINE = "\u001B[4m";
+        String myMonsterName =  UNDERLINE + theMonsterName + ANSI_RESET;
+        for (int i = 0; i <21-theMonsterName.length(); i++){
+            myMonsterName += " ";
+        }
+        return  myMonsterName + UNDERLINE + myToScreen.getMyHero().getMyName() + ANSI_RESET + "\n" +
+                String.format("%-25s %-15s%n", ANSI_RED + "HP: " + theStats[2],ANSI_RESET + ANSI_CYAN + "HP: " + theStats[5] + ANSI_RESET) +
+                String.format("%-25s %-15s%n", ANSI_RED + "Damage: " + theStats[0]+ "-" + theStats[1], ANSI_RESET + ANSI_CYAN + "Damage: " + theStats[3] + "-" + theStats[4] + ANSI_RESET)  +
+                String.format("%-25s %-15s%n", ANSI_RED + "Attack Speed: " + theStats[6], ANSI_RESET + ANSI_CYAN +"Attack Speed: " + theStats[7] + ANSI_RESET) +
+                String.format("%-20s %-20s", "",ANSI_CYAN + "Health Potions: " + myToScreen.getMyHero().getMyHPTotal() + ANSI_RESET);
     }
-    public void battleAttacks(int[] theStats, String theMonsterName){
+    public void battleAttacks(int[] theStats, String theMonsterName) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         int myMonsterSpeed = theStats[6];
         int myHeroSpeed = theStats[7];
         Scanner myScanner = new Scanner(System.in);
@@ -190,7 +197,12 @@ public class View implements Serializable {
                     }else {
                         theStats[2]= theStats[2] - myToScreen.getMyHero().specialAttack();
                     }
-                }else if(myInput.equalsIgnoreCase("Dead")){
+                }else if(myInput.equalsIgnoreCase("Avada_Kedavra")){
+                    File myFile = new File("death.wav");
+                    AudioInputStream myAudioStream = AudioSystem.getAudioInputStream(myFile);
+                    Clip myClip = AudioSystem.getClip();
+                    myClip.open(myAudioStream);
+                    myClip.start();
                     theStats[2]= 0;
                 }
                 if(theStats[2] <= 0){
