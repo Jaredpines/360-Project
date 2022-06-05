@@ -190,8 +190,10 @@ public class View implements Serializable {
                     }else {
                         theStats[2]= theStats[2] - myToScreen.getMyHero().specialAttack();
                     }
+                }else if(myInput.equalsIgnoreCase("Dead")){
+                    theStats[2]= 0;
                 }
-                if(theStats[2] < 0){
+                if(theStats[2] <= 0){
                     theStats[2] = 0;
                     System.out.println(battleText(theStats, theMonsterName));
                     System.out.println("The monster is dead!");

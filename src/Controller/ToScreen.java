@@ -16,9 +16,14 @@ public class ToScreen implements Serializable {
     private static Hero myHero;
     private static Monster myMonster;
     private static View myView;
-    private Music myMusic = new Music();
-    private MovePlayer myMovePlayer = new MovePlayer();
-    private Art myArt = new Art();
+    private boolean myPillar1 = false;
+    private boolean myPillar2 = false;
+    private boolean myPillar3 = false;
+    private boolean myPillar4 = false;
+    private int myPillarCount;
+    private final Music MUSIC = new Music();
+    private final MovePlayer MOVE_PLAYER = new MovePlayer();
+    private final Art ART = new Art();
     public StringBuilder heroToScreen(String theName) throws SQLException {
         StringBuilder myStats = new StringBuilder();
         myView = new View();
@@ -44,7 +49,6 @@ public class ToScreen implements Serializable {
         StringBuilder mySB = new StringBuilder();
         //make Dungeon 3D array
         int myCoordinates = 0;
-
         if(myMainDungeon == null){
             this.myMainDungeon = new Dungeon(theX,theY);
         }
@@ -70,7 +74,7 @@ public class ToScreen implements Serializable {
         return mySB;
     }
     public String Intro () throws Exception {
-        myMusic.playMusic();
+        MUSIC.playMusic();
         System.out.println("Welcome to the game!");
         System.out.println("This is dungeon adventure game!");
         System.out.println("Press 1) Start the game");
@@ -84,7 +88,7 @@ public class ToScreen implements Serializable {
 
             case "1":
 
-                String myStart = myArt.StartScreenArt();
+                String myStart = ART.StartScreenArt();
 
                 for (int i = 0; i < myStart.length(); i++){
                     System.out.print(myStart.charAt(i));
@@ -130,25 +134,52 @@ public class ToScreen implements Serializable {
                         getMyHero().setMyVPTotal(getMyHero().getMyVPTotal()-1);
                         myVPUsed = true;
                         System.out.println(myView.roomMap(myX,myY));
-                    }else {
-                        myMovePlayer.move(myChoice);
+                    }else if(myChoice.equalsIgnoreCase("left")||myChoice.equalsIgnoreCase("right")||myChoice.equalsIgnoreCase("up")||myChoice.equalsIgnoreCase("down")) {
+                        MOVE_PLAYER.move(myChoice);
                         System.out.println(myView.roomMap(myX,myY));
+                        if(myMainDungeon.getMyMaze()[myMainDungeon.getMyPlayerX()][myMainDungeon.getMyPlayerY()][0].getStatus().equalsIgnoreCase("A")){
+                            SpecialBattle();
+                            myPillar1 = true;
+                            myPillarCount++;
+                        }else if(myMainDungeon.getMyMaze()[myMainDungeon.getMyPlayerX()][myMainDungeon.getMyPlayerY()][0].getStatus().equalsIgnoreCase("E")){
+                            SpecialBattle();
+                            myPillar2 = true;
+                            myPillarCount++;
+                        }else if(myMainDungeon.getMyMaze()[myMainDungeon.getMyPlayerX()][myMainDungeon.getMyPlayerY()][0].getStatus().equalsIgnoreCase("I")){
+                            SpecialBattle();
+                            myPillar3 = true;
+                            myPillarCount++;
+                        }else if(myMainDungeon.getMyMaze()[myMainDungeon.getMyPlayerX()][myMainDungeon.getMyPlayerY()][0].getStatus().equalsIgnoreCase("P")){
+                            SpecialBattle();
+                            myPillar4 = true;
+                            myPillarCount++;
+                        }else if(myRand.nextInt(101) >75 && !getMyMainDungeon().getMyMaze()[getMyMainDungeon().getMyPlayerX()][getMyMainDungeon().getMyPlayerY()][0].getStatus().equalsIgnoreCase("entrance")
+                                && !getMyMainDungeon().getMyMaze()[getMyMainDungeon().getMyPlayerX()][getMyMainDungeon().getMyPlayerY()][0].getStatus().equalsIgnoreCase("exit")){
+                            int myWhichMonster = myRand.nextInt(3);
+                            switch (myWhichMonster) {
+                                case 0 -> myMonster = new Monster("Ogre");
+                                case 1 -> myMonster = new Monster("Skeleton");
+                                case 2 -> myMonster = new Monster("Gremlin");
+                            }
+                            battleToScreen(myMonster, myHero);
+                        }
                     }
 
-                    if(myRand.nextInt(101) >75 && !getMyMainDungeon().getMyMaze()[getMyMainDungeon().getMyPlayerX()][getMyMainDungeon().getMyPlayerY()][0].getStatus().equalsIgnoreCase("entrance")
-                            && !getMyMainDungeon().getMyMaze()[getMyMainDungeon().getMyPlayerX()][getMyMainDungeon().getMyPlayerY()][0].getStatus().equalsIgnoreCase("exit")){
-                        int myWhichMonster = myRand.nextInt(3);
-                        switch (myWhichMonster) {
-                            case 0 -> myMonster = new Monster("Ogre");
-                            case 1 -> myMonster = new Monster("Skeleton");
-                            case 2 -> myMonster = new Monster("Gremlin");
-                        }
-                        battleToScreen(myMonster, myHero);
+                    if(myMainDungeon.getMyMaze()[myMainDungeon.getMyPlayerX()][myMainDungeon.getMyPlayerY()][0].getStatus().equalsIgnoreCase("Pit")){
+                        System.out.println("You feel in a pit and took damage!");
+                        System.out.println("HP: "+getMyHero().getMyHitPoints());
                     }
                     if(!myMainDungeon.getMyMaze()[myMainDungeon.getMyPlayerX()][myMainDungeon.getMyPlayerY()][0].getStatus().equalsIgnoreCase("entrance")
                             && !myMainDungeon.getMyMaze()[myMainDungeon.getMyPlayerX()][myMainDungeon.getMyPlayerY()][0].getStatus().equalsIgnoreCase("exit")) {
                         myMainDungeon.getMyMaze()[myMainDungeon.getMyPlayerX()][myMainDungeon.getMyPlayerY()][0].setStatus("empty");
+                    }else if(myMainDungeon.getMyMaze()[myMainDungeon.getMyPlayerX()][myMainDungeon.getMyPlayerY()][0].getStatus().equalsIgnoreCase("exit")
+                            && myPillar1 && myPillar2 && myPillar3 && myPillar4){
+                        System.out.println(ART.YouWinArt());;
+                        System.exit(0);
+                    }else if(myMainDungeon.getMyMaze()[myMainDungeon.getMyPlayerX()][myMainDungeon.getMyPlayerY()][0].getStatus().equalsIgnoreCase("exit")){
+                        System.out.println("You need to collect all the pillars of OO to exit you only have " + myPillarCount + " pillars.");
                     }
+
                     System.out.println(myView.potionsToScreen(getMyHero().getMyHPTotal(), getMyHero().getMyVPTotal()));
                 }
                 //HOPEFULLY WHAT WE NEED TO MAKE SERIALIZATION WORK
@@ -202,38 +233,7 @@ public class ToScreen implements Serializable {
                 System.out.println("Repeat and have fun!");
                 break;
             case "3":
-                System.out.println("      ___           ___           ___         ___                              ___           ___          _____    \n" +
-                        "     /__/\\         /  /\\         /  /\\       /  /\\        ___                 /  /\\         /__/\\        /  /::\\   \n" +
-                        "     \\  \\:\\       /  /::\\       /  /::\\     /  /::\\      /__/|               /  /:/_        \\  \\:\\      /  /:/\\:\\  \n" +
-                        "      \\__\\:\\     /  /:/\\:\\     /  /:/\\:\\   /  /:/\\:\\    |  |:|              /  /:/ /\\        \\  \\:\\    /  /:/  \\:\\ \n" +
-                        "  ___ /  /::\\   /  /:/~/::\\   /  /:/~/:/  /  /:/~/:/    |  |:|             /  /:/ /:/_   _____\\__\\:\\  /__/:/ \\__\\:|\n" +
-                        " /__/\\  /:/\\:\\ /__/:/ /:/\\:\\ /__/:/ /:/  /__/:/ /:/   __|__|:|            /__/:/ /:/ /\\ /__/::::::::\\ \\  \\:\\ /  /:/\n" +
-                        " \\  \\:\\/:/__\\/ \\  \\:\\/:/__\\/ \\  \\:\\/:/   \\  \\:\\/:/   /__/::::\\            \\  \\:\\/:/ /:/ \\  \\:\\~~\\~~\\/  \\  \\:\\  /:/ \n" +
-                        "  \\  \\::/       \\  \\::/       \\  \\::/     \\  \\::/       ~\\~~\\:\\            \\  \\::/ /:/   \\  \\:\\  ~~~    \\  \\:\\/:/  \n" +
-                        "   \\  \\:\\        \\  \\:\\        \\  \\:\\      \\  \\:\\         \\  \\:\\            \\  \\:\\/:/     \\  \\:\\         \\  \\::/   \n" +
-                        "    \\  \\:\\        \\  \\:\\        \\  \\:\\      \\  \\:\\         \\__\\/             \\  \\::/       \\  \\:\\         \\__\\/    \n" +
-                        "     \\__\\/         \\__\\/         \\__\\/       \\__\\/                            \\__\\/         \\__\\/                  ");
-                System.out.println("#######################(((((((((((((////////////((((((((((((((##################\n" +
-                        "####################((((((((((////////////////////////(((((((((((###############\n" +
-                        "##################(((((((((///////////*@@@@@@/*///////////(((((((((#############\n" +
-                        "################((((((((////////*****@@@@@@@@@*******///////((((((((############\n" +
-                        "###############(((((((///////*******,&@@@@@@@&,,,,******//////((((((((##########\n" +
-                        "##############(((((((//////*****,,,,,%&@@@@@@%.,,,,,,*****//////(((((((#########\n" +
-                        "#############(((((((/////*****,,,,....&@@@@@@%....,,,,,****/////((((((((########\n" +
-                        "############(((((((/////****,,,,.....#@@@@@@@& ......,,,****//////((((((########\n" +
-                        "############(((((((/////****,,,...(%&@@@@@@@@@@&%#....,,,****/////(((((((#######\n" +
-                        "############((((((//////***,,,,%&&@@@@@@@@@@@@@@@&&%%(,,,****/////(((((((#######\n" +
-                        "############((((((//////**@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@(*/////(((((#%#######\n" +
-                        "############(((((((/////&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n" +
-                        "#############(((((((///*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n" +
-                        "#############((((((((%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n" +
-                        "###############(((((@@@@@@&&%**&&&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n" +
-                        "################(((@@@@@&&#////*(%&@@@@@@@@@@@@@@@&&**///@@@@@@@@(((#&@@@@@@@@@@\n" +
-                        "#################(@@@@@@&%///////%&&@@@@@@@@@@@@@&&////////@@@@@@@(##########@@@\n" +
-                        "##################@@@@@@@&&#(////&@@@@@@@@@@@@@@@&&/////(%&@@@@@@###############\n" +
-                        "###################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&&&&&&&@@@@@#################\n" +
-                        "#########################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@(((####################\n" +
-                        "#############################(((@@@@@@@@@@@@@@@@@@@@((((########################");
+                System.out.println(ART.ExitGameArt());
                 System.out.println("It was nice having you here!");
         }
         return myChoice;
@@ -270,5 +270,30 @@ public class ToScreen implements Serializable {
     }
     public Room getRoom(){
         return myMainDungeon.getMyMaze()[getMyMainDungeon().getMyPlayerX()][getMyMainDungeon().getMyPlayerY()][0];
+    }
+    public void SpecialBattle() throws SQLException {
+        Random myRand = new Random();
+        int myWhichMonster = myRand.nextInt(3);
+        switch (myWhichMonster) {
+            case 0 -> myMonster = new Monster("Ogre");
+            case 1 -> myMonster = new Monster("Skeleton");
+            case 2 -> myMonster = new Monster("Gremlin");
+        }
+        myMonster.setMyHitPoint(myMonster.getMyHitPoints() + (myMonster.getMyHitPoints()/2));
+        myWhichMonster = myRand.nextInt(11);
+        switch (myWhichMonster) {
+            case 0 -> myMonster.setMyName("Blue "+ myMonster.getMyName());
+            case 1 -> myMonster.setMyName("Green "+ myMonster.getMyName());
+            case 2 -> myMonster.setMyName("Red "+ myMonster.getMyName());
+            case 3 -> myMonster.setMyName("Yellow "+ myMonster.getMyName());
+            case 4 -> myMonster.setMyName("White "+ myMonster.getMyName());
+            case 5 -> myMonster.setMyName("Purple "+ myMonster.getMyName());
+            case 6 -> myMonster.setMyName("Violet "+ myMonster.getMyName());
+            case 7 -> myMonster.setMyName("Orange "+ myMonster.getMyName());
+            case 8 -> myMonster.setMyName("Black "+ myMonster.getMyName());
+            case 9 -> myMonster.setMyName("Magenta "+ myMonster.getMyName());
+            case 10 -> myMonster.setMyName("Crimson "+ myMonster.getMyName());
+        }
+        battleToScreen(myMonster, myHero);
     }
 }

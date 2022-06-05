@@ -71,9 +71,7 @@ public class Room implements Serializable {
                 myToScreen.getMyHero().setMyHPTotal(myToScreen.getMyHero().getMyHPTotal() + 1);
             }else if(mySplit[i].equalsIgnoreCase("Pit")){
                 int myRandDamage = myRand.nextInt(20) + 1;
-                System.out.println(myToScreen.getMyHero().getMyHitPoints());
                 myToScreen.getMyHero().setMyHitPoint(myToScreen.getMyHero().getMyHitPoints() - myRandDamage);
-                System.out.println(myToScreen.getMyHero().getMyHitPoints());
             }else if(mySplit[i].equalsIgnoreCase("VP")){
                 myToScreen.getMyHero().setMyVPTotal(myToScreen.getMyHero().getMyVPTotal() + 1);
             }else if(mySplit[i].equalsIgnoreCase("A")){
