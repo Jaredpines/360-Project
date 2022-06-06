@@ -1,0 +1,1 @@
+please navigate to the ansi189 folder in your command prompt then into x64 for 64 bit computers or x86 for 32 bit computers than run the command ansicon -i
