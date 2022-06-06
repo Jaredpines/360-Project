@@ -107,7 +107,7 @@ public class ToScreen implements Serializable {
                  */
     }
     public void battleToScreen(Monster theMonster, Hero theHero) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        int[] myStats = new int[8];
+        int[] myStats = new int[11];
         myStats[0] = theMonster.getMINIMUM_DAMAGE();
         myStats[1] = theMonster.getMyMaximumDamage();
         myStats[2] = theMonster.getMyHitPoints();
@@ -116,6 +116,9 @@ public class ToScreen implements Serializable {
         myStats[5] = theHero.getMyHitPoints();
         myStats[6] = theMonster.getMyAttackSpeed();
         myStats[7] = theHero.getMyAttackSpeed();
+        myStats[8] = theMonster.getMINIMUM_HEAL_POINTS();
+        myStats[9] = theMonster.getMAXIMUM_HEAL_POINTS();
+        myStats[10] = (int)theMonster.getMyChangesToBlockOrHeal()*100;
         myView.battleAttacks(myStats, theMonster.getMyName());
     }
     public boolean getMyVPUsed(){

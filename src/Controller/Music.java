@@ -12,7 +12,9 @@ public class Music {
         AudioInputStream myAudioStream = AudioSystem.getAudioInputStream(myFile);
         Clip myClip = AudioSystem.getClip();
         myClip.open(myAudioStream);
-        //myClip.loop(100);
+        FloatControl gainControl = (FloatControl) myClip.getControl(FloatControl.Type.MASTER_GAIN);
+        myClip.loop(100);
+        gainControl.setValue(-15.0f);
         System.out.println("You can turn off music pressing 'S' ");
         System.out.println("Q to exit menu and start game");
 

@@ -73,7 +73,7 @@ public class GamePlay {
             }
 
             if(myToScreen.getMyMainDungeon().getMyMaze()[myToScreen.getMyMainDungeon().getMyPlayerX()][myToScreen.getMyMainDungeon().getMyPlayerY()][0].getStatus().equalsIgnoreCase("Pit")){
-                System.out.println("You feel in a pit and took damage!");
+                System.out.println("You fell in a pit and took damage!");
                 System.out.println("HP: "+myToScreen.getMyHero().getMyHitPoints());
             }
             if(!myToScreen.getMyMainDungeon().getMyMaze()[myToScreen.getMyMainDungeon().getMyPlayerX()][myToScreen.getMyMainDungeon().getMyPlayerY()][0].getStatus().equalsIgnoreCase("entrance")
@@ -96,18 +96,18 @@ public class GamePlay {
         int myWhichMonster;
         myToScreen.getMyMonster().setMyHitPoint(myToScreen.getMyMonster().getMyHitPoints() + (myToScreen.getMyMonster().getMyHitPoints()/2));
         myWhichMonster = myRand.nextInt(11);
-        final String BLUE = "\u001B[38;5;4m";
-        final String GREEN = "\u001B[38;5;2m";
-        final String RED = "\u001B[38;5;1m";
-        final String YELLOW = "\u001B[38;5;11m";
-        final String PURPLE = "\u001B[38;5;129m";
-        final String VIOLET = "\u001B[38;5;5m";
-        final String ORANGE = "\u001B[38;5;208m";
-        final String BLACK = "\u001B[38;5;0m";
-        final String MAGENTA = "\u001B[38;5;201m";
-        final String CRIMSON = "\u001B[38;2;157;34;53m";
+        final String BLUE = "\u001B[38;5;4m ";
+        final String GREEN = "\u001B[38;5;2m ";
+        final String RED = "\u001B[38;5;1m ";
+        final String YELLOW = "\u001B[38;5;11m ";
+        final String PURPLE = "\u001B[38;5;129m ";
+        final String VIOLET = "\u001B[38;5;5m ";
+        final String ORANGE = "\u001B[38;5;208m ";
+        final String BLACK = "\u001B[38;5;0m ";
+        final String MAGENTA = "\u001B[38;5;201m ";
+        final String CRIMSON = "\u001B[38;2;157;34;53m ";
         final String BACKGROUND = "\u001B[48;5;244m";
-        final String RESET = "\u001B[0m";
+        final String RESET = " \u001B[0m";
         switch (myWhichMonster) {
             case 0 -> myToScreen.getMyMonster().setMyName(BLUE+"Blue "+ myToScreen.getMyMonster().getMyName()+RESET);
             case 1 -> myToScreen.getMyMonster().setMyName(GREEN+ "Green "+ myToScreen.getMyMonster().getMyName()+RESET);

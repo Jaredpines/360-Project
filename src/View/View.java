@@ -162,15 +162,26 @@ public class View implements Serializable {
         final String ANSI_RED = "\u001B[31m";
         final String ANSI_CYAN = "\u001B[36m";
         final String UNDERLINE = "\u001B[4m";
-        String myMonsterName =  UNDERLINE + theMonsterName + ANSI_RESET;
-        for (int i = 0; i <21-theMonsterName.length(); i++){
-            myMonsterName += " ";
+        String myMonsterName;
+        String mySpaces = "";
+        String[] mySplit = theMonsterName.split(" ");
+        if(mySplit.length > 3) {
+            myMonsterName = theMonsterName;
+            for (int i = 0; i < 22 - (mySplit[1].length() + mySplit[2].length() + 1); i++) {
+                mySpaces += " ";
+            }
+        }else {
+            myMonsterName = " " + theMonsterName + " ";
+            for (int i = 0; i < 22 - theMonsterName.length(); i++) {
+                mySpaces += " ";
+
+            }
         }
-        return  myMonsterName + UNDERLINE + myToScreen.getMyHero().getMyName() + ANSI_RESET + "\n" +
-                String.format("%-25s %-15s%n", ANSI_RED + "HP: " + theStats[2],ANSI_RESET + ANSI_CYAN + "HP: " + theStats[5] + ANSI_RESET) +
-                String.format("%-25s %-15s%n", ANSI_RED + "Damage: " + theStats[0]+ "-" + theStats[1], ANSI_RESET + ANSI_CYAN + "Damage: " + theStats[3] + "-" + theStats[4] + ANSI_RESET)  +
-                String.format("%-25s %-15s%n", ANSI_RED + "Attack Speed: " + theStats[6], ANSI_RESET + ANSI_CYAN +"Attack Speed: " + theStats[7] + ANSI_RESET) +
-                String.format("%-20s %-20s", "",ANSI_CYAN + "Health Potions: " + myToScreen.getMyHero().getMyHPTotal() + ANSI_RESET);
+        return  UNDERLINE + myMonsterName + ANSI_RESET + mySpaces + UNDERLINE + " " + myToScreen.getMyHero().getMyName() + " " + ANSI_RESET + "\n" +
+                String.format("%-28s %-15s%n", ANSI_RED + "HP: " + theStats[2],ANSI_RESET + ANSI_CYAN + "HP: " + theStats[5] + ANSI_RESET) +
+                String.format("%-28s %-15s%n", ANSI_RED + "Damage: " + theStats[0]+ "-" + theStats[1], ANSI_RESET + ANSI_CYAN + "Damage: " + theStats[3] + "-" + theStats[4] + ANSI_RESET)  +
+                String.format("%-28s %-15s%n", ANSI_RED + "Attack Speed: " + theStats[6], ANSI_RESET + ANSI_CYAN +"Attack Speed: " + theStats[7] + ANSI_RESET) +
+                String.format("%-23s %-23s", "",ANSI_CYAN + "Health Potions: " + myToScreen.getMyHero().getMyHPTotal() + ANSI_RESET);
     }
     public void battleAttacks(int[] theStats, String theMonsterName) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         int myMonsterSpeed = theStats[6];
@@ -184,25 +195,44 @@ public class View implements Serializable {
                 System.out.println("Do you want to (A)ttack, use (S)pecial attack or (H)eal?");
                 myInput = myScanner.next();
                 if(myInput.equalsIgnoreCase("A")){
-                    theStats[2]= theStats[2]-myToScreen.getMyHero().attack();
+                    int myHitOrMiss = myToScreen.getMyHero().attack();
+                    if(myHitOrMiss != 0) {
+                        theStats[2] = theStats[2] - myHitOrMiss;
+                        System.out.println("Your attack hits for " + myHitOrMiss + " damage.");
+                    }
+                    else {
+                        System.out.println("Your attack missed.");
+                    }
                 }else if(myInput.equalsIgnoreCase("H") && myToScreen.getMyHero().getMyHPTotal()>0){
                     myToScreen.getMyHero().setMyHPTotal(myToScreen.getMyHero().getMyHPTotal()-1);
                     Random myRand = new Random();
                     int myRandHP = myRand.nextInt(11) + 5;
                     myToScreen.getMyHero().setMyHitPoint(myToScreen.getMyHero().getMyHitPoints() + myRandHP);
                     theStats[5] = theStats[5] + myRandHP;
+                    System.out.println("You healed for " + myRandHP + "HP.");
                 }else if(myInput.equalsIgnoreCase("S")){
                     if(myToScreen.getMyHero().getMyName().equalsIgnoreCase("Priestess")){
-                        theStats[5] = theStats[5] + myToScreen.getMyHero().specialAttack();
+                        int myHeal = myToScreen.getMyHero().specialAttack();
+                        theStats[5] = theStats[5] + myHeal;
+                        System.out.println("You healed for " + myHeal + "HP.");
                     }else {
-                        theStats[2]= theStats[2] - myToScreen.getMyHero().specialAttack();
+                        int myHitMiss = myToScreen.getMyHero().specialAttack();
+                        if (myHitMiss != 0){
+                            theStats[2]= theStats[2] - myHitMiss;
+                            System.out.println("Your attack hits for " + myHitMiss + " damage.");
+                        }else {
+                            System.out.println("You missed.");
+                        }
+
                     }
                 }else if(myInput.equalsIgnoreCase("Avada_Kedavra")){
                     File myFile = new File("death.wav");
                     AudioInputStream myAudioStream = AudioSystem.getAudioInputStream(myFile);
                     Clip myClip = AudioSystem.getClip();
                     myClip.open(myAudioStream);
+                    FloatControl gainControl = (FloatControl) myClip.getControl(FloatControl.Type.MASTER_GAIN);
                     myClip.start();
+                    gainControl.setValue(6.0f);
                     theStats[2]= 0;
                 }
                 if(theStats[2] <= 0){
@@ -216,8 +246,20 @@ public class View implements Serializable {
             myMonsterSpeed = theStats[6];
             myHeroSpeed = theStats[7];
             while (myMonsterSpeed > 0 && theStats[5] > 0 && theStats[2] > 0){
+                Random myRand = new Random();
+                int myHitOrMiss = myToScreen.getMyMonster().attack();
                 myMonsterSpeed -= myHeroSpeed;
-                theStats[5] = theStats[5] - myToScreen.getMyMonster().attack();
+                if(myHitOrMiss != 0) {
+                    theStats[5] = theStats[5] - myHitOrMiss;
+                    System.out.println("The " + theMonsterName + " attacked for " + myHitOrMiss + " damage.");
+                }else {
+                    System.out.println("The " + theMonsterName + " missed.");
+                }
+                if(myRand.nextInt(101) < theStats[10]){
+                    int myHeal = myRand.nextInt(theStats[8], theStats[9]);
+                    theStats[2] += theStats[2] + myHeal;
+                    System.out.println("The " + theMonsterName + " healed for " + myHeal + "HP.");
+                }
                 if(theStats[5]< 0){
                     theStats[5] = 0;
                     System.out.println(battleText(theStats, theMonsterName));
