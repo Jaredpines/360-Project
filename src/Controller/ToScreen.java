@@ -142,6 +142,9 @@ public class ToScreen implements Serializable {
     public Dungeon getMyMainDungeon(){
         return myMainDungeon;
     }
+    public void setMyMainDungeon(Dungeon theDungeon){
+        myMainDungeon = theDungeon;
+    }
     public Room getRoom(){
         return myMainDungeon.getMyMaze()[getMyMainDungeon().getMyPlayerX()][getMyMainDungeon().getMyPlayerY()][0];
     }
