@@ -14,6 +14,7 @@ public abstract class DungeonCharacter implements Serializable {
     private double myChangesToBlockOrHeal;
     private final int MINIMUM_HEAL_POINTS;
     private final int MAXIMUM_HEAL_POINTS;
+
     public DungeonCharacter(String theName) throws SQLException {
         Database DB = new Database();
         String[] theStats = DB.getStats(theName).toString().split(" ");
@@ -23,16 +24,16 @@ public abstract class DungeonCharacter implements Serializable {
         MINIMUM_DAMAGE = Integer.parseInt(theStats[3]);
         myMaximumDamage = Integer.parseInt(theStats[4]);
         myChangesToBlockOrHeal = Double.parseDouble(theStats[5]);
-        if(theStats.length != 6){
+        if (theStats.length != 6) {
             MINIMUM_HEAL_POINTS = Integer.parseInt(theStats[6]);
             MAXIMUM_HEAL_POINTS = Integer.parseInt(theStats[7]);
-        }
-        else {
+        } else {
             MINIMUM_HEAL_POINTS = 0;
             MAXIMUM_HEAL_POINTS = 0;
         }
-        myName = theName.substring(0,1).toUpperCase(Locale.ROOT) + theName.substring(1).toLowerCase(Locale.ROOT);
+        myName = theName.substring(0, 1).toUpperCase(Locale.ROOT) + theName.substring(1).toLowerCase(Locale.ROOT);
     }
+
     public int getMyHitPoints() {
         return myHitPoint;
     }
@@ -64,26 +65,34 @@ public abstract class DungeonCharacter implements Serializable {
     public int getMAXIMUM_HEAL_POINTS() {
         return MAXIMUM_HEAL_POINTS;
     }
-    public String getMyName(){
+
+    public String getMyName() {
         return myName;
     }
-    public void setMyHitPoint(int theHealth){
+
+    public void setMyHitPoint(int theHealth) {
         myHitPoint = theHealth;
     }
-    public void setMyAttackSpeed(int theSpeed){
+
+    public void setMyAttackSpeed(int theSpeed) {
         myAttackSpeed = theSpeed;
     }
-    public void setMyChangesToBlockOrHeal(double theChance){
+
+    public void setMyChangesToBlockOrHeal(double theChance) {
         myChangesToBlockOrHeal = theChance;
     }
-    public void setMyMaximumDamage(int theDamage){
+
+    public void setMyMaximumDamage(int theDamage) {
         myMaximumDamage = theDamage;
     }
-    public void setMyChanceToHit(double theChance){
+
+    public void setMyChanceToHit(double theChance) {
         myChanceToHit = theChance;
     }
-    public void setMyName(String theName){
+
+    public void setMyName(String theName) {
         myName = theName;
     }
+
     abstract public int attack();
 }

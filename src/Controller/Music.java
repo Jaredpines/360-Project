@@ -20,19 +20,20 @@ public class Music {
 
         String myResponse = "";
 
-        while (!myResponse.equals("Q")){
+        while (!myResponse.equals("Q")) {
             myResponse = myScanner.next();
             myResponse = myResponse.toUpperCase();
-            switch (myResponse){
-                case ("S"): myClip.close();
-                case ("Q"): break;
+            switch (myResponse) {
+                case ("S"):
+                    myClip.close();
+                case ("Q"):
+                    break;
 
                 default:
                     System.out.println("Not a valid response");
             }
 
         }
-
 
 
     }

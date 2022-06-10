@@ -3,10 +3,11 @@ package Model;
 import java.sql.SQLException;
 import java.util.Random;
 
-public class Priestess extends Hero{
+public class Priestess extends Hero {
     public Priestess(String theName) throws SQLException {
         super(theName);
     }
+
     // TODO: Make special attack
     @Override
     public int specialAttack() {
@@ -17,11 +18,11 @@ public class Priestess extends Hero{
     @Override
     public int attack() {
         Random myRand = new Random();
-        boolean myMissHit = myRand.nextInt(101) > getMyChanceToHit()*100;
+        boolean myMissHit = myRand.nextInt(101) > getMyChanceToHit() * 100;
         if (myMissHit) {
             return 0;
         } else {
-            return myRand.nextInt(getMINIMUM_DAMAGE(), getMyMaximumDamage()+1);
+            return myRand.nextInt(getMINIMUM_DAMAGE(), getMyMaximumDamage() + 1);
         }
     }
 }

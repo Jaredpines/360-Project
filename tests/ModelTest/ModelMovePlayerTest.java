@@ -10,8 +10,8 @@ import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ModelMovePlayerTest {
-    private MovePlayer myMovePlayer = new MovePlayer();
-    private ToScreen myToScreen = new ToScreen();
+    private final MovePlayer myMovePlayer = new MovePlayer();
+    private final ToScreen myToScreen = new ToScreen();
     @Test
     public void moveTestLeft() throws SQLException {
         Dungeon myDungeon = new Dungeon(5,5);
@@ -20,9 +20,7 @@ public class ModelMovePlayerTest {
         myToScreen.setMyVPUsed(false);
         int count = 100;
         while (count-- > 0) {
-            assertDoesNotThrow(() -> {
-                myMovePlayer.move("Left");
-            }, "Out of Bounds");
+            assertDoesNotThrow(() -> myMovePlayer.move("Left"), "Out of Bounds");
         }
     }
     @Test
@@ -33,9 +31,7 @@ public class ModelMovePlayerTest {
         myToScreen.setMyVPUsed(false);
         int count = 100;
         while (count-- > 0) {
-            assertDoesNotThrow(() -> {
-                myMovePlayer.move("Right");
-            }, "Out of Bounds");
+            assertDoesNotThrow(() -> myMovePlayer.move("Right"), "Out of Bounds");
         }
     }
     @Test
@@ -46,9 +42,7 @@ public class ModelMovePlayerTest {
         myToScreen.setMyVPUsed(false);
         int count = 100;
         while (count-- > 0) {
-            assertDoesNotThrow(() -> {
-                myMovePlayer.move("Up");
-            }, "Out of Bounds");
+            assertDoesNotThrow(() -> myMovePlayer.move("Up"), "Out of Bounds");
         }
     }
     @Test
@@ -59,9 +53,7 @@ public class ModelMovePlayerTest {
         myToScreen.setMyVPUsed(false);
         int count = 100;
         while (count-- > 0) {
-            assertDoesNotThrow(() -> {
-                myMovePlayer.move("Down");
-            }, "Out of Bounds");
+            assertDoesNotThrow(() -> myMovePlayer.move("Down"), "Out of Bounds");
         }
     }
 }

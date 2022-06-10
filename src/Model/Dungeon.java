@@ -10,9 +10,10 @@ public class Dungeon implements Serializable {
     final private int Dungeon_Y;
     private int myEntExi;
     /**
-     * 2D room inside of this class
+     * 2D room inside this class
      */
-    private Room[][][] myMaze;
+    private final Room[][][] MAZE;
+
     /**
      * 2D array that holds coordinates
      */
@@ -23,38 +24,36 @@ public class Dungeon implements Serializable {
         Dungeon_Y = theDungeon_Y;
 
 
-        myMaze = new Room[theDungeon_X][theDungeon_Y][2];
+        MAZE = new Room[theDungeon_X][theDungeon_Y][2];
         createEntranceExit();
         creatPillars();
         creatItemRooms();
 
 
-
-
     }
-    public void createEntranceExit(){
+
+    public void createEntranceExit() {
         Random myRand = new Random();
         int myRanNumEntranceX = myRand.nextInt(getDungeon_X());
         int myRanNumEntranceY = myRand.nextInt(getDungeon_Y());
-        myMaze[myRanNumEntranceX][myRanNumEntranceY][1] = new Room("player");
+        MAZE[myRanNumEntranceX][myRanNumEntranceY][1] = new Room("player");
 
         myPlayerX = myRanNumEntranceX;
         myPlayerY = myRanNumEntranceY;
         int myRanNumExitX;
         int myRanNumExitY;
-        do{
+        do {
             myRanNumExitX = myRand.nextInt(getDungeon_X());
             myRanNumExitY = myRand.nextInt(getDungeon_Y());
             //it works here
             //System.out.println("ExitCorX " + myRanNumExitX + "ExitCorY " + myRanNumExitY);
-        }while (myRanNumEntranceX == myRanNumExitX || myRanNumEntranceY == myRanNumExitY);
-        myMaze[myRanNumEntranceX][myRanNumEntranceY][0] = new Room(myEntExi);
+        } while (myRanNumEntranceX == myRanNumExitX || myRanNumEntranceY == myRanNumExitY);
+        MAZE[myRanNumEntranceX][myRanNumEntranceY][0] = new Room(myEntExi);
         myEntExi++;
-        myMaze[myRanNumExitX][myRanNumExitY][0]= new Room(myEntExi);
-       // System.out.println("ExitCorX " + myRanNumExitX + "ExitCorY " + myRanNumExitY);
-        //System.out.println("corX " + myRanNumEntranceX + "corY " + myRanNumEntranceY);
+        MAZE[myRanNumExitX][myRanNumExitY][0] = new Room(myEntExi);
     }
-    public void creatPillars(){
+
+    public void creatPillars() {
         Random myRand = new Random();
         int myX;
         int myY;
@@ -62,34 +61,36 @@ public class Dungeon implements Serializable {
         boolean existenceCheck2 = false;
         boolean existenceCheck3 = false;
         boolean existenceCheck4 = false;
-        while (!existenceCheck1||!existenceCheck2||!existenceCheck3||!existenceCheck4) {
-            if (myMaze[myX = myRand.nextInt(getDungeon_X())][myY = myRand.nextInt(getDungeon_Y())][0] == null && !existenceCheck1) {
-                myMaze[myX][myY][0] = new Room("pillarA");
+        while (!existenceCheck1 || !existenceCheck2 || !existenceCheck3 || !existenceCheck4) {
+            if (MAZE[myX = myRand.nextInt(getDungeon_X())][myY = myRand.nextInt(getDungeon_Y())][0] == null && !existenceCheck1) {
+                MAZE[myX][myY][0] = new Room("pillarA");
                 existenceCheck1 = true;
             }
-            if (myMaze[myX = myRand.nextInt(getDungeon_X())][myY = myRand.nextInt(getDungeon_Y())][0] == null && !existenceCheck2) {
-                myMaze[myX][myY][0] = new Room("pillarE");
+            if (MAZE[myX = myRand.nextInt(getDungeon_X())][myY = myRand.nextInt(getDungeon_Y())][0] == null && !existenceCheck2) {
+                MAZE[myX][myY][0] = new Room("pillarE");
                 existenceCheck2 = true;
             }
-            if (myMaze[myX = myRand.nextInt(getDungeon_X())][myY = myRand.nextInt(getDungeon_Y())][0] == null && !existenceCheck3) {
-                myMaze[myX][myY][0] = new Room("pillarI");
+            if (MAZE[myX = myRand.nextInt(getDungeon_X())][myY = myRand.nextInt(getDungeon_Y())][0] == null && !existenceCheck3) {
+                MAZE[myX][myY][0] = new Room("pillarI");
                 existenceCheck3 = true;
             }
-            if (myMaze[myX = myRand.nextInt(getDungeon_X())][myY = myRand.nextInt(getDungeon_Y())][0] == null && !existenceCheck4) {
-                myMaze[myX][myY][0] = new Room("pillarP");
+            if (MAZE[myX = myRand.nextInt(getDungeon_X())][myY = myRand.nextInt(getDungeon_Y())][0] == null && !existenceCheck4) {
+                MAZE[myX][myY][0] = new Room("pillarP");
                 existenceCheck4 = true;
             }
         }
     }
-    public void creatItemRooms(){
-        for (int i = 0; i < myMaze.length; i++){
-            for (int j = 0; j < myMaze[0].length; j++) {
-                if(myMaze[i][j][0] == null){
-                    myMaze[i][j][0] = new Room("items");
+
+    public void creatItemRooms() {
+        for (int i = 0; i < MAZE.length; i++) {
+            for (int j = 0; j < MAZE[0].length; j++) {
+                if (MAZE[i][j][0] == null) {
+                    MAZE[i][j][0] = new Room("items");
                 }
             }
         }
     }
+
     public int getDungeon_X() {
         return Dungeon_X;
     }
@@ -114,11 +115,8 @@ public class Dungeon implements Serializable {
         myPlayerY = thePlayerY;
     }
 
-    public Room[][][] getMyMaze() {
-        return myMaze;
-    }
-    public void setMyMaze(Room[][][] theMaze) {
-        myMaze = theMaze;
+    public Room[][][] getMAZE() {
+        return MAZE;
     }
 
     @Override
@@ -128,15 +126,14 @@ public class Dungeon implements Serializable {
      */
     public String toString() {
         StringBuilder mySB = new StringBuilder();
-        for (int i = 0; i < myMaze.length; i++){
-            for (int j = 0; j < myMaze[i].length; j++) {
-                mySB.append(myMaze[i][j][0].getStatus());
+        for (Room[][] rooms : MAZE) {
+            for (Room[] room : rooms) {
+                mySB.append(room[0].getStatus());
                 mySB.append(" ");
             }
         }
         return mySB.toString();
     }
-
 
 
 }

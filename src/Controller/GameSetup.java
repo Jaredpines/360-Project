@@ -1,15 +1,15 @@
 package Controller;
 
-import View.*;
+import View.Art;
+import View.View;
 
 import java.sql.SQLException;
-import java.util.Scanner;
 
 public class GameSetup {
     public void Setup(Art theArt) throws InterruptedException, SQLException {
         String myStart = theArt.StartScreenArt();
 
-        for (int i = 0; i < myStart.length(); i++){
+        for (int i = 0; i < myStart.length(); i++) {
             System.out.print(myStart.charAt(i));
             Thread.sleep(1);
         }

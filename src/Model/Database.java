@@ -14,18 +14,20 @@ public class Database implements Serializable {
         createConnection();
         createTable();
     }
-    public SQLiteDataSource createConnection(){
+
+    public SQLiteDataSource createConnection() {
         SQLiteDataSource myDS = null;
 
-        try{
+        try {
             myDS = new SQLiteDataSource();
             myDS.setUrl("jdbc:sqlite:DungeonCharacter.db");
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             System.exit(0);
         }
         return myDS;
     }
+
     public void createTable() throws SQLException {
         Connection myConn = createConnection().getConnection();
         Statement myStmt = myConn.createStatement();
@@ -33,16 +35,17 @@ public class Database implements Serializable {
                 "WARRIOR," +
                 "PRIESTESS," +
                 "THIEF," +
-                "OGRE,"+
-                "GREMLIN,"+
+                "OGRE," +
+                "GREMLIN," +
                 "SKELETON )";
         try {
             myStmt.executeUpdate(query);
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             System.exit(0);
         }
     }
+
     public StringBuilder getStats(String theName) throws SQLException {
         StringBuilder myStats = new StringBuilder();
         Connection myConn = createConnection().getConnection();
@@ -51,11 +54,11 @@ public class Database implements Serializable {
         String query = "SELECT * FROM heroes";
         try {
             ResultSet myRS = myStmt.executeQuery(query);
-            while (myRS.next()){
+            while (myRS.next()) {
                 myStats.append(myRS.getString(theName.toUpperCase(Locale.ROOT)));
                 myStats.append(" ");
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             System.exit(0);
         }
