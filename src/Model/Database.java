@@ -9,12 +9,23 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Locale;
 
+/**
+ * The class creates the dungeon characters database
+ */
 public class Database implements Serializable {
+    /**
+     * Constructor of Database class
+     * @throws SQLException database error
+     */
     Database() throws SQLException {
         createConnection();
         createTable();
     }
 
+    /**
+     * Connect the SQLite with jdbc driver
+     * @return database
+     */
     public SQLiteDataSource createConnection() {
         SQLiteDataSource myDS = null;
 
@@ -28,6 +39,10 @@ public class Database implements Serializable {
         return myDS;
     }
 
+    /**
+     * Create the hero table
+     * @throws SQLException errors
+     */
     public void createTable() throws SQLException {
         Connection myConn = createConnection().getConnection();
         Statement myStmt = myConn.createStatement();
@@ -46,6 +61,12 @@ public class Database implements Serializable {
         }
     }
 
+    /**
+     * Retrieve data from the table.
+     * @param theName
+     * @return the status
+     * @throws SQLException database error
+     */
     public StringBuilder getStats(String theName) throws SQLException {
         StringBuilder myStats = new StringBuilder();
         Connection myConn = createConnection().getConnection();

@@ -5,10 +5,17 @@ import Controller.ToScreen;
 import java.io.Serializable;
 import java.util.Random;
 
+/**
+ * The class that creates room for the dungeon
+ */
 public class Room implements Serializable {
     private String status = "";
     private final ToScreen TO_SCREEN = new ToScreen();
 
+    /**
+     * Constructor of Room class for entrance and exit
+     * @param entExi 0 or 1 indicates entrance or exit
+     */
     public Room(int entExi) {
         if (entExi == 0) {
             this.status = "entrance";
@@ -19,6 +26,10 @@ public class Room implements Serializable {
         }
     }
 
+    /**
+     * Constructor of Room class for the pillar items
+     * @param theItems a string indicates which item it is
+     */
     public Room(final String theItems) {
         switch (theItems) {
             case "pillarA" -> this.status = "A";
@@ -62,6 +73,11 @@ public class Room implements Serializable {
 
     }
 
+    /**
+     * Picking up an item from each room. Identifying which item it is when there is an item in
+     * the room, and increase the hero's corresponding item count
+     * @param theStatus a string represents the item
+     */
     public void statusEffect(String theStatus) {
         String[] mySplit = theStatus.split("-");
         Random myRand = new Random();
@@ -87,10 +103,18 @@ public class Room implements Serializable {
 
     }
 
+    /**
+     * Getter for status
+     * @return the status
+     */
     public String getStatus() {
         return status;
     }
 
+    /**
+     * Setter for status
+     * @param theStatus a string represents the status
+     */
     public void setStatus(String theStatus) {
         status = theStatus;
     }

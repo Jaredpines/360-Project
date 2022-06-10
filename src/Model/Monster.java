@@ -4,11 +4,25 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.Random;
 
+/**
+ * The class extended from DungeonCharacter class creates a monster
+ */
 public class Monster extends DungeonCharacter implements Serializable {
+
+    /**
+     * Constructor of Monster class
+     * @param theName the name of the monster
+     * @throws SQLException database errors
+     */
     public Monster(String theName) throws SQLException {
         super(theName);
     }
 
+    /**
+     * Perform attack of a monster with a randomly generated damage from a range of maximum damage and
+     * minimum of damage
+     * @return the amount of damage
+     */
     @Override
     public int attack() {
         Random myRand = new Random();
@@ -20,6 +34,10 @@ public class Monster extends DungeonCharacter implements Serializable {
         }
     }
 
+    /**
+     * Generate the healing points of a monster
+     * @return the healing points
+     */
     public int heal() {
         Random myRand = new Random();
         if (myRand.nextInt(101) < getMyChangesToBlockOrHeal() * 100) {

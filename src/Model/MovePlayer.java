@@ -1,9 +1,14 @@
 package Model;
-
-
 import Controller.ToScreen;
 
+/**
+ * The class that contains the movement of a hero
+ */
 public class MovePlayer {
+    /**
+     * Identify the direction to move and updates the new location
+     * @param theDirection a string indicates moving direction
+     */
     public void move(final String theDirection) {
         ToScreen myToScreen = new ToScreen();
         int myPreviousLocationX = myToScreen.getMyMainDungeon().getMyPlayerX();

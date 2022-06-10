@@ -3,12 +3,26 @@ package Model;
 import java.sql.SQLException;
 import java.util.Random;
 
+/**
+ * Class for Warrior
+ */
 public class Warrior extends Hero {
+
+    /**
+     * Constructor for Warrior class
+     * @param theName name of Warrior
+     * @throws SQLException database exception
+     */
     public Warrior(String theName) throws SQLException {
         super(theName);
     }
 
-    // TODO: Make attack
+
+    /**
+     * Perform warrior's special attack. A warrior has 40 percent chance to land their special attack successfully.
+     * Otherwise, do no damage. Each successful special damage can cause damage amount from 75 to 175 points.
+     * @return the damage to monster caused by the special attack
+     */
     @Override
     public int specialAttack() {
         Random myRand = new Random();
@@ -19,7 +33,12 @@ public class Warrior extends Hero {
         return 0;
     }
 
-    // TODO: Make attack
+
+    /**
+     * Regular attack of a warrior. The damage amount is from the minimum damage (35) to maximum damage(60), but it
+     * also has 20 percent change miss the damage.
+     * @return the amount of damage
+     */
     @Override
     public int attack() {
         Random myRand = new Random();
