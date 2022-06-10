@@ -2,20 +2,22 @@ package Model;
 
 import java.io.Serializable;
 import java.util.Random;
-
+/**
+ * The class that create Dungeon
+ */
 public class Dungeon implements Serializable {
     private int myPlayerX;
     private int myPlayerY;
     final private int Dungeon_X;
     final private int Dungeon_Y;
     private int myEntExi;
-    /**
-     * 2D room inside this class
-     */
+
     private final Room[][][] MAZE;
 
     /**
-     * 2D array that holds coordinates
+     * Constructor for the Dungeon
+     * @param theDungeon_X X coordinates
+     * @param theDungeon_Y Y coordinates
      */
 
     public Dungeon(final int theDungeon_X, final int theDungeon_Y) {
@@ -31,7 +33,9 @@ public class Dungeon implements Serializable {
 
 
     }
-
+    /**
+     * Create entrance and exit
+     */
     public void createEntranceExit() {
         Random myRand = new Random();
         int myRanNumEntranceX = myRand.nextInt(getDungeon_X());
@@ -52,7 +56,9 @@ public class Dungeon implements Serializable {
         myEntExi++;
         MAZE[myRanNumExitX][myRanNumExitY][0] = new Room(myEntExi);
     }
-
+    /**
+     * Create pillars
+     */
     public void creatPillars() {
         Random myRand = new Random();
         int myX;
@@ -81,6 +87,9 @@ public class Dungeon implements Serializable {
         }
     }
 
+    /**
+     * Create iteams for rooms
+     */
     public void creatItemRooms() {
         for (int i = 0; i < MAZE.length; i++) {
             for (int j = 0; j < MAZE[0].length; j++) {
@@ -91,39 +100,59 @@ public class Dungeon implements Serializable {
         }
     }
 
+    /**
+     * Getters for Dungeon with coordinates X
+     * @return
+     */
     public int getDungeon_X() {
         return Dungeon_X;
     }
-
+    /**
+     * Getters for Dungeon with coordinates Y
+     * @return
+     */
     public int getDungeon_Y() {
         return Dungeon_Y;
     }
-
+    /**
+     * Getters for Player with coordinates X
+     * @return
+     */
     public int getMyPlayerX() {
         return myPlayerX;
     }
-
+    /**
+     * Getters for Player with coordinates Y
+     * @return
+     */
     public int getMyPlayerY() {
         return myPlayerY;
     }
-
+    /**
+     * Setters for Player with coordinates X
+     * @return
+     */
     public void setMyPlayerX(int thePlayerX) {
         myPlayerX = thePlayerX;
     }
-
+    /**
+     * Getters for Player with coordinates Y
+     * @return
+     */
     public void setMyPlayerY(int thePlayerY) {
         myPlayerY = thePlayerY;
     }
 
+    /**
+     * Returns the maze
+     * @return
+     */
     public Room[][][] getMAZE() {
         return MAZE;
     }
 
     @Override
 
-    /*
-   TODO STILL NEED TO BE FINISHED
-     */
     public String toString() {
         StringBuilder mySB = new StringBuilder();
         for (Room[][] rooms : MAZE) {

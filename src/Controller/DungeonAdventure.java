@@ -1,7 +1,9 @@
 package Controller;
 
 import java.io.Serializable;
-
+/**
+ * DungeonAdventure-starts the game
+ */
 public class DungeonAdventure implements Serializable {
     public static void main(String[] args) {
         ToScreen myToScreen = new ToScreen();

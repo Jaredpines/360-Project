@@ -8,7 +8,9 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.sql.SQLException;
 
-
+/**
+ * ToScreen-makes sure that every element shows on the screen
+ */
 public class ToScreen implements Serializable {
 
     private static Dungeon myMainDungeon;
@@ -17,7 +19,12 @@ public class ToScreen implements Serializable {
     private static Monster myMonster;
     private static View myView;
     private final Options OPTIONS = new Options();
-
+    /**
+     * heroToScreen-builds stringBuilder for the game
+     * @param theName of the hero
+     * @return Statistic about hero
+     * @throws SQLException
+     */
     public StringBuilder heroToScreen(String theName) throws SQLException {
         StringBuilder myStats = new StringBuilder();
         myView = new View();
@@ -38,7 +45,12 @@ public class ToScreen implements Serializable {
         return myStats;
     }
 
-
+    /**
+     * dungeonToScreen-shows dungeon on the screen
+     * @param theX -passes parameter X
+     * @param theY -passes parameter Y
+     * @return stringBuilder with dungeon
+     */
     public StringBuilder dungeonToScreen(final int theX, final int theY) {
         StringBuilder mySB = new StringBuilder();
         if (myMainDungeon == null) {
@@ -65,7 +77,10 @@ public class ToScreen implements Serializable {
         }
         return mySB;
     }
-
+    /**
+     * Intro-shows the intro of the game
+     * @throws Exception
+     */
     public void Intro() throws Exception {
         OPTIONS.DifferentOptions();
         //HOPEFULLY WHAT WE NEED TO MAKE SERIALIZATION WORK
@@ -85,7 +100,12 @@ public class ToScreen implements Serializable {
         //TODO Serialization works but Deserialization shows an error
         // (Will ask prof on code review what is wrong)
     }
+    /**
+     * battleToScreen-shows the current battle on the console
+     * @param theMonster - passes the monster
+     * @param theHero - passes the hero that user chose
 
+     */
     public void battleToScreen(Monster theMonster, Hero theHero) throws Exception {
         int[] myStats = new int[11];
         myStats[0] = theMonster.getMINIMUM_DAMAGE();
@@ -101,39 +121,69 @@ public class ToScreen implements Serializable {
         myStats[10] = (int) theMonster.getMyChangesToBlockOrHeal() * 100;
         myView.battleAttacks(myStats, theMonster.getMyName());
     }
-
+    /**
+     * Getter for VP used
+     * @return VP
+     */
     public boolean getMyVPUsed() {
         return myVPUsed;
     }
-
+    /**
+     * Setter for VP
+     * @param theTF
+     */
     public void setMyVPUsed(boolean theTF) {
         myVPUsed = theTF;
     }
-
+    /**
+     * Getter for hero
+     * @return
+     */
     public Hero getMyHero() {
         return myHero;
     }
-
+    /**
+     * Getter for monster
+     * @return
+     */
     public Monster getMyMonster() {
         return myMonster;
     }
 
+    /**
+     * Setter for monster
+     * @param theMonster
+     */
     public void setMyMonster(Monster theMonster) {
         myMonster = theMonster;
     }
-
+    /**
+     * Setter for hero
+     * @param theHero
+     */
     public void setMyHero(Hero theHero) {
         myHero = theHero;
     }
 
+    /**
+     * Getter for main dungeon
+     * @return
+     */
     public Dungeon getMyMainDungeon() {
         return myMainDungeon;
     }
 
+    /**
+     * Setter for main dungeon
+     * @param theDungeon
+     */
     public void setMyMainDungeon(Dungeon theDungeon) {
         myMainDungeon = theDungeon;
     }
-
+    /**
+     * Getter for room
+     * @return
+     */
     public Room getRoom() {
         return myMainDungeon.getMAZE()[getMyMainDungeon().getMyPlayerX()][getMyMainDungeon().getMyPlayerY()][0];
     }

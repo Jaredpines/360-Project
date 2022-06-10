@@ -2,11 +2,9 @@ package View;
 
 import Controller.ToScreen;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.*;
 import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -14,11 +12,17 @@ import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
 
-
+/**
+ * Class that shows how the game works in the console
+ */
 public class View implements Serializable {
     private final Art ART = new Art();
     private final ToScreen TO_SCREEN = new ToScreen();
-
+    /**
+     * This method helps to choose the hero
+     * @return String that shows hero you chose
+     * @throws SQLException
+     */
     public String chooseHero() throws SQLException {
         Scanner myScanner = new Scanner(System.in);
         String myInput = "";
@@ -41,7 +45,16 @@ public class View implements Serializable {
         TO_SCREEN.getMyHero().setMyName(myInput.substring(0, 1).toUpperCase(Locale.ROOT) + myInput.substring(1).toLowerCase(Locale.ROOT));
         return "You chose a " + TO_SCREEN.getMyHero().getMyName() + ": \n" + getHeroString(myInput);
     }
-
+    /**
+     * Method that is works with statistic of all hit points, attack speed, chance to hit, minimum damage, maximum damage, and change to block or heal
+     * @param hit_points
+     * @param attack_speed
+     * @param chance_to_hit
+     * @param minimum_damage
+     * @param maximum_damage
+     * @param chance_to_block_or_heal
+     * @return all the statistic that is in parametrs
+     */
     public StringBuilder Stats(int hit_points, int attack_speed, double chance_to_hit, int minimum_damage, int maximum_damage, double chance_to_block_or_heal) {
         StringBuilder stats = new StringBuilder();
         stats.append("hit points: ").append(hit_points).append("\n");
@@ -52,12 +65,22 @@ public class View implements Serializable {
         stats.append("chance to block: ").append(chance_to_block_or_heal).append("\n");
         return stats;
     }
-
+    /**
+     * Hettore for Hero name
+     * @param theName
+     * @return the name of the hero
+     * @throws SQLException
+     */
     public String getHeroString(String theName) throws SQLException {
 
         return TO_SCREEN.heroToScreen(theName).toString();
     }
-
+    /**
+     * Make the map of the game with X and Y
+     * @param theX coordinates of X
+     * @param theY coordinates of Y
+     * @return map
+     */
     public String mapMaker(final int theX, final int theY) {
         StringBuilder mySB = new StringBuilder();
         String[] mySplit = TO_SCREEN.dungeonToScreen(theX, theY).toString().split("");
@@ -87,7 +110,12 @@ public class View implements Serializable {
         mySB.append("\n");
         return mySB.toString();
     }
-
+    /**
+     * Creates room for the map
+     * @param theX coordinates of X
+     * @param theY coordinates of Y
+     * @return String of the room
+     */
     public String roomMap(int theX, int theY) {
         int mySideRoomsLeft = 0;
         int mySideRoomsRight = 0;
@@ -150,13 +178,23 @@ public class View implements Serializable {
         }
         return myRoom.toString();
     }
-
+    /**
+     * Shows the number of health and vision potionas on the screen
+     * @param theHP health potions
+     * @param theVP vision potions
+     * @return string builder of potions
+     */
     public String potionsToScreen(int theHP, int theVP) {
         return "Number of Health Potions: " + theHP +
                 "   " +
                 "Number of Vision Potions: " + theVP;
     }
-
+    /**
+     * Shows the text of the battle.
+     * @param theStats the statistic
+     * @param theMonsterName the name of the hero
+     * @return statistics about hero and monster
+     */
     public String battleText(int[] theStats, String theMonsterName) {
         final String ANSI_RESET = "\u001B[0m";
         final String ANSI_RED = "\u001B[31m";
@@ -178,7 +216,14 @@ public class View implements Serializable {
                 String.format("%-28s %-15s%n", ANSI_RED + "Attack Speed: " + theStats[6], ANSI_RESET + ANSI_CYAN + "Attack Speed: " + theStats[7] + ANSI_RESET) +
                 String.format("%-23s %-23s", "", ANSI_CYAN + "Health Potions: " + TO_SCREEN.getMyHero().getMyHPTotal() + ANSI_RESET);
     }
-
+    /**
+     * Asks user about attack and what attack he wants to use
+     * @param theStats statistics
+     * @param theMonsterName monster name
+     * @throws UnsupportedAudioFileException
+     * @throws IOException
+     * @throws LineUnavailableException
+     */
     public void battleAttacks(int[] theStats, String theMonsterName) throws Exception {
         int myMonsterSpeed = theStats[6];
         int myHeroSpeed = theStats[7];
@@ -264,7 +309,10 @@ public class View implements Serializable {
         }
         TO_SCREEN.getMyHero().setMyHitPoint(theStats[5]);
     }
-
+    /**
+     * Shows the availables hero
+     * @return the name of the hero
+     */
     public ArrayList<String> currentlyAvailableHeroes() {
         ArrayList<String> names = new ArrayList<>();
         names.add("WARRIOR");

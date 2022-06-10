@@ -1,5 +1,7 @@
 package View;
-
+/**
+ * Class that is responsible for ASCII
+ */
 public class Art {
     public String StartScreenArt() {
         return """
