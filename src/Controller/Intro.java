@@ -2,10 +2,19 @@ package Controller;
 
 import java.util.Scanner;
 
+/**
+ * The class creates the intro text box
+ */
 public class Intro {
+
     private final Music MUSIC = new Music();
     private boolean myMusicON = false;
 
+    /**
+     * Intro of the game
+     * @return player's options
+     * @throws Exception errors
+     */
     public String IntroChoice() throws Exception {
         if (!myMusicON) {
             MUSIC.playMusic();

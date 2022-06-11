@@ -5,7 +5,17 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * This class contains the background music set up of the game
+ */
 public class Music {
+
+    /**
+     * Background music starts with the game, but the player is giving choice to turn it off
+     * @throws UnsupportedAudioFileException unsupported file
+     * @throws IOException IOException
+     * @throws LineUnavailableException  Unavailable
+     */
     public void playMusic() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         Scanner myScanner = new Scanner(System.in);
         File myFile = new File("Dungeon music.wav");

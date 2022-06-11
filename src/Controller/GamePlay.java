@@ -9,7 +9,11 @@ import java.sql.SQLException;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * The class that connects the main game to the display and update the character's status to the console
+ */
 public class GamePlay {
+
     private final static Scanner SCANNER = new Scanner(System.in);
     private final static View VIEW = new View();
     private final ToScreen TO_SCREEN = new ToScreen();
@@ -21,6 +25,12 @@ public class GamePlay {
     private boolean myPillar4 = false;
     private int myPillarCount;
 
+    /**
+     * Initialize the dungeon. Connects the screen display with the hero's behavior, and updates
+     * the new location to the display after each movement
+     * @param ART ascii art
+     * @throws Exception input errors
+     */
     public void Game(Art ART) throws Exception {
         int myX = SCANNER.nextInt();
         int myY = SCANNER.nextInt();
@@ -89,6 +99,10 @@ public class GamePlay {
         }
     }
 
+    /**
+     * Updates the status of monster and hero after each battle
+     * @throws Exception input errors
+     */
     public void SpecialBattle() throws Exception {
         Random myRand = new Random();
         RandomMonster(myRand);
@@ -123,6 +137,11 @@ public class GamePlay {
         TO_SCREEN.battleToScreen(TO_SCREEN.getMyMonster(), TO_SCREEN.getMyHero());
     }
 
+    /**
+     * Generate a random monster when hero reach a battlefield
+     * @param myRand random object
+     * @throws SQLException database error
+     */
     private void RandomMonster(Random myRand) throws SQLException {
         int myWhichMonster = myRand.nextInt(3);
         switch (myWhichMonster) {

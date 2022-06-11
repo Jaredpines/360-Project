@@ -1,13 +1,19 @@
 package Controller;
-
 import View.Art;
 
+/**
+ * This class contains the starting setting of the Dungeon Adventure game
+ */
 public class Options {
     private final Art ART = new Art();
     private final Intro INTRO = new Intro();
     private final GameSetup GAME_SETUP = new GameSetup();
     private final static GamePlay GAME_PLAY = new GamePlay();
 
+    /**
+     * The choices that a player can make in the beginning of the game
+     * @throws Exception type error
+     */
     public void DifferentOptions() throws Exception {
         String myChoice = "";
         while (!myChoice.equals("3")) {

@@ -5,7 +5,18 @@ import View.View;
 
 import java.sql.SQLException;
 
+
+/**
+ * Set up the game
+ */
 public class GameSetup {
+
+    /**
+     * Set up the game and start the thread
+     * @param theArt the ascii display
+     * @throws InterruptedException interrupted exception
+     * @throws SQLException databased exception
+     */
     public void Setup(Art theArt) throws InterruptedException, SQLException {
         String myStart = theArt.StartScreenArt();
 
